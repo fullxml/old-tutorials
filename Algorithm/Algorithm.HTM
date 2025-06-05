@@ -1,0 +1,719 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Introduction to Algorithms</TITLE>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Keywords" CONTENT="Algorithms, Programming, Tutorial, Methods, Sorting, Searching">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000FF" VLINK="#800080" ALINK="#800080">
+
+<H1><FONT COLOR="#0000A0">Introduction to Algorithms</FONT></H1>
+
+<PRE><B><FONT COLOR="#FF0000"><FONT SIZE=+1>Version 1.03</FONT></FONT></B></PRE>
+
+<P>Welcome to my second tutorial, a document introducing and presenting
+common, simple programming algorithms, written especially for beginning
+programmers. An <I>algorithm</I> is simply the method, logic, and implementation
+of solving a programming problem, and does not refer to the implementation
+in code in a given language. Therefore, I will not present these algorithms
+in a specific language; instead, I will use <I>pseudocode</I>, which is
+a general coding style that roughly approximates most procedural-based
+languages, in terms of a <I>line-by-line comparison</I>. I leave the specific
+implementation to the reader. Also, these algorithms will be presented
+in such a way as can be implemented in either a classical, procedural,
+third-generation language, or an object-oriented language. In addition,
+the programmer should endevor to translate the algorithms so that they
+use For loops, While loops, etc., instead of the &quot;goto's&quot; used
+here...&quot;goto's&quot; are used here for those using older languages,
+or are new to programming, and are simply used to express concept of the
+algorithm.</P>
+
+<P>
+<HR></P>
+
+<H2>Contents</H2>
+
+<P><A HREF="#Random Sampling">Random Sampling<BR>
+</A><A HREF="#Integer Square Root">Integer Square Root<BR>
+</A><A HREF="#Linked List using Parallel Arrays">Linked Lists using Parallel
+Arrays<BR>
+</A><A HREF="#Shuffling">Shuffling<BR>
+</A><A HREF="#Short Sort">Short Sort<BR>
+</A><A HREF="#Selection Sort">Selection Sort<BR>
+</A><A HREF="#Insertion Sort">Insertion Sort<BR>
+</A><A HREF="#Counting Sort">Counting Sort<BR>
+</A><A HREF="#Greatest Common Divisor">Greatest Common Divisor<BR>
+</A><A HREF="#On-Bit Count">On-Bit Count<BR>
+</A><A HREF="#Binary Search">Binary Search<BR>
+</A><A HREF="#Self-Organizing Search">Self-Organizing Search<BR>
+</A><A HREF="#Bibliography">Bibliography<BR>
+</A><A HREF="#Disclaimer">Disclaimer</A></P>
+
+<P>
+<HR></P>
+
+<H3>Conventions</H3>
+
+<OL>
+<LI><B><I>RAND</I></B> refers to a random number generation function, that
+returns a decimal number in the range of 0 to 1.</LI>
+
+<LI>x ^ y refers to x <U>raised to the power of</U> y.</LI>
+
+<LI><I>Time</I> refers to a value representing the theoretical, relative,
+approximate worst-case running time constant, based on some parameter of
+the algorithm...data copying/moving/checking is not included.</LI>
+
+<LI><B>SIGN(X) </B>returns a -1 if X is negative, 0 if X is 0, or 1 if
+X is positive.</LI>
+
+<LI><B>INT(X)</B> returns the truncated, integer part of a real number,
+i.e. INT(2.7) = 2.</LI>
+
+<LI>Arrays are referenced as: ArrayName(PositionNumber).</LI>
+
+<LI>A <B>For/Next</B> loop is a loop where the looping variable is initialized
+with the given value, then if the looping variable is less than or equal
+to the value after the &quot;to&quot; keyword, the code between the For
+and the Next is executed, then the step is added to the looping variable,
+and the process begins again with the test with the &quot;to&quot; value.
+These can be nested with different variables, and if the step is negative,
+the test is a &quot;greater than or equal to&quot; test.</LI>
+</OL>
+
+<P>
+<HR></P>
+
+<H3><A NAME="Random Sampling"></A><I>Random Sampling</I></H3>
+
+<P><I>Goal:</I> Out of N data inputs, select S samples at random.<BR>
+<I>Time:</I> N<BR>
+<I>Note:</I> The probability of the (T + 1)th input being selected is (S
+- M)/(N - T), assuming M items have already been selected.</P>
+
+<OL>
+<LI>Set T = 0 &amp; M = 0.</LI>
+
+<LI><I>Input an item</I> (from a data structure, the keyboard, etc.).</LI>
+
+<LI>R = (N - T) * RAND</LI>
+
+<LI><B>If</B> R &gt;= S - M, go to step 7 (<I>&gt;=</I> means <I>greater
+than or equal to</I>).</LI>
+
+<LI><I>Select the inputted item</I> (or mark it as selected with a flag,
+etc.).</LI>
+
+<LI>M = M + 1 (increment M).</LI>
+
+<LI>T = T + 1 (if this step was skipped to, this item was not selected).</LI>
+
+<LI><B>If</B> M &lt; S, go to step 2.</LI>
+</OL>
+
+<P>
+<HR></P>
+
+<H3><A NAME="Integer Square Root"></A><I>Integer Square Root</I></H3>
+
+<P><I>Goal:</I> Sets S to the integer part of the square root of X.<BR>
+<I>Time:</I> S.<BR>
+<I>Note:</I> Except for the final step, multiplication and division are
+not used. This algorithm works because the sum of consecutive odd integers
+starting with one is always a perfect square...the square root of the greatest
+perfect square less than X is the desired value, S, which is calculated
+from the last odd integer of the summing sequence used to find the least
+perfect square greater than X.</P>
+
+<OL>
+<LI>Set S = 0 &amp; C = 1.</LI>
+
+<LI>S = S + C.</LI>
+
+<LI>C = C + 2.</LI>
+
+<LI><B>If</B> S &lt;= X, then go to step 2.</LI>
+
+<LI>S = INT (C / 2) - 1.</LI>
+</OL>
+
+<P>
+<HR></P>
+
+<H3><A NAME="Linked List using Parallel Arrays"></A><I>Linked List using
+Parallel Arrays</I></H3>
+
+<P>First, initialize three arrays with the listed names, as large as you
+feel necessary, as follows. The &quot;E's&quot; represent empty spaces,
+and you may wish to use a flag of your choosing.</P>
+
+<TABLE BORDER=2 BGCOLOR="#FFFFFF" bordercolor="#000000" bordercolordark="#808080" bordercolorlight="#C0C0C0" >
+<TR>
+<TD>POSITION</TD>
+
+<TD>0</TD>
+
+<TD>1</TD>
+
+<TD>2</TD>
+
+<TD>3</TD>
+
+<TD>4</TD>
+
+<TD>5</TD>
+
+<TD>6</TD>
+
+<TD>7</TD>
+
+<TD>8</TD>
+
+<TD>9</TD>
+
+<TD>10</TD>
+</TR>
+
+<TR>
+<TD>VALUE</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>E</TD>
+
+<TD>E</TD>
+
+<TD>E</TD>
+
+<TD>E</TD>
+
+<TD>E</TD>
+
+<TD>E</TD>
+
+<TD>E</TD>
+
+<TD>E</TD>
+
+<TD>E</TD>
+
+<TD>E</TD>
+</TR>
+
+<TR>
+<TD>LINK</TD>
+
+<TD>0</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+</TR>
+</TABLE>
+
+<P>With these arrays, you can simulate a linked list, with the following
+three functions, each with <I>time</I> being the array size.</P>
+
+<UL>
+<LI><B>Traversal:</B> the list starts with Position 0 (the special &quot;beginning
+of list&quot; Link), initialize P to 0, and leave the value &quot;Empty&quot;.
+To continue through the list from the first value to the end, remember
+that the next value in the list is Value(Link) &amp; its position is Position(Link).
+So, set L to Link(P). The next value, V, is Value(L), and its position,
+the new P, is Position(L). To continue, reset L to Link(P), and the next
+value of V and P is found as before. Once a 0 value for Link(P) is reached,
+you have reached the end of the list.</LI>
+
+<LI><B>Insertion before a given value: </B>first, find the first empty
+space, but not at position 0...in the list below, insert your value V at
+Value(4).<BR>
+<BR>
+Then, you must rearrange links to keep the list in order, so first do a
+traversal as follows: initialize B to 0 &amp; P to 0; <I>set L to Link(P)</I>;
+test Value(L)--is it the value you wish to insert before?--if so, set P
+to Position(L) and stop for now; if not, set P to Position(L), B to L,
+and go to the italicized instruction.<BR>
+<BR>
+Now, we insert the value between Position(B) and Position(P): simply set
+Link(4), in this case, to Position(P) and reset Link(B) to 4 to reflect
+the new order.<BR>
+<BR>
+Obviously, the 4 would be kept in a variable. Also, if you don't know the
+exact value you wish to insert before, but, for example, are keeping an
+ascending ordered list, the test would be to look for the first value greater
+than the value you are inserting.</LI>
+
+<LI><B>Deletion: </B>traverse the list until you find the value you wish
+to delete like so: initialize B to 0 &amp; P to 0; <I>set L to Link(P)</I>;
+test Value(L)--is it the value you wish to delete?--if so, set P to Position(L)
+and stop for now; if not, set P to Position(L), B to L, and go to the italicized
+instruction.<BR>
+<BR>
+To delete the item at Position P, set Value(P) to &quot;E&quot;, and set
+Link(B) to Link(P) (clear Link(P) if you would like).</LI>
+</UL>
+
+<P>A list used to sort names might look like:</P>
+
+<TABLE BORDER=2 BGCOLOR="#FFFFFF" bordercolor="#000000" bordercolordark="#808080" bordercolorlight="#C0C0C0" >
+<TR>
+<TD>POSITION</TD>
+
+<TD>0</TD>
+
+<TD>1</TD>
+
+<TD>2</TD>
+
+<TD>3</TD>
+
+<TD>4</TD>
+
+<TD>5</TD>
+
+<TD>6</TD>
+
+<TD>7</TD>
+
+<TD>8</TD>
+
+<TD>9</TD>
+
+<TD>10</TD>
+</TR>
+
+<TR>
+<TD>VALUE</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>Adams</TD>
+
+<TD>Evans</TD>
+
+<TD>Cobb</TD>
+
+<TD>E</TD>
+
+<TD>Perry</TD>
+
+<TD>May</TD>
+
+<TD>E</TD>
+
+<TD>Smith</TD>
+
+<TD>E</TD>
+
+<TD>E</TD>
+</TR>
+
+<TR>
+<TD>LINK</TD>
+
+<TD>1</TD>
+
+<TD>3</TD>
+
+<TD>6</TD>
+
+<TD>2</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>8</TD>
+
+<TD>5</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>0</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+</TR>
+</TABLE>
+
+<P>
+<HR></P>
+
+<H3><A NAME="Shuffling"></A><I>Shuffling</I></H3>
+
+<P><I>Goal:</I> Takes the Array A, and randomizes the N elements.<BR>
+<I>Time:</I> N.<BR>
+<I>Note:</I> Despite the appearance, the algorithm creates a very random
+array. The algorithm works from right to left (until element 2), and swaps
+each element with an element taken randomly from the collection of elements
+including itself and all elements to the left. A <I>swap</I> is done by
+assigning the first variable of the swap to a temporary variable, then
+overwriting the first variable with the second variable of the swap, then
+finishing by moving the value of the temporary variable into the second
+variable.</P>
+
+<OL>
+<LI><B>For</B> loop: I = N to 2, with a step of -1.</LI>
+
+<LI>T = INT(RAND * I) + 1.</LI>
+
+<LI>H = A(T) (start the swap).</LI>
+
+<LI>A(T) = A(I).</LI>
+
+<LI>A(I) = H (end of swap).</LI>
+
+<LI><B>Next</B> I.</LI>
+</OL>
+
+<P>
+<HR></P>
+
+<H3><A NAME="Short Sort"></A><I>&quot;Short&quot; Sort</I></H3>
+
+<P><I>Goal:</I> Does an ascending sort on the N elements of array A.<BR>
+<I>Time:</I> N^3<BR>
+<I>Note:</I> Only useful on small arrays; this is called a &quot;short&quot;
+sort, because it is short in terms of code. This sort is a type of <I>bubble</I>
+sort, because the smaller values &quot;bubble up to the top.&quot; The
+algorithm starts with a comparison of the first two elements, looking for
+a pair out of order. If no pairs out of order, the sort is finished; otherwise,
+swap the two elements, and go back to the first two elements and start
+over. For a descending sort, in step 2, change &lt;= to &gt;=.</P>
+
+<OL>
+<LI>I = 1.</LI>
+
+<LI><B>If</B> A(I) &lt;= A(I + 1), go to step 7.</LI>
+
+<LI>H = A(I) (start of swap).</LI>
+
+<LI>A(I) = A(I + 1).</LI>
+
+<LI>A(I + 1) = H (end of swap).</LI>
+
+<LI>I = 0.</LI>
+
+<LI>I = I + 1.</LI>
+
+<LI><B>If</B> I &lt;&gt; N, go to step 2 (<I>&lt;&gt; </I>means <I>not
+equal to</I>).</LI>
+</OL>
+
+<P>
+<HR></P>
+
+<H3><A NAME="Selection Sort"></A><I>Selection Sort</I></H3>
+
+<P><I>Goal:</I> Does an ascending sort on the N elements of array A.<BR>
+<I>Time:</I> Upper bounded by N^2 [or (N) + (N -1) + (N - 2)...(2) = (n^2
++ n) / 2]--<U>Pretty Slow<BR>
+</U><I>Note: </I>The Selection Sort look for the lowest value in the list
+on the first pass &amp; swaps it to top with whatever value is at the top;
+it then looks for the lowest value from element 2 to element N, and swaps
+it up to position 2, etc.; after pass X, you are guaranteed that the first
+X elements are in their proper order.</P>
+
+<OL>
+<LI><B>For</B> loop: I = 1 to N - 1, with a step of 1.</LI>
+
+<LI>L = A(I) &amp; P = I.</LI>
+
+<LI><B>Inside For</B> loop: J = I + 1 to N, with a step of 1.</LI>
+
+<LI><B>If </B>A(J) &lt; L, set L = A(J) &amp; P = J.</LI>
+
+<LI><B>Next </B>J.</LI>
+
+<LI><I>Swap</I> (see previous algorithms) A(I) &amp; A(P).</LI>
+
+<LI><B>Next </B>I.</LI>
+</OL>
+
+<P>
+<HR></P>
+
+<H3><A NAME="Insertion Sort"></A><I>Insertion Sort</I></H3>
+
+<P><I>Goal:</I> Sorts array A with N elements into ascending order.<BR>
+<I>Time:</I> N^2<BR>
+<I>Note:</I> Quicker than a bubble-type sort, and does not require extra
+memory. Taking elements from 1 to N (left to right), each element from
+2 to N is put in its proper location among the elements to its left by
+successively right-shifting elements on its left until its proper location
+is found.</P>
+
+<OL>
+<LI><B>For</B> loop: I = 2 to N, with a step of 1.</LI>
+
+<LI>J = I - 1.</LI>
+
+<LI>L = A(I).</LI>
+
+<LI><B>If</B> L &gt;= A(J), then go to step 8.</LI>
+
+<LI>A(J + 1) = A(J).</LI>
+
+<LI>J = J - 1.</LI>
+
+<LI><B>If</B> J &gt; 0, then go to step 4.</LI>
+
+<LI>A(J + 1) = L.</LI>
+
+<LI><B>Next</B> I.</LI>
+</OL>
+
+<P>
+<HR></P>
+
+<H3><A NAME="Counting Sort"></A><I>Counting Sort</I></H3>
+
+<P><I>Goal:</I> Takes the N elements of array A, and moves them, in ascending
+order, into array Q.<BR>
+<I>Time: </I>N.<BR>
+<I>Note:</I> <U>Best for arrays where the number of different items is
+small (small cardinality), i.e., there are a large number of repeat values.</U>
+This rapid sort requires a temporary array C of M elements where the values
+of the elements of array A are in the range of 1 to M. Essentially, this
+temporary array will hold the number of times each value occurs in A, and
+the array Q is generated from this information. This algorithm is also
+good if you have enough repeat values in the array to do a partial counting
+sort, then after moving over remaining values, use another type of sort
+to finish.</P>
+
+<P>Specifically, the array C is zeroed out; then for each element in A,
+increment its counter in C, which would be coded as C(A(I))...now, C(I)
+is the number of elements equal to I. Then C is changed to reflect running
+totals...for counts 2 through M, add the previous index' value (C(I) is
+now the number of elements &lt;= I). Then to generate Q, starting with
+Q(N), copy each element to Q(C(A(I))) and decrement C(A(I)).</P>
+
+<OL>
+<LI><B>For</B> loop: I = 1 to M, with a step of 1.</LI>
+
+<LI>C(I) = 0.</LI>
+
+<LI><B>Next<I> </I></B>I.</LI>
+</OL>
+
+<OL type="1" start="4">
+<LI><B>For</B> loop: I = 1 to N, with a step of 1.</LI>
+
+<LI>C(A(I)) = C(A(I)) + 1.</LI>
+
+<LI><B>Next</B> I.</LI>
+</OL>
+
+<OL type="1" start="7">
+<LI><B>For</B> loop: I = 2 to M, with a step of 1.</LI>
+
+<LI>C(I) = C(I) + C(I - 1).</LI>
+
+<LI><B>Next</B> I.</LI>
+</OL>
+
+<OL type="1" start="10">
+<LI><B>For</B> loop: I = N to 1, with a step of -1.</LI>
+
+<LI>T = A(I).</LI>
+
+<LI>J = C(T).</LI>
+
+<LI>Q(J) = T.</LI>
+
+<LI>C(T) = J - 1.</LI>
+
+<LI><B>Next</B> I.</LI>
+</OL>
+
+<P>
+<HR></P>
+
+<H3><A NAME="Greatest Common Divisor"></A><I>Greatest Common Divisor</I></H3>
+
+<P><I>Goal:</I> Using Euclid's method, set A to the GCD of A &amp; B (assuming
+neither are negative).<BR>
+<I>Time:</I> Log-base-2 (Lesser of A &amp; B).<BR>
+<I>Note:</I> In step 2, the calculation on the right side of the assignment
+is called the <I>modulus </I>(or<I> mod</I>) of A &amp; B, or A <I>MOD</I>
+B. The GCD of two numbers is the largest number that divides evenly into
+both numbers.</P>
+
+<OL>
+<LI><B>If</B> B = 0, then the algorithm is done.</LI>
+
+<LI>R = A - INT(A / B) * B.</LI>
+
+<LI>A = B.</LI>
+
+<LI>B = R.</LI>
+
+<LI>Go to step 1 (or While B &lt;&gt; 0 Do <FONT SIZE=-1>[body of loop]</FONT>
+End).</LI>
+</OL>
+
+<P>
+<HR></P>
+
+<H3><A NAME="On-Bit Count"></A><I>On-Bit Count</I></H3>
+
+<P><I>Goal: </I>Sets B to the number of bits in X set to one.<BR>
+<I>Time:</I> B.<BR>
+<I>Note:</I> This method is often faster than using a shifting method,
+and should be used preferably when the number of one's is low...if not,
+count the number of zeroes by counting the number of one's in the binary
+number's complement. The method is to logically AND the number with itself-minus-one,
+which clears the rightmost one-bit. By counting the number of times this
+operation must be repeated to reduce the number to zero, the number of
+one's in the original number is found. The operation for <I>AND</I>, like
+<I>MOD</I>, may be implementation-specific. In addition, algorithms, such
+as this, might be better written as a function.</P>
+
+<OL>
+<LI>B = 0.</LI>
+
+<LI>Go to step 5.</LI>
+
+<LI>X = X <B>AND</B> (X - 1).</LI>
+
+<LI>B = B + 1.</LI>
+
+<LI><B>If</B> X &lt;&gt; 0, then go to step 3.</LI>
+</OL>
+
+<P>
+<HR></P>
+
+<H3><A NAME="Binary Search"></A><I>Binary Search</I></H3>
+
+<P><I>Goal:</I> Looks for X in the ascending-ordered array A (with its
+N elements) and sets P to the position of X in A if found, or 0 if not
+found.<BR>
+<I>Time:</I> Log-base-2 (N).<BR>
+<I>Note: </I>Faster than a sequential search, but A must be sorted. The
+algorithm begins by comparing X with the middle element of the array. If
+they are equal, the search is done; else, comparing indicates which half
+of the array to search next...the search continues by searching this half
+in the same way as before, by starting with the middle element, and continuing
+from there. In the program, L &amp; R are &quot;pointers&quot; (similar
+to the linked list above) to the left and the right of the section being
+searched.</P>
+
+<OL>
+<LI>L = 1.</LI>
+
+<LI>R = N.</LI>
+
+<LI>P = <B>INT</B>((L + R) / 2).</LI>
+
+<LI><B>If</B> X &lt; A(P), then go to step 8.</LI>
+
+<LI><B>If</B> X = A(P), then the algorithm is complete.</LI>
+
+<LI>L = P + 1.</LI>
+
+<LI>Go to step 9.</LI>
+
+<LI>R = P - 1.</LI>
+
+<LI><B>If</B> L &lt;= R, then go to step 3.</LI>
+
+<LI>P = 0 and the algorithm is complete (if L &amp; R &quot;cross&quot;
+each other, the item was not found).</LI>
+</OL>
+
+<P>
+<HR></P>
+
+<H3><A NAME="Self-Organizing Search"></A><I>Self-Organizing Search</I></H3>
+
+<P><I>Goal: </I>Finds X among the N elements of array A, setting P to its
+position or to zero if X is not found. Array is then reorganized slightly
+to speed future searches.<BR>
+<I>Time:</I> N (still a sequential search).<BR>
+<I>Note:</I> This search requires that certain things are be able to be
+done on the data: that it would be good that A(N + 1) be dimensioned, that
+the ordering of A can be changed, and that some elements be searched more
+often than others. This search is good in that search times for commonly
+searched for items decreases over time over non-organizing methods, depending
+on how popular some elements are versus non-popular elements. The algorithm
+places X at the end of the array and scan from element 1 until item X is
+found. If the position is at A(N + 1), set P to 0. Otherwise, swap position
+where X was found with its lower indexed neighbor...this moves more often
+accessed items closer to position 1. Placing X at the end of the array
+isn't important, but is a good time optimization technique.</P>
+
+<OL>
+<LI>A(N + 1) = X.</LI>
+
+<LI>P = 0.</LI>
+
+<LI>P = P + 1.</LI>
+
+<LI><B>If</B> A(P) &lt;&gt; X, then go to step 3.</LI>
+
+<LI><B>If</B> P &lt;= N, then go to step 7.</LI>
+
+<LI>P = 0. and algorithm is completed.</LI>
+
+<LI><B>If</B> P = 1, then algorithm is completed.</LI>
+
+<LI>Swap A(P) &amp; A(P - 1).</LI>
+
+<LI>P = P - 1, and algorithm is completed.</LI>
+</OL>
+
+<P>
+<HR></P>
+
+<H3><A NAME="Bibliography"></A>Bibliography</H3>
+
+<UL>
+<LI><I>Algorithms</I> by James D. Lewis.</LI>
+
+<LI><I>The Art of Computer Programming, vols. 1, 2 &amp; 3</I> by D.E.
+Knuth, 1969, 73, Addison-Wesley.</LI>
+
+<LI><I>Dr. Dobb's Journal</I>, monthly magazine, and its companion CD,
+<I>Books on Algorithms and Data Structures.</I></LI>
+</UL>
+
+<P>
+<HR></P>
+
+<H3><A NAME="Disclaimer"></A>Disclaimer</H3>
+
+<P>I included this page to be a companion to my <A HREF="http://w3.one.net/~jhoffman/sqltut.htm">other
+tutorial</A>, based on SQL...please see this tutorial for more information,
+especially a list of Computing Links that you may find useful. I hope to
+add more algorithms later; this page reflects algorithms that I thought
+would be interesting and most inclusive for such a web page. Even though
+I cannot answer specific programming or algorithm questions, or come up
+with algorithms &quot;on demand&quot;, if you have a comment or suggestion,
+please e-mail at <A HREF="mailto:jhoffman@one.net">jhoffman@one.net</A>.</P>
+
+<P><FONT SIZE=-1>Copyright 1997-1999, James Hoffman; This tutorial may
+be used for free by any Internet user, but cannot be distributed or published
+in any way, including electronic or network means, without my permission.</FONT></P>
+
+<P><I><FONT SIZE=+0>Last Updated: 1-15-1999; deleted link.</FONT></I></P>
+
+<PRE><FONT SIZE=+0>http://w3.one.net/~jhoffman/algorithms.htm</FONT></PRE>
+
+</BODY>
+</HTML>
