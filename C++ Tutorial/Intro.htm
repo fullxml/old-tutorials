@@ -1,0 +1,180 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Gordon Dodrill">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; I) [Netscape]">
+   <TITLE>Intro</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<B>C++ Tutorial - Introduction</B>
+
+<P><B><FONT SIZE=+3>W</FONT><FONT SIZE=+2>HAT</FONT><FONT SIZE=+3> I</FONT><FONT SIZE=+2>S</FONT><FONT SIZE=+3>
+C</FONT><FONT SIZE=+2>++</FONT></B>
+
+<P><B>THE ORIGIN OF C++</B>
+
+<P>The C programming language was developed at AT&amp;T for the purpose
+of writing the operating system for the PDP-11 series of computers which
+ultimately became the UNIX operating system. C was developed with the primary
+goal of operating efficiency. Bjarne Stroustrup, also of AT&amp;T, developed
+C++ in order to add object oriented constructs to the C language. Because
+object oriented technology was new at the time and all existing implementations
+of object oriented languages were very slow and inefficient, the primary
+goal of C++ was to maintain the efficiency of C.
+
+<P>C++ can be viewed as a traditional procedural language with some additional
+constructs. Beginning with C, some constructs are added for object oriented
+programming and some for improved procedural syntax. A well written C++
+program will reflect elements of both object oriented programming style
+and classic procedural programming. C++ is actually an extendible language
+since we can define new types in such a way that they act just like the
+predefined types which are part of the standard language. C++ is designed
+for large scale software development.
+
+<P><B>HOW TO GET STARTED IN C++</B>
+
+<P>The C programming language was originally defined by the classic text
+authored by Kernigan and Ritchie, "The C Programming language", and was
+the standard used by all C programmers until a few years ago. The ANSI
+standard for C was finally approved in December of 1989 and has become
+the official standard for programming in C. The ANSI-C standard adds many
+things to the language which were not a part of the Kernigan and Ritchie
+definition, and changes a few. The two definitions are not absolutely compatible
+and some experienced C programmers may not have studied the newer constructs
+added to the language by the ANSI-C standard.
+
+<P>This tutorial will assume a thorough knowledge of the C programming
+language and little time will be spent on the fundamental aspects of the
+language. However, as a aid to those programmers that have learned the
+dialect of C as defined by Kernigan &amp; Ritchie, some sections will be
+devoted to explaining the newer additions included in the ANSI-C standard.
+As the ANSI-C standard was in development, many of the newer constructs
+from C++ were included as parts of C itself, so even though C++ is a derivation
+and extension of C, it would be fair to say that ANSI-C has some of its
+roots in C++. An example is prototyping which was developed for C++ and
+later added to C.
+
+<P>The best way to learn C++ is by using it. Almost any valid C program
+is also a valid C++ program and, in fact, the addition of about 12 keywords
+is the only reason that some C programs will not compile and execute as
+a C++ program. There are a few other subtle differences, but we will save
+the discussion of them until later. Since this is true, the best way to
+learn C++ is to simply add to your present knowledge and use a few new
+constructs as you need them for each new project. It would be a tremendous
+mistake to try to use all of the new constructs in your first C++ program.
+You would probably end up with an incomprehensive mixture of code that
+would be more inefficient than the same program written purely in C. It
+would be far better to add a few new constructs to your toolkit occasionally,
+and use them as needed while you gain experience with their use.
+
+<P>As an illustration of the portability of C to C++, all of the example
+programs included in the Coronado Enterprises C tutorial compiled and executed
+correctly when compiled as C++ programs with no changes. Note that this
+was version 2.6 which was released in 1994. The updates in the C++ compilers
+since then may have made this statement false for newer versions. None
+of the C++ programs will compile and execute correctly with any C compiler
+however, if for no other reason than the use of the new style of C++ comments.
+
+<P><B>HOW TO USE THIS TUTORIAL</B>
+
+<P>This tutorial is best used while sitting in front of your computer.
+It is designed to help you gain experience with your own C++ compiler in
+addition to teaching you the proper use of C++. Display an example program
+on the monitor, using whatever text editor you usually use, and read the
+accompanying text which will describe each new construct introduced in
+the example program. After you study the program, and understand the new
+constructs, compile and execute the program with your C++ compiler.
+
+<P>After you successfully compile and execute the example program, introduce
+a few errors into the program to see what kind of error messages are issued.
+If you have done much programming, you will not be surprised if your compiler
+gives you an error message that seems to have nothing to do with the error
+introduced. This is because error message analysis is a very difficult
+problem with any modern programming language. The most important result
+of these error introduction exercises is the experience you will gain using
+your compiler and understanding its nuances. You should then attempt to
+extend the program using the techniques introduced with the program to
+gain experience.
+
+<P>The way this tutorial is written, you will not find it necessary to
+compile and execute every program. At the end of each example program,
+listed in comments, you will find the result of execution of that program.
+Some of the constructs are simple and easy for you to understand, so you
+may choose to ignore compilation and execution of that example program,
+depending upon the result of execution to give you the output. Some students
+have used these results of execution to study several chapters of this
+tutorial on an airplane by referring to a hardcopy of the example programs.
+
+<P>In the text of this tutorial, <B>keywords</B>, <B>variable names</B>,
+and <B>function names</B> will be written in bold type as an aid when you
+are studying the example programs.
+
+<P><B>DIFFERENT C++ IMPLEMENTATIONS</B>
+
+<P>There are primarily two standards for naming C++ files, one using the
+extension CPP and the other using the extension CXX. All files in this
+tutorial use the CPP extension for naming files. If your compiler requires
+the CXX extension it will be up to you to rename the files. When C++ was
+in its infancy, header files generally used the extension .HPP, but there
+is a definite trend to use .H for all header files. For that reason all
+header files in this tutorial will use that convention.
+
+<P>Even though we have tried to use the most generic form of all constructs,
+it is possible that some constructs will not actually compile and run with
+some C++ compilers. As we find new implementations of C++, and acquire
+copies of them, we will compile and execute all files in an attempt to
+make all example programs as universal as possible.
+
+<P>A committee is currently meeting to produce an ANSI-C++ standard, but
+the standard is not expected to be available for general use until 1998
+at the earliest. Until then we must expect a few changes to the language.
+In fact, there have been many changes in the last two years as compiler
+writers are trying to catch up with the language changes.
+
+<P><B>PROGRAMMING EXERCISES</B>
+
+<P>There are programming exercises given at the end of each chapter to
+enable you to try a few of the constructs given in the chapter. These are
+for your benefit and you will benefit greatly if you attempt to solve each
+programming problem. If you merely read this entire tutorial, you will
+have a good working knowledge of C++, but you will only become a C++ programmer
+if you write C++ programs. The programming exercises are given as suggestions
+to get you started programming.
+
+<P>An answer for each programming exercise is given in the cppans.zip file
+available for download in the same manner as the source files. The answers
+are all given in compilable C++ source files named in the format CHnn_m.CPP,
+where nn is the chapter number and m is the exercise number. If more than
+one answer is required, an A, B, or C, is included following the exercise
+number.
+
+<P><B>RECOMMENDED ADDITIONAL READING</B>
+
+<P>Margaret Ellis &amp; Bjarne Stroustrup. "The Annotated C++ Reference
+Manual". Addison-Wesley, 1990. This is the base document for the ANSI-C++
+standard. Even though it is the definitive book on C++, it would be difficult
+for a beginner to learn the language from this book alone.
+
+<P>Scott Meyers. "Effective C++, 50 Specific Ways to Improve Your Programs
+and Designs". Addison-Wesley, 1992. This book is excellent for the advanced
+C++ programmer, but it is definitely not for the beginner.
+
+<P>Scott Meyers. "More Effective C++, 35 New Ways to Improve Your Programs
+and Designs". Addison-Wesley, 1996. This book is excellent for the advanced
+C++ programmer, following completion of the above reference.
+
+<P>Note that the C++ culture is in rapid change and by the time you read
+this, there will be additional well written texts available as aids to
+your learning the syntax and proper use of the C++ programming language.
+
+<P><A HREF="Chap01.htm">Advance to Chapter 1</A>
+
+<P><A HREF="C++Starter.htm">Return to the Table of Contents</A>
+
+<P>
+<HR width="100%"><I><FONT SIZE=-1>Copyright &copy; 1989-1996 Coronado Enterprises
+- Last update, September 22, 1996</FONT></I>
+<BR><FONT SIZE=-1><I>Gordon Dodrill - dodrill@swcp.com - </I><A HREF="mailto:dodrill@swcp.com">Please
+email any comments or suggestions.</A></FONT>
+</BODY>
+</HTML>

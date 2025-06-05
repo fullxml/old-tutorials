@@ -1,0 +1,445 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Gordon Dodrill">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; I) [Netscape]">
+   <TITLE>Chap08</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<B>C++ Tutorial - Chapter 8</B>
+
+<P><B><FONT SIZE=+3>M</FONT><FONT SIZE=+2>ORE</FONT><FONT SIZE=+3> I</FONT><FONT SIZE=+2>NHERITANCE</FONT></B>
+
+<P>In the last chapter we developed a model using modes of transportation
+to illustrate the concept of inheritance. In this chapter we will use that
+model to illustrate some of the finer points of inheritance and what it
+can be used for. If it has been a while since you read and studied chapter
+7, it would be good for you to return to that material and review it in
+preparation for a more detailed study of the topic of inheritance.
+
+<P><B>REORGANIZED FILE STRUCTURE</B>
+
+<P>Example program ------> <B>INHERIT1.CPP</B>
+
+<P>A close examination of the file named INHERIT1.CPP will reveal that
+it is identical to the program developed in chapter 7 named ALLVEHIC.CPP
+except that the program text is rearranged. The biggest difference is that
+some of the simpler methods in the classes have been changed to inline
+code to shorten the file considerably. In a practical programming situation,
+methods that are this short should be programmed inline since the actual
+code to return a simple value is shorter than the code required to send
+a message to a non-inline method.
+
+<P>The only other change is the reordering of the classes and associated
+methods with the classes all defined first, followed by the main program.
+This puts all class interface definitions on a single page to make the
+code easier to study. The implementations for the methods are deferred
+until the end of the file where they are available for quick reference
+but are not cluttering up the class definitions which we wish to study
+carefully in this chapter. This should be an indication to you that there
+is considerable flexibility in the way the classes and methods can be arranged
+in C++. Of course you realize that this violates the spirit of C++ and
+its use of separate compilation, but is only done here for convenience.
+The best way to package all of the example programs in this chapter is
+like the packaging illustrated in chapter 7.
+
+<P>As mentioned before, the two derived classes, <B>car </B>and <B>truck</B>,
+each have a variable named <B>passenger_load</B> which is perfectly legal.
+The <B>car </B>class has a method of the same name, <B>initialize()</B>,
+as one declared in the super-class named <B>vehicle</B>. The rearrangement
+of the files in no way voids this allowable repeating of names.
+
+<P>After you have convinced yourself that this program is truly identical
+to the program named ALLVEHIC.CPP from chapter 7, compile and execute it
+with your compiler to assure yourself that this arrangement is legal. Due
+to this means of code packaging, you will not need a "make" file or a "project"
+capability to compile and execute this code. This code arrangement is designed
+to make it easy to compile and execute the example programs in this chapter.
+
+<P><B>THE SCOPE OPERATOR</B>
+
+<P>Because the method <B>initialize()</B> is declared in the derived <B>car
+</B>class, it hides the method of the same name which is part of the base
+class, and there may be times you wish to send a message to the method
+in the base class for use in the derived class object. This can be done
+by using the scope operator in the following manner in the main program;
+<PRE>&nbsp;&nbsp;&nbsp; sedan.vehicle::initialize(4, 3500.0);</PRE>
+As you might guess, the number and types of parameters must agree with
+those of the method in the base class because it will respond to the message.
+
+<P><B>WHAT IS PROTECTED DATA?</B>
+
+<P>If the data within a base class were totally available in all classes
+inheriting that base class, it would be a simple matter for a programmer
+to inherit the base class into a derived class and have free access to
+all data in the parent class. This would completely override the protection
+afforded by the use of information hiding. For this reason, the data in
+a class are not automatically available to the methods of an inheriting
+class. There are times when you may wish to automatically inherit all variables
+directly into the subclasses and have them act just as though they were
+declared as a part of those classes also. For this reason, the designer
+of C++ has provided the keyword <B>protected</B>.
+
+<P>In the present example program, the keyword <B>protected </B>is given
+in line 6 so that all of the data of the <B>vehicle </B>class can be directly
+imported into any derived classes but are not available outside of the
+base class or derived classes. As we have mentioned before, all data are
+automatically defaulted to <B>private </B>at the beginning of a class if
+no specifier is given.
+
+<P>You will notice that the variables named <B>wheels </B>and <B>weight
+</B>are available to use in the method named <B>initialize() </B>in lines
+83 through 88 just as if they were declared as a part of the <B>car </B>class
+itself. They are available because they were declared <B>protected </B>in
+the base class. Of course, they would be available here if they had been
+decared <B>public </B>in the base class, but then they would be available
+outside of both classes and we would lose our protection. Note that the
+two variables are available for use in the base class as illustrated in
+lines 77 and 78. We can now state the rules for the three means of defining
+variables and methods.
+<UL>
+<LI>
+<B>private </B>- The variables and methods are not available to any outside
+calling routines, and they are not available to any derived classes inheriting
+this class.</LI>
+
+<LI>
+<B>protected </B>- The variables and methods are not available to any outside
+calling routines, but they are directly available to any derived class
+inheriting this class.</LI>
+
+<LI>
+<B>public </B>- All variables and methods are freely available to all outside
+calling routines and to all derived classes.</LI>
+</UL>
+You will note that these three means of definition can also be used in
+a <B>struct </B>type. The only difference with a <B>struct </B>is that
+everything defaults to <B>public </B>until one of the other keywords is
+used.
+
+<P>Be sure to compile and execute this program before continuing on to
+the next example program.
+
+<P><B>WHAT IS PRIVATE DATA?</B>
+
+<P>Example program ------> <B>INHERIT2.CPP</B>
+
+<P>Examine the file named INHERIT2.CPP where the data in the base class
+is permitted to use the <B>private </B>default because line 6 is commented
+out. In this program, the data is not available for use in the derived
+classes, so the only way the data in the base class can be used is by sending
+messages to methods in the base class, even within the derived class.
+
+<P>It seems a little silly to have to call methods in the base class to
+access the data which is actually a part of the derived class, but that
+is the way C++ is defined to work. This would indicate to you that you
+should spend some time thinking about how any class you define will be
+used. If you think somebody may wish to inherit your class into a new class
+and expand it, you should make the data members <B>protected </B>so they
+can be easily used in the new class. Lines 86 and 87 are invalid now since
+the members are not visible, but line 88 now does the job they did before
+they were hidden by calling the public method of the base class. Line 104
+is also changed because of the hidden data. You will notice that the data
+is still available in lines 77 and 78 just as they were before because
+the member variables are protected in the <B>vehicle </B>class. Be sure
+to compile and execute this program.
+
+<P><B>HIDDEN METHODS</B>
+
+<P>Example program ------> <B>INHERIT3.CPP</B>
+
+<P>Examine the file named INHERIT3.CPP carefully and you will see that
+it is a repeat of the first example program in this chapter with a few
+minor changes.
+
+<P>You will notice that the derived classes named <B>car </B>and <B>truck
+</B>do not have the keyword <B>public </B>prior to the name of the base
+class in the first line of each class declaration. The keyword <B>public</B>,
+when included prior to the base class name, makes all of the methods defined
+in the base class available for use in the derived class at the same security
+level as they were defined at in the base class. Therefore, in the previous
+program, we were permitted to call the methods defined as part of the base
+class from the main program even though we were working with an object
+of one of the derived classes.
+
+<P>In this program, all entities are inherited as <B>private </B>due to
+the use of the keyword <B>private </B>prior to the name of the base class.
+They are therefore unavailable to any code outside of the derived class.
+The general rule is that all elements are inherited into the derived class
+at the most restrictive of the two restrictions placed on them, one being
+the definition in the base class and the other being the restriction on
+inheritance. This defines the way the elements are viewed outside of the
+derived class.
+
+<P>The elements are all inherited into the derived class such that they
+have the same level of protection they had in the base class, as far as
+their visibility restrictions within the derived class. We have returned
+to the use of <B>protected </B>data instead of <B>private </B>in the base
+class, therefore the member variables are available for use within the
+derived class.
+
+<P>In the present program, the only methods available for objects of the
+<B>car </B>class, are those that are defined as part of the class itself,
+and therefore we only have the methods named <B>initialize()</B> and <B>passengers()
+</B>available for use with objects of class <B>car</B>.
+
+<P>When we declare an object of type <B>car</B>, according to the definition
+of the C++ language, it contains three variables. It contains the one defined
+as part of its class named <B>passenger_load</B> and the two that are part
+of its parent class, <B>wheels </B>and <B>weight</B>. All are available
+for direct use within its methods because of the use of the keyword <B>protected
+</B>in the base class. The variables are a part of an object of class <B>car
+</B>when it is declared and are stored as part of the object.
+
+<P>The observant student will notice that several of the output statements
+have been commented out of the main program since they are no longer legal
+or meaningful operations. Lines 57 through 59 have been commented out because
+the methods named <B>get_weight()</B> and <B>wheel_loading()</B> are not
+available as members of the <B>car </B>class because we are using <B>private
+</B>inheritance. You will notice that <B>initialize() </B>is still available
+but this is the one in the <B>car </B>class, not the method of the same
+name in the <B>vehicle </B>class.
+
+<P><B>USING THE TRUCK CLASS</B>
+
+<P>Moving on to the use of the <B>truck </B>class in the main program,
+we find that lines 63 and 65 are commented out for the same reason as given
+above, but lines 66 and 67 are commented out for an entirely different
+reason. Even though the method named <B>efficiency()</B> is available and
+can be called as a part of the <B>truck </B>class, it cannot be used because
+we have no way to initialize the <B>wheels </B>or <B>weight </B>of the
+<B>truck </B>object. We can get the <B>weight </B>of the <B>truck </B>object,
+as we have done in line 102, but since the <B>weight </B>has no way to
+be initialized, the result is meaningless and lines 66 and 67 are commented
+out.
+
+<P><B>Private </B>inheritance is very similar to using an embedded object
+and, in fact, is very rarely used. Until you gain a lot of experience with
+C++ and the proper use of Object Oriented Programming, you should use <B>public
+</B>inheritance exclusively. There is probably no reason to ever use <B>private
+</B>or <B>protected </B>inheritance. They were probably added to the language
+for completeness.
+
+<P>Be sure to compile and execute this example program to see that your
+compiler gives the same result. It would be a good exercise for you to
+reintroduce some of the commented out lines to see what sort of an error
+message your compiler issues for these errors.
+
+<P><B>INITIALIZING ALL DATA</B>
+
+<P>Example program ------> <B>INHERIT4.CPP</B>
+
+<P>If you will examine the example program named INHERIT4.CPP, you will
+find that we have fixed the initialization problem that we left dangling
+in the last example program. We also added default constructors to each
+of the classes so we can study how they are used when we use inheritance
+and we have returned to the use of <B>public </B>inheritance.
+
+<P>When we create an object of the base class <B>vehicle</B>, there is
+no problem since inheritance is not a factor. The constructor for the base
+class operates in exactly the same manner that all constructors have in
+previous chapters. You will notice that we create the <B>unicycle </B>object
+in line 47 using the default constructor and the object is initialized
+to the values contained in the constructor. Line 49 is commented out because
+we no longer need the initialization code for the object.
+
+<P>When we define an object of one of the derived classes in line 57, the
+<B>sedan</B>, it is a little different because not only do we need to call
+a constructor for the derived class, we have to worry about how we get
+the base class initialized through its constructor also. Actually, it is
+no problem because the compiler will automatically call the default constructor
+for the base class unless the derived class explicitly calls another constructor
+for the base class. We will explicitly call another constructor in the
+next example program, but for now we will only be concerned about the default
+constructor for the base class that is called automatically.
+
+<P><B>ORDER OF CONSTRUCTION</B>
+
+<P>The next problem we need to be concerned about is the order of construction,
+and it is easy to remember if you remember the following statement, "C++
+classes honor their parents by calling their parents constructor before
+they call their own." The base class constructor will be called before
+the derived class constructor. This makes sense because it guarantees that
+the base class is properly constructed when the constructor for the derived
+class is executed. This allows you to use some of the data from the base
+class during construction of the derived class. That was a mouthful, but
+if you spend a little time with this concept, it will make a lot of sense,
+and you will not easily forget it. In this case, the <B>vehicle </B>part
+of the <B>sedan </B>object is constructed, then the local portions of the
+<B>sedan </B>object will be constructed, so that all member variables are
+properly initialized. This is why we can comment out the <B>initialize
+</B>method in line 59. It is not needed.
+
+<P>When we define a <B>semi </B>object in line 66, it will also be constructed
+in the same manner. The constructor for the base class is executed, then
+the constructor for the derived class will be executed. The object is now
+fully defined and useable with default data in each member. Lines 68 and
+69 are therefore not needed.
+
+<P>The remainder of this program should be no problem for you to understand
+except for the order of destruction of the various objects.
+
+<P><B>HOW ARE THE DESTRUCTORS EXECUTED?</B>
+
+<P>As the objects go out of scope, they must have their destructors executed
+also, and since we didn't define any, the default destructors will be executed.
+Once again, the destruction of the base class object named <B>unicycle
+</B>is no problem, it's destructor is executed and the object is gone.
+The <B>sedan </B>object however, must have two destructors executed to
+destroy each of its parts, the base class part and the derived class part.
+It should not be too much of a surprise that the destructors for this object
+are executed in reverse order from the order in which they were constructed.
+In other words, the object is dismantled in the opposite order from the
+order in which it was assembled. The derived class destructor is executed
+first, then the base class destructor is executed and the object is removed
+from they system.
+
+<P>Remember that every time an object is defined or created, every portion
+of it must have a constructor executed on it. Every object must also have
+a destructor executed on each of its parts when it is destroyed in order
+to properly dismantle the object.
+
+<P>Be sure to compile and execute this program following your detailed
+study of it.
+
+<P><B>INHERITANCE WHEN CONSTRUCTORS ARE USED</B>
+
+<P>Example program ------><B> INHERIT5.CPP</B>
+
+<P>Examine the example program named INHERIT5.CPP for yet another variation
+to our basic program, this time using constructors that are more than just
+the default constructors. You will notice that each class has another constructor
+declared within it. The additional constructor added to the <B>vehicle
+</B>class in lines 12 through 14 is nothing special, it is just like some
+of the constructors we have studied earlier in this tutorial. It is used
+in line 59 of the main program where we define <B>unicycle </B>with two
+values passed in to be used when executing this constructor.
+
+<P>The constructor for the <B>car </B>class which is declared in lines
+28 through 31 is a bit different, because we pass in three values. One
+of the values, the one named <B>people, </B>is used within the derived
+class itself to initialize the member variable named <B>passenger_load</B>.
+The other two literal values however, must be passed to the base class
+somehow in order to initialize the number of <B>wheels </B>and the <B>weight</B>.
+This is done by using a member initializer, and is illustrated in this
+constructor. The colon near the end of line 28 indicates that a member
+initializer list follows, and all entities between the colon and the opening
+brace of the constructor body are member initializers. The first member
+initializer is given in line 29 and looks like a constructor call to the
+<B>vehicle </B>class that requires two input parameters. That is exactly
+what it is, and it calls the constructor for the <B>vehicle </B>class and
+initializes that part of the <B>sedan </B>object that is inherited from
+the <B>vehicle </B>class. We can therefore control which base class initializer
+gets called when we construct an object of the derived class.
+
+<P>The next member initializer, in line 30, acts kind of like a constructor
+for a simple variable. By mentioning the name of the variable and including
+a value of the correct type within the parentheses, that value is assigned
+to that variable even though the variable is not a class, but a simple
+predefined type. This technique can be used to initialize all members of
+the derived class or any portion of them. When all of the members of the
+member initializer list are executed, the code within the braces is executed.
+In this case, there is no code within the executable block of the constructor.
+The code within the braces would be written in a normal manner for a constructor.
+
+<P><B>WHAT ABOUT THE ORDER OF EXECUTION?</B>
+
+<P>This may seem to be very strange, but the elements of the member initializer
+list are not executed in the order in which they appear in the list. The
+constructors for the inherited classes are executed first, in the order
+of their declaration in the class header. When using multiple inheritance,
+several classes can be listed in the header line, but in this program,
+only one is used. The member variables are then initialized, but not in
+the order as given in the list, but in the order in which they are declared
+in the class. Finally, the code within the constructor block is executed,
+if there is any code in the block.
+
+<P>There is a good reason for this seemingly strange order. The destructors
+must be executed in reverse order from the construction order, but if there
+are two constructors with different construction order defined, which should
+define the destruction order? The correct answer is neither. The system
+uses the declaration order for construction order and reverses it for the
+destruction order.
+
+<P>You will notice that the <B>truck </B>class uses one initializer for
+the base class constructor and two member initializers, one to initialize
+the<B> passenger_load, </B>and one to initialize the <B>payload</B>. The
+body of the constuctor, much like the <B>car </B>class, is empty.
+
+<P>The two constructors in the <B>car </B>class and the <B>truck </B>class
+are called to construct objects in lines 69 and 78 for a <B>car </B>object
+and a <B>truck </B>object as illustrations in this example program.
+
+<P>The remainder of this program should be easy for you to folow. Be sure
+to compile and execute this program before moving on.
+
+<P><B>POINTERS TO AN OBJECT AND AN ARRAY OF OBJECTS</B>
+
+<P>Example program ------> <B>INHERIT6.CPP</B>
+
+<P>Examine the example program named INHERIT6.CPP for examples of the use
+of an array of objects and a pointer to an object. In this program, the
+objects are instantiated from an inherited class and the intent of this
+program is to illustrate that there is nothing magic about a derived class.
+A class acts the same whether it is a base class or a derived class.
+
+<P>This program is identical to the first program in this chapter until
+we get to the <B>main()</B> program where we find an array of 3 objects
+of class <B>car </B>declared in line 53. It should be obvious that any
+operation that is legal for a simple object is legal for an object that
+is part of an array, but we must be sure to tell the system which object
+of the array we are interested in by adding the array subscript as we do
+in lines 58 through 64. The operation of this portion of the program should
+be very easy for you to follow, so we will go on to the next construct
+of interest.
+
+<P>You will notice, in line 68, that we do not declare an object of type
+<B>truck </B>but a pointer to an object of type <B>truck</B>. In order
+to use the pointer, we must give it something to point at which we do in
+line 70 by dynamically allocating an object. Once the pointer has an object
+to point to, we can use the object in the same way we would use any object,
+but we must use the pointer notation to access any of the methods of the
+object. This is illustrated for you in lines 76 through 80, and will be
+further illustrated in the example program of chapter 12 in this tutorial.
+
+<P>Finally, we deallocate the object in line 81. You should spend enough
+time with this program to thoroughly understand the new material presented
+here, then compile and execute it.
+
+<P><B>THE NEW TIME CLASS</B>
+
+<P>We began a series of nontrivial classes in chapter 5 where we developed
+a <B>date </B>class, then a <B>time </B>class, and finally a <B>newdate
+</B>class in the last chapter. Now it is your turn to add to this series.
+Your assignment is to develop the <B>newtime </B>class which inherits the
+<B>time </B>class and adds a new member variable named <B>seconds_today</B>
+and a method to calculate the value of seconds since midnight to fill the
+variable.
+
+<P>A complete solution to this problem will be found in cppans.zip available
+for download. The files named NEWTIME.H, NEWTIME.CPP, and TRYNTIME.CPP
+are the solution files. It would be a good exercise for you to attempt
+to write this new class before you look at the example solution.
+
+<P><B>PROGRAMMING EXERCISES</B>
+<OL>
+<LI>
+Remove the comment delimiters from lines 57 through 59 of INHERIT3.CPP
+to see what kind of errors are reported.</LI>
+
+<LI>
+Add <B>cout </B>statements to each of the constructors of INHERIT4.CPP
+to output messages to the monitor so you can see the order of sending messages
+to the constructors.</LI>
+</OL>
+<A HREF="Chap09.htm">Advance to Chapter 9</A>
+
+<P><A HREF="C++Starter.htm">Return to the Table of Contents</A>
+
+<P>
+<HR width="100%"><I><FONT SIZE=-1>Copyright &copy; 1989-1996 Coronado Enterprises
+- Last update, September 22, 1996</FONT></I>
+<BR><FONT SIZE=-1><I>Gordon Dodrill - dodrill@swcp.com - </I><A HREF="mailto:dodrill@swcp.com">Please
+email any comments or suggestions.</A></FONT>
+</BODY>
+</HTML>

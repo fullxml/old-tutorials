@@ -1,0 +1,410 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Gordon Dodrill">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; I) [Netscape]">
+   <TITLE>Chap04</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<B>C++ Tutorial - Chapter 4</B>
+
+<P><B><FONT SIZE=+3>F</FONT><FONT SIZE=+2>UNCTIONS</FONT></B>
+
+<P>This chapter discusses enhancements in the capabilities of functions
+that have been made to C++. These changes make programming more convenient
+and permit the compiler to do further checking for errors. A fair amount
+of time is also spent in this chapter teaching the modern form of function
+definition and prototyping.
+
+<P>Prototyping allows the compiler to do additional type checking for your
+function calls which can detect some programming errors. The first two
+example programs in this chapter are designed to teach prototyping and
+what it will do for you. Prototyping is a relatively new addition to C,
+so even some experienced C programmers are not familiar with it. If you
+have experience with prototyping you can skip directly to the section named
+PASS BY REFERENCE later in this chapter.
+
+<P><B>PROTOTYPES</B>
+
+<P>Example program ------> <B>PROTYPE1.CPP</B>
+
+<P>Examine the file named PROTYPE1.CPP for our first look at a prototype
+and an illustration of how it is used. The prototyping used in C++ is no
+different than that used in ANSI-C. Actually, many C programmers take a
+rather dim view of prototyping and seem reluctant to use it, but with C++
+it is considerably more important and is in much heavier use. In fact,
+prototyping is required to be used in some situations in C++.
+
+<P>A prototype is a limited model of a more complete entity to come later.
+In this case, the full function is the complete entity to come later and
+the prototype is illustrated in line 4. The prototype gives a model of
+the interface to the function that can be used to check the calls to the
+function for the proper number of parameters and the correct types of parameters.
+Each call to the function named <B>do_stuff()</B> must have exactly three
+parameters or the compiler will issue an error message. In addition to
+the correct number of parameters, the types must be compatible or the compiler
+will issue an error message. Notice that when the compiler is working on
+lines 12 and 13, the type checking can be done based on the prototype in
+line 4 even though the function itself is not yet defined. If the prototype
+is not given, the number of parameters will not be checked, nor will the
+types of the parameters be checked. Without a prototype, if you have the
+wrong number of parameters, you will get an apparently good compile and
+link, but the program may do some very strange things when it is executed.
+
+<P>To write the prototype, simply copy the header from the function to
+the beginning of the program and append a semicolon to the end as a signal
+to the compiler that this is not a function but a prototype. The variable
+names given in the prototype are optional and act merely as comments to
+the human reader since they are completely ignored by the compiler. You
+could replace the variable name <B>wings </B>in line 4 with your first
+name and there would be no difference in compilation. Of course, the next
+person that had to read your program would be somewhat baffled with your
+choice of variable names.
+
+<P>In this case, the two function calls to this function, given in lines
+12 and 13, are correct so no error will be listed during compilation.
+
+<P>Even though we wish to use the <B>char </B>type for <B>eyes </B>in the
+function, we wish to use it as a number rather than as a character. The
+cast to <B>int </B>in line 22 is required to force the printout of the
+numerical value rather than an ASCII character. The next example program
+is similar but omits the cast to <B>int </B>in order to illustrate the
+difference.
+
+<P><B>COMPATIBLE TYPES</B>
+
+<P>We mentioned compatible types earlier so we should review them just
+a bit in order to make our discussion of prototyping complete. Compatible
+types are any simple types that can be converted from one to another in
+a meaningful way. For example, if you used an integer as the actual parameter
+and the function was expecting a <B>float </B>type as the formal parameter,
+the system would do the conversion automatically, without mentioning it
+to you. This is also true of a <B>float </B>changing to a <B>char</B>,
+or a <B>char </B>changing to an <B>int</B>. There are definite conversion
+rules which would be followed. These rules are given in great detail in
+section 3.2 of the ANSI-C standard and are also given on page 198 of the
+second edition of the K&amp;R reference.
+
+<P>If we supplied a pointer to an integer as the actual parameter and expected
+an integer as the formal parameter in the function, the conversion would
+not be made because they are two entirely different kinds of values. Likewise,
+a structure would not be converted automatically to a <B>long float</B>,
+an array, or even to a different kind of structure, because they are all
+incompatible and cannot be converted in any meaningful manner. The entire
+issue of type compatibility as discussed in chapter 2 of this tutorial
+applies equally well to the compatibility of types when calling a function.
+Likewise, the type specified as the return type, in this case <B>void</B>,
+must be compatible with the expected return type in the calling statement,
+or the compiler will issue a warning.
+
+<P><B>HOW DOES PROTOTYPING WORK?</B>
+
+<P>This is your chance to try prototyping for yourself and see how well
+it works and what kinds of error messages you get when you do certain wrong
+things. Change the actual parameters in line 12 to read (12.2, 13, 12345)
+and see what the compiler says about that change. It will probably say
+nothing because they are all type compatible. If you change it to read
+(12.0, 13), it will issue a warning or error because there are not enough
+arguments given. Likewise you should receive an error message if you change
+one of the parameters in line 13 to an address by putting an ampersand
+in front of one of the variable names. Finally, change the first word in
+line 4 from <B>void </B>to <B>int </B>and see what kind of error message
+is given. You will first be required to make the function header in line
+18 agree with the prototype, then you will find that there is no value
+returned from the function. You should have a good feeling that prototyping
+is doing something worthwhile for you after making these changes.
+
+<P>Be sure to compile and execute this program then make the changes recommended
+above, attempting to compile it after each change.
+
+<P><B>A LITTLE MORE PROTOTYPING</B>
+
+<P>Example program ------> <B>PROTYPE2.CPP</B>
+
+<P>Examine the next example program named PROTYPE2.CPP for a little more
+information on prototyping. This program is identical to the last one except
+for a few small changes. The variable names have been omitted from the
+prototype in line 4 as an illustration that they are interpreted only as
+comments by the C++ compiler. The function header is formatted differently
+to allow for a comment alongside each of the actual parameters. This should
+make the function header a little more self explanatory. However, you should
+remember that comments should not be used to replace careful selection
+of variable names. In this particular case, the comments add essentially
+nothing to the clarity of the program.
+
+<P><B>WHAT DOES PROTOTYPING COST?</B>
+
+<P>Prototyping is essentially free because it costs absolutely nothing
+concerning the run time size or speed of execution. Prototyping is a compile
+time check only, and slows down the compile time a negligible amount because
+of the extra checking that the compiler must do. If prototyping finds one
+error for you that you would have had to find with a debugger, it has more
+than paid for itself for use in an entire project. I once spent 12 hours
+of debugging time to find that I forgot to pass the address of a variable
+to a function. Prototyping would have found the error on the first compilation
+of that 2000 line program.
+
+<P>The only price you pay to use prototyping is the extra size of the source
+files because of the prototypes, and the extra time for the compiler to
+read the prototypes during the compilation process, but both costs are
+negligible.
+
+<P>Be sure to compile and execute this example program. You will find that
+it is identical to the last example program, except for the changes in
+the prototype and the removal of the cast from the last line of the function.
+
+<P><B>PASS BY REFERENCE</B>
+
+<P>Example program ------> <B>PASSREF.CPP</B>
+
+<P>Examine the program named PASSREF.CPP for an example of a pass by reference,
+a construct which is not available in ANSI-C. The reference variable was
+mentioned in chapter 1 and it was recommended there that you don't use
+it in the manner illustrated there. This example program illustrates a
+situation where it can be used to your advantage. The pass by reference
+allows the passing of a variable to a function and returning the changes
+made in the function to the main program. In ANSI-C the same effect can
+be seen when a pointer to a variable is passed to a function, but use of
+a reference variable is a little cleaner.
+
+<P>Observe the prototype in line 4 where the second variable has an ampersand
+in front of the variable name. The ampersand instructs the compiler to
+treat this variable as a reference to the actual variable passed from the
+calling function. It acts like the actual variable from the main program
+is used in the function. In the function itself, in lines 24 through 27,
+the variable <B>in2 </B>is used just like any other variable but it acts
+like we are using the variable passed to this function from the main program
+not a copy of it. The other variable named <B>in1 </B>is treated just like
+any other normal variable in ANSI-C. The name <B>in2 </B>is a synonym for
+the variable named <B>index </B>in the main program, but the name <B>in1
+</B>refers to a copy of the variable <B>count </B>from the main program.
+In actual practice, a pointer is passed to the function and it is automatically
+dereferenced when used in the function. This is transparent to you, the
+programmer.
+
+<P>If you prefer to omit the variable names in the prototypes, you would
+write the prototype as follows;
+<PRE>&nbsp;&nbsp;&nbsp; void fiddle(int, int&amp;);</PRE>
+If you are a Pascal programmer, you will recognize that the variable named
+<B>in1 </B>is treated just like a normal parameter in a Pascal call, a
+call by value. The variable named <B>in2 </B>however, is treated like a
+variable with the reserved word VAR used in front of it, usually referred
+to as a call by reference. As mentioned earlier, the reference variable
+used in C++ is actually a self dereferencing pointer which refers to, or
+points to, the original value.
+
+<P>When you compile and execute this program, you will find that the first
+variable got changed in the function but the change was not reflected in
+the original value when we returned to the main program. The second variable
+however, was changed in the function and the new value was reflected back
+into the variable in the main program which we can see when the values
+are listed on the monitor. It should be clear that the reference allows
+you to pass a parameter by reference to a function. After you gain experience
+with the reference, you will use it to improve efficiency of some programs.
+This is because passing a large structure can be done very efficiently
+if it is passed by reference.
+
+<P><B>DEFAULT PARAMETERS</B>
+
+<P>Example program ------> <B>DEFAULT.CPP</B>
+
+<P>Examine the file named DEFAULT.CPP for an example of the use of default
+parameters in C++. This program really looks strange since it contains
+default values for some of the parameters in the prototype, but these default
+values are very useful as we will see shortly.
+
+<P>This prototype says that the first parameter named <B>length </B>must
+be given for each call of this function because a default value is not
+supplied. The second parameter named <B>width</B>, however, is not required
+to be specified for each call, and if it is not specified, the value 2
+will be used for the variable <B>width </B>within the function. Likewise,
+the third parameter is optional, and if it is not specified, the value
+of 3 will be used for <B>height </B>within the function.
+
+<P>In line 11 of this program, all three parameters are specified so there
+is nothing unusual about this call from any other function call we have
+made. Only two values are specified in line 12 however, so we will use
+the default value for the third parameter and the system acts as if we
+called it with <B>get_volume(x,y,3)</B> since the default value for the
+third value is 3. In line 13, we only specified one parameter which will
+be used for the first formal parameter, and the other two will be defaulted.
+The system will act as if we had called the function with<B> get_volume(x,2,3).</B>
+Note that the output from these three lines is reversed. This will be explained
+shortly.
+
+<P>There are a few rules which should be obvious but will be stated anyway.
+Once a parameter is given a default value in the list of formal parameters,
+all of the remaining must have default values also. It is not possible
+to leave a hole in the middle of the list, only the trailing values can
+be defaulted. Of course, the defaulted values must be of the correct types
+or a compiler error will be issued. The default values can be given in
+either the prototype or the function header, but not in both. If they were
+given in both places, the compiler must not only use the default value,
+but it must carefully check to see that both values are identical. This
+could further complicate an already very complicated problem, that of writing
+a C++ compiler, so this rule was instituted for the benefit of the compiler
+writer.
+
+<P>As a matter of style, it is highly recommended that the default values
+be given in the prototype rather than in the function. The reason will
+be obvious when we begin using object oriented programming techniques.
+
+<P><B>WHY IS THE OUTPUT SCRAMBLED?</B>
+
+<P>When the compiler finds a <B>cout </B>statement, the complete line of
+code is initially scanned from right to left to evaluate any functions,
+then the data is output field by field from left to right. Therefore in
+line 11, <B>get_volume()</B> is evaluated with its internal output displayed
+first. Then the fields of the <B>cout </B>are displayed from left to right
+with "Some box data is" displayed next. Finally, the result of the return
+from <B>get_volume()</B> is output in <B>int </B>format, the type of the
+returned value. The end result is that the output is not in the expected
+order when lines 11 through 13 are executed. (The output is not what you
+would intuitively expect to happen so appears to be a deficiency in the
+language. A call to Borland International, the writers of Turbo C++ and
+Borland C++, verified that this code is operating correctly.) Your compiler
+may not execute this program correctly. You may need to find a compiler
+switch to permit mixing <B>printf()</B> and <B>cout </B>outputs, or you
+may need to convert the <B>printf()</B> statements to <B>cout </B>outputs
+to get the program to operate properly.
+
+<P>We still have the problem of mixing <B>cout </B>and <B>printf() </B>output
+as discussed in chapter 1 while studying the program named MESSAGE.CPP.
+Eventually, all conforming compilers will overcome this problem.
+
+<P>Lines 15 through 18 are similar to any two of the lines of code in lines
+11 through 13, but are each separated into two lines so the output is in
+the expected order.
+
+<P>Be sure to compile and execute DEFAULT.CPP after you understand it.
+Note that the funny output order will appear again later in this tutorial.
+
+<P><B>VARIABLE NUMBER OF ARGUMENTS</B>
+
+<P>Example program ------> <B>VARARGS.CPP</B>
+
+<P>Examine the program named VARARGS.CPP for an illustration of the use
+of a variable number of arguments in a function call.
+
+<P>We have gone to a lot of trouble to get the compiler to help us by carefully
+checking how many parameters we use in the function calls and checking
+the types of the parameters. On rare occasion, we may wish to write a function
+that uses a variable number of parameters. The <B>printf()</B> function
+is a good example of this. ANSI-C has a series of three macros available
+in the "stdarg.h" header file to allow the use of a variable number of
+arguments. These are available for use with C++ also, but we need a way
+to eliminate the stronger type checking that is done with all C++ functions.
+The three dots illustrated in line 6 will do this for us. This prototype
+says that a single argument of type <B>int </B>is required as the first
+parameter, then no further type checking will be done by the compiler.
+
+<P>You will note that the main program consists of three calls to the function,
+each with a different number of parameters, and the system does not balk
+at the differences in the function calls. In fact, you could put as many
+different types as you desire in the calls. As long as the first one is
+an <B>int </B>type variable, the system will do its best to compile and
+run it for you. Of course the compiler is ignoring all type checking beyond
+the first parameter so it is up to you to make sure you use the correct
+parameter types in this call.
+
+<P>In this case, the first parameter gives the system the number of additional
+parameters to look for and handle. In this simple program, we simply display
+the numbers on the monitor to illustrate that they really did get handled
+properly.
+
+<P>Of course, you realize that using a variable number of arguments in
+a function call can lead to very obscure code and should be used very little
+in a production program, but the capability exists if you need it. Be sure
+to compile and execute this program.
+
+<P><B>FUNCTION NAME OVERLOADING</B>
+
+<P>Example program ------> <B>OVERLOAD.CPP</B>
+
+<P>Examine the file named OVERLOAD.CPP for an example of a program with
+a few function names overloaded. This is not possible in ANSI-C, but is
+perfectly legal and in fact used quite regularly in C++. At first this
+will seem a bit strange, but it is one of the keystones of object oriented
+programming. You will see its utility and purpose very clearly in later
+chapters of this tutorial.
+
+<P>You will notice in this example program that there are three functions,
+in addition to the main function, and all three have the same name. Your
+first question is likely to be, "Which function do you call when you call
+<B>do_stuff()</B>?" That is a valid question and the answer is, the function
+that has the correct number of formal parameters of the correct types.
+If <B>do_stuff()</B> is called with an integer value or variable as its
+actual parameter, the function beginning in line 25 will be called and
+executed. If the single actual parameter is of type <B>float</B>, the function
+beginning in line 30 will be called, and if two floats are specified, the
+function beginning in line 36 will be called.
+
+<P>It should be noted that the return type is not used to determine which
+function will be called. Only the types of the formal parameters are used
+to determine which overloaded function will be called.
+
+<P>The keyword <B>overload </B>used in line 4 tells the system that you
+really do intend to overload the name <B>do_stuff</B>, and the overloading
+is not merely an oversight. This is only required in very early versions
+of C++. Newer versions of C++ do not require the keyword overload but,
+at least for the time being, allows it to be used to prevent breaking the
+existing body of C++ code. It is not necessary to use this keyword because,
+when overloading is used in C++, it is generally used in a context in which
+it is obvious that the function name is overloaded.
+
+<P>When the final ANSI-C++ standard is completed, the use of this word
+may not be permitted. As was mentioned earlier, the C++ language is changing
+and we must be willing to change with it.
+
+<P>The actual selection of which function to call is done at compile time,
+not at execution time, so the program is not slowed down. If each of the
+overloaded function names were changed to different names, each being unique,
+there would be no difference in execution size or speed of the resulting
+program.
+
+<P>Overloading of function names may seem very strange to you, and it is
+strange if you are used to the rules of K&amp;R or ANSI-C programming.
+As you gain experience with C++, you will feel very comfortable with this,
+and you will use it a lot in your C++ programming.
+
+<P>Note the use of the keyword <B>const </B>used in some of the function
+prototypes and headers. Once again, this prevents the programmer from accidentally
+changing the formal parameter within the function. In a function as short
+as these, there is no real problem with an accidental assignment. In a
+real function that you occasionally modify, you could easily forget the
+original intention of the use of a variable and attempt to change it during
+an extended debugging session.
+
+<P><B>PROGRAMMING EXERCISES</B>
+<OL>
+<LI>
+Change the type of <B>wings </B>in the prototype of PROTYPE1.CPP to <B>float
+</B>so that it disagrees with the function definition to see if you get
+a compilation error.</LI>
+
+<LI>
+Change the function definition in PROTYPE1.CPP to agree with the changed
+prototype. Compile and execute the program without changing the calls in
+lines 12 and 13. Explain the results.</LI>
+
+<LI>
+In DEFAULT.CPP, remove the default value from the prototype for <B>height
+</B>only to see what kind of compiler error you get. Only the last values
+of the list can be defaulted.</LI>
+
+<LI>
+In OVERLOAD.CPP, change the names of the three functions so that each is
+a unique name and compare the size of the resulting executable file with
+that given for the present program.</LI>
+</OL>
+<A HREF="Chap05.htm">Advance to Chapter 5</A>
+
+<P><A HREF="C++Starter.htm">Return to the Table of Contents</A>
+
+<P>
+<HR width="100%"><I><FONT SIZE=-1>Copyright &copy; 1989-1996 Coronado Enterprises
+- Last update, September 22, 1996</FONT></I>
+<BR><FONT SIZE=-1><I>Gordon Dodrill - dodrill@swcp.com - </I><A HREF="mailto:dodrill@swcp.com">Please
+email any comments or suggestions.</A></FONT>
+</BODY>
+</HTML>

@@ -1,0 +1,433 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Gordon Dodrill">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; I) [Netscape]">
+   <TITLE>Chap09</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<B>C++ Tutorial - Chapter 9</B>
+
+<P><B><FONT SIZE=+3>M</FONT><FONT SIZE=+2>ULTIPLE</FONT><FONT SIZE=+3>
+I</FONT><FONT SIZE=+2>NHERITANCE</FONT><FONT SIZE=+3> A</FONT><FONT SIZE=+2>ND</FONT><FONT SIZE=+3>
+F</FONT><FONT SIZE=+2>UTURE </FONT><FONT SIZE=+3>D</FONT><FONT SIZE=+2>IRECTIONS</FONT></B>
+
+<P>Multiple inheritance is the ability to inherit data and methods from
+more than one base class into a derived class. Multiple inheritance and
+a few of the other recent additions to the language will be discussed in
+this chapter along with some of the expected future directions of the language.
+
+<P>Several companies have C++ compilers available in the marketplace, and
+others are sure to follow. Because the example programs in this tutorial
+are designed to be as generic as possible, most should be compilable with
+any good quality C++ compiler provided it follows the AT&amp;T definition
+of version 2.1 or newer. Many of these examples will not work with earlier
+definitions because the language was significantly changed with the version
+2.1 update.
+
+<P>After completing this tutorial, you should have enough experience with
+the language to study additional new constructs on your own as they are
+implemented by the various compiler writers. We will update the entire
+tutorial as soon as practical following procurement of any new compiler,
+but hopefully the language will not change rapidly enough now to warrant
+an update oftener than semi-annually.
+
+<P><B>MULTIPLE INHERITANCE</B>
+
+<P>A major recent addition to the C++ language is the ability to inherit
+methods and variables from two or more parent classes when building a new
+class. This is called multiple inheritance, and is purported by many people
+to be a major requirement for an object oriented programming language.
+Some writers, however, have expressed doubts as to the utility of multiple
+inheritance. To illustrate the validity of this, it was not easy to think
+up a good example of the use of multiple inheritance as an illustration
+for this chapter. In fact, the resulting example is sort of a forced example
+that really does nothing useful. It does however, illustrate the mechanics
+of the use of multiple inheritance with C++, and that is our primary concern
+at this time.
+
+<P>The biggest problem with multiple inheritance involves the inheritance
+of variables or methods with duplicated names from two or more parent classes.
+Which variable or method should be chosen as the inherited variable or
+method if two or more have the same name? This will be illustrated in the
+next few example programs.
+
+<P><B>SIMPLE MULTIPLE INHERITANCE</B>
+
+<P>Example program ------> <B>MULTINH1.CPP</B>
+
+<P>An examination of the file named MULTINH1.CPP will reveal the definition
+of two very simple classes in lines 4 through 29 named <B>moving_van</B>
+and <B>driver</B>.
+
+<P>In order to keep the program as simple as possible, all of the member
+methods are defined as <B>inline </B>functions. This puts the code for
+the methods where it is easy to find and study. You will also notice that
+all variables in both classes are declared to be <B>protected </B>so they
+will be readily available for use in any class that inherits them. The
+code for each class is kept very simple so that we can concentrate on studying
+the interface to the methods rather than spending time trying to understand
+complex methods. As mentioned previously, chapter 12 will illustrate the
+use of non-trivial methods.
+
+<P>Beginning in line 32, we define another class named <B>driven_truck</B>
+which inherits all of the data and all of the methods from both of the
+previously defined classes. In the last two chapters, we studied how to
+inherit a single class into another class, and to inherit two or more classes,
+the same technique is used except that we use a list of inherited classes
+separated by commas as illustrated in line 32. The observant student will
+notice that we use the keyword <B>public </B>prior to the name of each
+inherited class in order to be able to freely use the methods within the
+subclass. In this case, we didn't define any new variables, but we did
+introduce two new methods into the subclass in lines 35 through 42.
+
+<P>We define an object named <B>chuck_ford</B> which presumably refers
+to someone named Chuck who is driving a Ford moving van. The object named
+<B>chuck_ford</B> is composed of four variables, three from the <B>moving_van</B>
+class, and one from the <B>driver </B>class. Any of these four variables
+can be manipulated in any of the methods defined within the <B>driven_truck</B>
+class in the same way as in a singly inherited situation. A few examples
+are given in lines 50 through 59 of the main program and the diligent student
+should be able to add additional output messages to this program if he
+understands the principles involved.
+
+<P>All of the rules for <B>private </B>or protected <B>variables </B>and
+<B>public </B>or <B>private </B>method inheritance as used with single
+inheritance extends to multiple inheritance.
+
+<P><B>DUPLICATED METHOD NAMES</B>
+
+<P>You will notice that both of the parent classes have a method named
+<B>initialize()</B>, and both of these are inherited into the subclass
+with no difficulty. However, if we attempt to send a message to one of
+these methods, we will have a problem, because the system does not know
+which we are referring to. This problem will be solved and illustrated
+in the next example program.
+
+<P>Before going on to the next example program, it should be noted that
+we have not declared any objects of the two parent classes in the main
+program. Since the two parent classes are normal classes themselves, it
+should be apparent that there is nothing magic about them and they can
+be used to define and manipulate objects in the usual fashion. You may
+wish to do this to review your knowledge of simple classes and objects
+of those classes.
+
+<P>Be sure to compile and execute this program after you understand its
+operation completely.
+
+<P><B>MORE DUPLICATE METHOD NAMES</B>
+
+<P>Example program ------> <B>MULTINH2.CPP</B>
+
+<P>The second example program in this chapter named MULTINH2.CPP, illustrates
+the use of classes with duplicate method names being inherited into a derived
+class.
+
+<P>If you study the code, you will find that a new method has been added
+to all three of the classes named <B>cost_per_full_day()</B>. This was
+done intentionally to illustrate how the same method name can be used in
+all three classes. The class definitions are no problem at all, the methods
+are simply named and defined as shown. The problem comes when we wish to
+use one of the methods since they are all the same name and they have the
+same numbers and types of parameters and identical return types. This prevents
+some sort of an overloading rule to disambiguate the message sent to one
+or more of the methods.
+
+<P>The method used to disambiguate the method calls are illustrated in
+lines 63, 67, and 71 of the main program. The solution is to prepend the
+class name to the method name with the double colon as used in the method
+implementation definition. This is referred to as qualifying the method
+name. Qualification is not necessary in line 71 since it is the method
+in the derived class and it will take precedence over the other method
+names. Actually, you could qualify all method calls, but if the names are
+unique, the compiler can do it for you and make your code easier to write
+and read.
+
+<P>Be sure to compile and execute this program and study the results. The
+observant student will notice that there is a slight discrepancy in the
+results given in lines 84 through 86, since the first two values do not
+add up to the third value exactly. This is due to the limited precision
+of the <B>float </B>variable but should cause no real problem.
+
+<P><B>WE VIOLATED SOME OOP PRINCIPLES</B>
+
+<P>One of the hallmarks of object oriented programming is that when you
+inherit a base class into a derived class, you are implying that the derived
+class "is a" kind of the base class, with emphasis on the words "is a"
+in this statement. It would be silly to inherit the characteristics of
+a polar bear into an object meant to describe a skyscraper, because we
+cannot say that a "skyscraper is a polar bear." However, since a "skyscraper
+is a building", it would make sense to inherit the characteristics of a
+building into a skyscraper class and add the unique properties of a skyscraper
+to the class.
+
+<P>The real problem is that multiple inheritance doesn't fit this problem
+chosen as an example too well, except for the fact that the entities within
+these classes are easy to visualize and therefore relatively easy to grasp
+the concepts. At this point we are more interested in illustrating the
+mechanics of multiple inheritance than principles of good object oriented
+programming. You will have lots of time to study the proper use of all
+forms of inheritance later. For the time being, we are interested in giving
+you a complete tool box of C++ constructs.
+
+<P><B>DUPLICATED VARIABLE NAMES</B>
+
+<P>Example program ------> <B>MULTINH3.CPP</B>
+
+<P>If you will examine the example program named MULTINH3.CPP, you will
+notice that each base class has a variable with the same name.
+
+<P>According to the rules of inheritance, an object of the <B>driven_truck</B>
+class will have two variables with the same name, <B>weight</B>. This would
+be a problem if it weren't for the fact that C++ has defined a method of
+accessing each one in a well defined way. You have probably guessed that
+we will use qualification to access each variable. Lines 41 and 48 illustrate
+the use of the variables. It may be obvious, but it should be explicitly
+stated, that there is no reason that the derived class itself cannot have
+a variable of the same name as those inherited from the parent classes.
+In order to access it, no qualification would be required, but qualification
+with the derived class name is permitted.
+
+<P>It should be apparent to you that once you understand single inheritance,
+multiple inheritance is nothing more than an extension of the same rules.
+Of course, if you inherit two methods or variables of the same name, you
+must use qualification to allow the compiler to select the correct one.
+
+<P>Constructors are called for both classes before the derived class constructor
+is executed. The constructors for the base classes are called in the order
+they are declared in the class header line.
+
+<P><B>PRACTICAL MULTIPLE INHERITANCE</B>
+
+<P>Example program ------> <B>DATETIME.H</B>
+
+<P>Examine the example program named DATETIME.H for a practical example
+using multiple inheritance. You will notice that we are returning to our
+familiar <B>new_date</B> and <B>time_of_day</B> classes from earlier chapters.
+
+<P>There is a good deal to be learned from this very short header file
+since it is our first example of member initialization used with multiple
+inheritance. There are two constructors for this class, the first being
+a very simple constructor that does nothing in itself, as is evident from
+an examination of line 13. This constructor allows the default constructors
+to be executed for the classes <B>new_date</B> and <B>time_of_day</B>.
+In both cases the constructor that requires no parameters will be executed.
+A default constructor is available for each of these classes.
+
+<P>The second constructor is more interesting since it does not simply
+use the default constructor, but instead passes some of the input parameters
+to the inherited class constructors. Following the colon in line 14 are
+two member initializers which are used to initialize members of this class.
+Since the two parent classes are inherited, they are also members of this
+class and can be initialized as shown. Each of the member initializers
+is actually a call to a constructor of the base classes and it should be
+evident that there must be a constructor in each base class with the proper
+number of input parameters to respond to the messages given. You will note
+that in line 15, we are actually calling the default constructor of the
+<B>new_date</B> class since no parameters are given explicitly. If we chose,
+we could simply let the system call the default constructor automatically,
+but this gives us an explicit comment on what is happening.
+
+<P>Following all member initialization, the normal constructor code for
+the derived class is executed which in this case is given in line 17.
+
+<P><B>ORDER OF MEMBER INITIALIZATION</B>
+
+<P>The order of member initialization seems a bit strange, but it does
+follow a few simple rules. You will recall from the last chapter that the
+order of member initialization does not follow the order given by the initialization
+list, but another very strict order over which you have complete control.
+All inherited classes are initialized first in the order they are listed
+in the class header. If lines 15 and 16 were reversed, class <B>new_date</B>
+would still be initialized first because it is mentioned first in line
+8. We mentioned that C++ respects its elders and initializes its parents
+prior to itself. That should be a useful memory aid in the use of member
+initializers.
+
+<P>Next, all local class members, if there are any, are initialized in
+the order in which they are declared in the class, not the order in which
+they are declared in the initialization list.
+
+<P>Finally, after the member initializers are all executed in the proper
+order, the main body of the constructor is executed in the normal manner.
+
+<P><B>USING THE NEW CLASS</B>
+
+<P>Example program ------> <B>USEDTTM.CPP</B>
+
+<P>The example program named USEDTTM.CPP uses the <B>datetime </B>class
+we just built, and like our previous examples, the main program is kept
+very simple and straight forward. You will note that the default constructor
+is used for the object named <B>now</B>, and the constructor with the member
+initializers is used with the objects named <B>birthday </B>and <B>special</B>.
+
+<P>The diligent student should have no trouble understanding the remaining
+code in this very simple example. You will note that the class, once we
+are finished with it, is very easy to use because of the effort we put
+into properly declaring it.
+
+<P><B>FUTURE DIRECTIONS OF C++</B>
+
+<P>An ANSI committee has been formed to write an ANSI standard for C++.
+They first met in the Spring of 1990 and have released a preliminary draft
+of the standard. The goal for the release of the standard is 1998, but
+until the new standard is released, the C++ language was supposed to stay
+fairly stable. However, due to the nature of compiler writers and their
+desire to improve their offerings over their competitors, the language
+has not remained static during this period.
+
+<P>Many changes have been added in recent years that affect the C++ programmer
+in a big way. You can be sure that the language will evolve into a very
+usable and reliable language. In the meantime, however, the language is
+changing and we must follow in order to stay effective and competitive.
+
+<P>There are two areas, however, that should be discussed in a little detail
+because they will add so much to the language in future years. Those two
+topics are parameterized types and exception handling, both of which are
+now available with good C++ compilers.
+
+<P><B>PARAMETERIZED TYPES</B>
+
+<P>Many times, when developing a program, you wish to perform some operation
+on more than one data type. For example you may wish to sort a list of
+integers, another list of floating point numbers, and a list of alphabetic
+strings. It seems silly to have to write a separate sort function for each
+of the three types when all three are sorted in the same logical way. With
+parameterized types, you will be able to write a single sort routine that
+is capable of sorting all three of the lists.
+
+<P>This is already available in the Ada language as the generic package
+or procedure. Because it is available in Ada, there is a software components
+industry that provides programmers with prewritten and thoroughly debugged
+software routines that work with many different types. When this is generally
+available in C++, there will be a components industry for C++ and precoded,
+debugged and efficient source code will be available off the shelf to perform
+many of the standard operations. These operations will include such things
+as sorts, queues, stacks, lists, etc. There is already a library of these
+components available as a part of the ANSI-C++ standard. It is called the
+Standard Template Library, usually referred to as the STL. Even though
+studying this library is beyond the scope of this tutorial, it will be
+very beneficial for you to study it and learn how to use it in your programs.
+
+<P>Most compiler writers have included the ability to use templates in
+their newest compilers. The next three example programs will illustrate
+the use of templates according to the proposed ANSI standard. Since some
+compiler writers did not follow that standard initially, these programs
+may not work with all compilers. Eventually, all C++ compilers will have
+to follow the standard in order to remain competitive, so it would pay
+you to study these examples.
+
+<P><B>THE FIRST TEMPLATE</B>
+
+<P>Example program ------> <B>TEMPLAT1.CPP</B>
+
+<P>The example program named TEMPLAT1.CPP is the first example of the use
+of a template. This program is so simple it seems silly to even bother
+with it but it will illustrate the use of the parameterized type.
+
+<P>The template is given in lines 4 through 8 with the first line indicating
+that it is a template with a single type to be replaced, the type ANY_TYPE.
+This type can be replaced by any type which can be used in the comparison
+operation in line 7. If you have defined a class, and you have overloaded
+the operator ">", then this template can be used with objects of your class.
+Thus, you do not have to write a <B>maximum </B>function for each type
+or class in your program.
+
+<P>This function is included automatically for each type it is called with
+in the program, and the code itself should be very easy to understand.
+
+<P>The diligent student should realize that nearly the same effect can
+be achieved through use of a macro, except that when a macro is used, the
+strict type checking is not done. Because of this and because of the availability
+of the inline method capability in C++, the use of macros is essentially
+non-existent by experienced C++ programmers.
+
+<P><B>A CLASS TEMPLATE</B>
+
+<P>Example program ------> <B>TEMPLAT2.CPP</B>
+
+<P>The example program named TEMPLAT2.CPP is a little more involved since
+it provides a template for an entire class rather than a single function.
+The template code is given in lines 6 through 16 and a little study will
+show that this is an entire class definition. The diligent student will
+recognize that this is a very weak stack class since there is nothing to
+prevent popping data from an empty stack, and there is no indication of
+a full stack. Our intent, however, is to illustrate the use of the parameterized
+type and to do so using the simplest class possible.
+
+<P>In the main program we create an object named <B>int_stack</B> in line
+25 which will be a stack designed to store integers, and another object
+named <B>float_stack</B> in line 26 which is designed to store <B>float
+</B>type values. In both cases, we enclose the type we desire this object
+to work with in "&lt;>" brackets, and the system creates the object by
+first replacing all instances of <B>ANY_TYPE</B> with the desired type,
+then creating the object of that type. You will note that any type can
+be used that has an assignment capability since lines 13 and 14 use the
+assignment operator on the parameterized type. The assignment operator
+is used in line 14 because it returns an object of that type which must
+be assigned to something in the calling program.
+
+<P>Even though the strings are all of differing lengths, we can even use
+the stack to store a stack of strings if we only store a pointer to the
+strings and not the entire string. This is illustrated in the object named
+<B>string_stack</B> defined in line 27 and used later in the program.
+
+<P>This program should be fairly easy for you to follow if you spend a
+bit of time studying it. You should compile and run it if you have a compiler
+that will handle this new construct.
+
+<P><B>REUSING THE STACK CLASS</B>
+
+<P>Example program ------> <B>TEMPLAT3.CPP</B>
+
+<P>The program named TEMPLAT3.CPP uses the same class with the template
+as defined in the last program but in this case, it uses the <B>date </B>class
+developed earlier as the stack members. More specifically, it uses a pointer
+to the <B>date </B>class as the stack member.
+
+<P>Because class assignment is legal, you could also store the actual class
+in the stack rather than just the pointer to it. To do so however, would
+be very inefficient since the entire class would be copied into the stack
+each time it is pushed and the entire class would be copied out again when
+it was popped. Use of the pointer is a little more general, so it was illustrated
+here for your benefit.
+
+<P>All three of the previous programs can be compiled and executed if you
+have a compiler that supports templates. Parameterized types are a part
+of the C++ specification, and are included in most of the newest implementations.
+
+<P><B>EXCEPTION HANDLING</B>
+
+<P>A future version of C++ will have some form of exception handling to
+allow the programmer to trap errors and prevent the system from completely
+shutting down when a fatal error occurs. The Ada language allows the programmer
+to trap any error that occurs, even system errors, execute some recovery
+code, and continue on with the program execution in a very well defined
+way.
+
+<P><B><I>(Note - Exception handling will be added to this tutorial very
+soon.)</I></B>
+
+<P><B>WHAT SHOULD BE YOUR NEXT STEP?</B>
+
+<P>Once again, we have reached a major milestone in C++ programming. With
+the ability to use inheritance, you have nearly all of the tools you need
+to effectively use the object oriented programming techniques of C++ and
+you would do well to stop studying again and begin programming. The only
+topic left with C++ is virtual methods which are used for dynamic binding
+or polymorphism. This will be covered in the next two chapters. The vast
+majority of all programming can be done without dynamic binding, and in
+attempting to force it into every program, you could wind up with an unreadable
+mess, so you should approach it slowly.
+
+<P><A HREF="Chap10.htm">Advance to Chapter 10</A>
+
+<P><A HREF="C++Starter.htm">Return to the Table of Contents</A>
+
+<P>
+<HR width="100%"><I><FONT SIZE=-1>Copyright &copy; 1989-1996 Coronado Enterprises
+- Last update, September 22, 1996</FONT></I>
+<BR><FONT SIZE=-1><I>Gordon Dodrill - dodrill@swcp.com - </I><A HREF="mailto:dodrill@swcp.com">Please
+email any comments or suggestions.</A></FONT>
+</BODY>
+</HTML>

@@ -1,0 +1,388 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Gordon Dodrill">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; I) [Netscape]">
+   <TITLE>Chap07</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<B>C++ Tutorial - Chapter 7</B>
+
+<P><B><FONT SIZE=+3>I</FONT><FONT SIZE=+2>NHERITANCE</FONT></B>
+
+<P>One reason to use inheritance is that it permits you to reuse code from
+a previous project, but gives you the flexibility to slightly modify it
+if the old code doesn't do exactly what you need for the new project. It
+doesn't make sense to start every new project from scratch since some code
+will certainly be repeated in several programs and you should strive to
+build on what you did previously. However, it is easy to make an error
+if you try to modify the original class. You are less likely to make an
+error if you leave the original alone and only add to it. Another reason
+for using inheritance is if the project requires the use of several classes
+which are very similar but slightly different.
+
+<P>In this chapter we will concentrate on the mechanism of inheritance
+and how to build it into a program. A better illustration of why you would
+use inheritance will be given in later chapters where we will discuss some
+practical applications of object oriented programming. The principle of
+inheritance is available with several modern programming languages and
+is handled slightly differently with each. C++ allows you to inherit all
+or part of the members and methods of a class, modify some, and add new
+ones not available in the parent class. You have complete flexibility,
+and as usual, the method used with C++ has been selected to result in the
+most efficient code execution.
+
+<P><B>A SIMPLE CLASS TO START WITH</B>
+
+<P>Example program ------> <B>VEHICLE.H</B>
+
+<P><IMG SRC="Image/CPP0701.GIF" HSPACE=20 VSPACE=20 NOSAVE BORDER=0 HEIGHT=209 WIDTH=260 ALIGN=RIGHT>Examine
+the file named VEHICLE.H for a simple class which we will use to begin
+our study of inheritance. There is nothing unusual about this class header,
+it has been kept very simple. It consists of four simple methods which
+can be used to manipulate data pertaining to our vehicle. What each method
+does is not especially important at this time. We will eventually refer
+to this as a base class or parent class, but for the time being, we will
+simply use it like any other class to show that it is indeed identical
+to the classes already studied. Note that we will explain the added keyword
+<B>protected </B>shortly. Figure 7-1 is a graphical representation of the
+<B>vehicle </B>class.
+
+<P>Ignore lines 4, 5, and 19 until the end of this chapter where they will
+be explained in detail. This file cannot be compiled or executed because
+it is only a header file.
+
+<P><B>THE IMPLEMENTATION FOR VEHICLE</B>
+
+<P>Example program ------> <B>VEHICLE.CPP</B>
+
+<P>Examine the file named VEHICLE.CPP and you will find that it is the
+implementation of the <B>vehicle </B>class. The <B>initialize() </B>method
+assigns the values input as parameters to the <B>wheels </B>and <B>weight
+</B>variables. We have methods to return the number of <B>wheels </B>and
+the <B>weight</B>, and finally, we have one that does a trivial calculation
+to return the loading on each wheel. We will have a few examples of methods
+that do some significant processing later, but at this point, we are more
+interested in learning how to set up the interface to the classes, so the
+implementations will be kept trivial.
+
+<P>As stated above, this is a very simple class which will be used in the
+next program. Later in this tutorial we will use it as a base class. You
+should compile this class at this time in preparation for the next example
+program, but you cannot execute it because there is no entry point.
+
+<P><B>USING THE VEHICLE CLASS</B>
+
+<P>Example program ------> <B>TRANSPRT.CPP</B>
+
+<P>The file named TRANSPRT.CPP uses the <B>vehicle </B>class in exactly
+the same manner as we illustrated in the last chapter. This should be an
+indication to you that the <B>vehicle </B>class is truly nothing more than
+a normal class as defined in C++. We will make it a little special, however,
+by using it unmodified as a base class in the next few example files to
+illustrate inheritance. Inheritance uses an existing class and adds functionality
+to it to accomplish another, possibly more complex job.
+
+<P>You should have no problem understanding the operation of this program.
+It declares four objects of the <B>vehicle </B>class, initializes them,
+and prints out a few of the data values to illustrate that the <B>vehicle
+</B>class can be used as a simple class because it is a simple class. We
+are referring to it as a simple class as opposed to calling it a base class
+or derived class as we will do shortly.
+
+<P>If you thoroughly understand this program, you should compile and execute
+it, remembering to link the <B>vehicle </B>object file with this object
+file.
+
+<P><B>OUR FIRST DERIVED CLASS</B>
+
+<P>Example program ------> <B>CAR.H</B>
+
+<P>Examine the file named CAR.H for our first example of the use of a derived
+class or child class. The <B>vehicle </B>class is inherited due to the
+<B>": public vehicle"</B> added to line 7. This derived class named <B>car
+</B>is composed of all of the information included in the base class <B>vehicle</B>,
+and all of its own additional information. Even though we did nothing to
+the class named <B>vehicle</B>, we made it into a base class because of
+the way we are using it here. To go a step further, even though it will
+be used as a base class in an example program later in this chapter, there
+is no reason it cannot continue to be used as a simple class in the previous
+example program. In fact, it can be used as a simple class and a base class
+in the same program. The question of whether it is a simple class or a
+base class is answered by the way it is used.
+
+<P>A discussion of terminology is needed here. When discussing object oriented
+programming in general, a class that inherits another is often called a
+derived class or a child class, but the most proper term as defined for
+C++, is a derived class. Since these terms are very descriptive, and most
+writers tend to use the terms interchangeably, we will also use these terms
+in this tutorial. Likewise the proper C++ terminology for the inherited
+class is to call it a base class, but parent class and super class are
+sometimes used also.
+
+<P>A base class is a rather general class which can cover a wide range
+of objects, whereas a derived class is somewhat more restricted but at
+the same time more useful. For example if we had a base class named programming
+language and a derived class named C++, then we could use the base class
+to define Pascal, Ada, C++, or any other programming language, but it would
+not tell us about the use of classes in C++ because it can only give a
+general view of each language. On the other hand, the derived class named
+C++ could define the use of classes, but it could not be used to describe
+the other languages because it is too narrow. A base class tends to be
+more general, and a derived class is more specific.
+
+<P>In this case, the <B>vehicle </B>base class can be used to declare objects
+that represent trucks, cars, bicycles, or any number of other vehicles
+you can think up. The class named <B>car </B>however can only be used to
+declare an object that is of type <B>car </B>because we have limited the
+kinds of data that can be intelligently used with it. The <B>car </B>class
+is therefore more restrictive and specific than the <B>vehicle </B>class.
+The <B>vehicle </B>class is more general than the car class.
+
+<P>If we wished to get even more specific, we could define a derived class
+using <B>car </B>as the base class, name it <B>sports_car</B>, and include
+such information as <B>red_line_limit</B> for the tachometer which would
+be silly for the family station wagon. The <B>car </B>class would therefore
+be used as a derived class and a base class at the same time, so it should
+be clear that these names refer to how a class is used.
+
+<P><B>HOW DO WE DECLARE A DERIVED CLASS?</B>
+
+<P>Enough generalities about classes, let's get down to the specifics.
+A derived class is defined by including the header file for the base class
+as is done in line 5, then the name of the base class is given following
+the name of the derived class separated by a colon as is illustrated in
+line 7. Ignore the keyword <B>public </B>immediately following the colon
+in this line. This defines public inheritance and we will study it in detail
+in the next chapter. All objects declared as being of class <B>car </B>therefore
+are composed of the two variables from the class <B>vehicle </B>because
+they inherit those variables, and the single variable declared in the class
+<B>car </B>named <B>passenger_load</B>.
+
+<P><IMG SRC="Image/CPP0702.GIF" HSPACE=20 VSPACE=20 NOSAVE BORDER=0 HEIGHT=221 WIDTH=478>
+
+<P>An object of this class will have three of the four methods of <B>vehicle
+</B>and the two new ones declared here. The method named <B>initialize()</B>
+which is part of the <B>vehicle </B>class will not be available here because
+it is hidden by the local version of <B>initialize()</B> which is a part
+of the <B>car </B>class. The local method will be used if the name is repeated
+allowing you to customize your new class. Figure 7-2 is a graphical representation
+of an object of this class.
+
+<P>Note once again that the implementation for the base class only needs
+to be supplied in its compiled form. The source code for the implementation
+can be hidden for economic reasons to aid software developers. Hiding the
+source code also allows the practice of information hiding. The header
+for the base class must be available as a text file since the class definitions
+are required in order to use the class.
+
+<P><B>THE CAR CLASS IMPLEMENTATION</B>
+
+<P>Example program ------> <B>CAR.CPP</B>
+
+<P>Examine the file named CAR.CPP which is the implementation file for
+the <B>car </B>class. The first thing you should notice is that this file
+has no indication of the fact that it is a derived class of any other file,
+that can only be determined by inspecting the header file for the class.
+Since we can't tell if it is a derived class or not, it is written in exactly
+the same way as any other class implementation file.
+
+<P>The implementations for the two new methods are written in exactly the
+same way as methods are written for any other class. If you think you understand
+this file, you should compile it for later use.
+
+<P><B>ANOTHER DERIVED CLASS</B>
+
+<P>Example program ------> <B>TRUCK.H</B>
+
+<P>Examine the file named TRUCK.H for an example of another class that
+uses the <B>vehicle </B>class and adds to it. Of course, it adds different
+things to it, because it will specialize in those things that pertain to
+trucks. In fact, it adds two more variables and three more methods. Once
+again, ignore the keyword <B>public </B>following the colon in line 7 for
+a few minutes and we will cover it in detail in the next chapter of this
+tutorial. See figure 7-3 for a graphical representation of the <B>truck
+</B>class.
+
+<P><IMG SRC="Image/CPP0703.GIF" HSPACE=20 VSPACE=20 NOSAVE BORDER=0 HEIGHT=259 WIDTH=474>
+
+<P>A very important point that must be made is that the <B>car </B>class
+and the <B>truck </B>class have absolutely nothing to do with each other,
+they only happen to be derived classes of the same base class or parent
+class as it is sometimes called.
+
+<P>Note that both the <B>car </B>and the <B>truck </B>classes have methods
+named <B>passengers() </B>but this causes no problems and is perfectly
+acceptable. If classes are related in some way, and they certainly are
+if they are both derived classes of a common base class, you would expect
+them to be doing somewhat similar things. In this situation there is a
+good possibility that a method name would be repeated in both child classes.
+
+<P><B>THE TRUCK IMPLEMENTATION</B>
+
+<P>Example program ------> <B>TRUCK.CPP</B>
+
+<P>Examine the file named TRUCK.CPP for the implementation of the <B>truck
+</B>class. It has nothing unusual included in it.
+
+<P>You should have no problem understanding this implementation. Your assignment
+at this point is to compile it in preparation for our example program that
+uses all three of the classes defined in this chapter.
+
+<P><B>USING ALL THREE CLASSES</B>
+
+<P>Example program ------> <B>ALLVEHIC.CPP</B>
+
+<P>Examine the program named ALLVEHIC.CPP for an example that uses all
+three of the classes we have been discussing in this chapter. It uses the
+parent class <B>vehicle </B>to declare objects and also uses the two child
+classes to declare objects. This was done to illustrate that all three
+classes can be used in a single program.
+
+<P>All three of the header files for the classes are included in lines
+3 through 5 so the program can use the components of the classes. Notice
+that the implementations of the three classes are not in view here and
+do not need to be in view. This allows the code to be used without access
+to the source code for the actual implementation of the class. However,
+it should be clear that the header file definition must be available.
+
+<P>In this example program, only one object of each class is declared and
+used but as many as desired could be declared and used in order to accomplish
+the programming task at hand. You will notice how clean and uncluttered
+the source code is for this program. The classes were developed, debugged,
+and stored away previously, and the interfaces were kept very simple. There
+is nothing new here so you should have no trouble understanding the operation
+of this program.
+
+<P>Compiling and executing this program will take a bit of effort but the
+process is not complicated. The three classes and the <B>main() </B>program
+can be compiled in any order desired. All four must be compiled prior to
+linking the four resulting object (or binary) files together. Finally,
+you can execute the complete program. Be sure you do the required steps
+to compile and execute this program because the effective use of C++ will
+require you to compile many separate files and link them together. This
+is because of the nature of the C++ language, but it should not be a burden
+if a good "make" capability exists with your compiler. If you are using
+an implementation of C++ that has a "project" capability, it will make
+this a snap.
+
+<P><B>WHY THE #ifndef VEHICLE_H ?</B>
+
+<P>We promised to return to the strange looking preprocessor directive
+in lines 4, 5 and 19 in the VEHICLE.H file, and this is the time for it.
+When we define the derived class <B>car</B>, we are required to supply
+it with the full definition of the interface to the <B>vehicle </B>class
+since <B>car </B>is a derived class of <B>vehicle </B>and must know all
+about its parent. We do that by including the <B>vehicle </B>class into
+the <B>car </B>class, and the <B>car </B>class can be compiled. The <B>vehicle
+</B>class must also be included in the header file of the <B>truck </B>class
+for the same reason.
+
+<P>When we get to the ALLVEHIC.CPP program, we must inform it of the details
+of all three classes, so all three header files must be included as is
+done in lines 3 through 5 of ALLVEHIC.CPP, but this leads to a problem.
+When the preprocessor gets to the <B>car </B>class, it includes the <B>vehicle
+</B>class because it is listed in the <B>car </B>class header file, but
+since the <B>vehicle </B>class was already included in line 3 of ALLVEHIC.CPP,
+it is included twice and we attempt to redeclare the class <B>vehicle</B>.
+Of course it is the same declaration, but the system doesn't care, it simply
+doesn't allow redeclaration of a class. We allow the double inclusion of
+the file and at the same time prevent the double inclusion of the class
+by building a bridge around it using the word VEHICLE_H. If the word is
+already defined, the declaration is skipped, but if the word is not defined,
+the declaration is included and VEHICLE.H is defined at that time. The
+end result is the actual inclusion of the class only once, even though
+the file is included more than once. You should have no trouble understanding
+the logic of the includes if you spend a little time studying this program
+sequence.
+
+<P>Even though ANSI-C allows multiple definitions of entities, provided
+the definitions are identical, C++ does not permit this. The primary reason
+is because the compiler would have great difficulty in knowing if it has
+already made a constructor call for the redefined entity, if there is one.
+A multiple constructor call for a single object could cause great havoc,
+so C++ was defined to prevent any multiple constructor calls by making
+it illegal to redefine any entity. This is not a problem in any practical
+program.
+
+<P>The name VEHICLE_H was chosen as the word because it is the name of
+the file, with the period replaced by the underline. If the name of the
+file is used systematically in all of your class definitions, you cannot
+have a name clash because the filename of every class must be unique provided
+you keep all files in the same directory. It would be good for you to get
+into the practice of building the optional skip around all of your class
+headers. All class definition files in the remainder of this tutorial will
+include this skip around to prevent multiple inclusions and to be an example
+for you. You should get into the practice of adding the skip around to
+all of your class headers no matter how trivial they may seem to be.
+
+<P><B>OUR FIRST PRACTICAL INHERITANCE</B>
+
+<P>Example program ------> <B>NEWDATE.H</B>
+
+<P>Continuing where we started in chapter 5, we will inherit the <B>date
+</B>class into the file named NEWDATE.H and add a member variable and a
+new method to the class. Actually, this is not a good way to add the <B>day_of_year</B>
+to the <B>date </B>class since it is available in the structure returned
+from the system call in the <B>date </B>class. However, we are more interested
+in illustrating inheritance in a practical example than we are in developing
+a perfect class, so we will live with this inefficiency. You will note
+that we add one variable and one method to create our new class.
+
+<P>Example program ------> <B>NEWDATE.CPP</B>
+
+<P>The program named NEWDATE.CPP contains the implementation for the added
+method and should be easy for the student to understand. This class implementation
+uses the array <B>days[]</B> from the <B>date </B>class implementation
+since it was defined as a global variable there. The method named <B>get_time_of_day()</B>
+involves very simple logic. It doesn't even adjust for leap years. Once
+again, we are not really interested in writing a good <B>date </B>class,
+but in learning the mechanics of inheritance.
+
+<P>Example program ------> <B>TRYNDATE.CPP</B>
+
+<P>Finally, the example program named TRYNDATE.CPP will use the new class
+in a very simple way to illustrate that the derived class is as easy to
+use as the base class and in fact the main program has no way of knowing
+that it is using a derived class.
+
+<P>You should compile and link this program to gain the experience of doing
+so. Remember that it will be necessary to link in the object code for the
+original <B>date </B>class as well as the object code from the <B>newdate
+</B>class and the <B>main()</B> program.
+
+<P><B>PROGRAMMING EXERCISES</B>
+<OL>
+<LI>
+Add another object of the <B>vehicle </B>class to ALLVEHIC.CPP named <B>bicycle</B>,
+and do some of the same operations as were done to the <B>unicycle</B>.
+You will only need to recompile the <B>main() </B>program and link all
+four files together to get an executable file, the three classes will not
+require recompilation.</LI>
+
+<LI>
+Add a new method to the <B>truck </B>class to return the total weight of
+the truck plus its payload and add code to ALLVEHIC.CPP to read the value
+out and display it on the monitor. This will require an addition to TRUCK.H,
+another addition to TRUCK.CPP, and of course the changes to the main program
+named ALLVEHIC.CPP. The answer is given as three files named CH07_3A.H
+(TRUCK.H), CH07_3B.CPP (TRUCK.CPP) and the changed <B>main()</B> program
+is found in CH07_3C.CPP in the answers for this tutorial.</LI>
+
+<LI>
+Add a variable named <B>sex </B>of type <B>char </B>to the <B>name </B>class
+you developed in chapter 5 as well as methods to set and retrieve the value
+of this variable. The only legal inputs are 'M' or 'F'. These additions
+should be done by inheriting the <B>name </B>class into the new class.</LI>
+</OL>
+<A HREF="Chap08.htm">Advance to Chapter 8</A>
+
+<P><A HREF="C++Starter.htm">Return to the Table of Contents</A>
+
+<P>
+<HR width="100%"><I><FONT SIZE=-1>Copyright &copy; 1989-1996 Coronado Enterprises
+- Last update, September 22, 1996</FONT></I>
+<BR><FONT SIZE=-1><I>Gordon Dodrill - dodrill@swcp.com - </I><A HREF="mailto:dodrill@swcp.com">Please
+email any comments or suggestions.</A></FONT>
+</BODY>
+</HTML>

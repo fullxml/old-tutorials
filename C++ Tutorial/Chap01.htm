@@ -1,0 +1,465 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Gordon Dodrill">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; I) [Netscape]">
+   <TITLE>Chap01</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<B>C++ Tutorial - Chapter 1</B>
+
+<P><B><FONT SIZE=+3>S</FONT><FONT SIZE=+2>IMPLE</FONT><FONT SIZE=+3> T</FONT><FONT SIZE=+2>HINGS</FONT></B>
+
+<P>As we begin the study of C++ and object oriented programming, a few
+comments are in order to help you get started. Since the field of object
+oriented programming is probably new to you, you will find that there is
+a significant amount of new terminology for you to grasp. This is true
+of any new endeavor and you should be warned not to be intimidated by all
+of the new concepts. We will add a few new topics in each chapter and you
+will slowly grasp the entire language.
+
+<P>Chapters one through four of this tutorial will concentrate on the non
+object oriented additions to C++. We will not begin the discussion of any
+object oriented programming techniques until chapter five.
+
+<P><B>EVEN COMMENTS ARE IMPROVED IN C++</B>
+
+<P>Example program ------> <B>CONCOM.CPP</B>
+
+<P>Examine the file named CONCOM.CPP for an example of several new things
+in C++. We will take the new constructs one at a time beginning with the
+comments.
+
+<P>A C++ comment begins with the double slash "//", starts anywhere on
+a line, and runs to the end of that line where it is automatically terminated.
+The old method of comment definition used with ANSI-C can also be used
+with C++ as illustrated in lines 11 through 14, among other places in this
+program. The new method is the preferred method of comment definition because
+it is impossible to inadvertently comment out several lines of code. This
+can be done by forgetting to include the end of comment notation when using
+the older C method of comment notation. Good programming practice would
+be to use the new method for all comments and reserve the old method for
+use in commenting out a section of code during debugging since the two
+methods can be nested.
+
+<P>It would be well to caution you at this point however, that you should
+not use comments when the same sense of program definition can be obtained
+by using meaningful names for variables, constants, and functions. The
+careful selection of variable and function names can make nearly any code
+self documenting and you should strive to achieve this in your code.
+
+<P><B>THE KEYWORDS const AND volatile</B>
+
+<P>There are two new keywords used in lines 9 through 11 which were not
+part of the original K&amp;R definition of C, but are part of the ANSI-C
+standard. The keyword <B>const </B>is used to define a constant. In line
+9 the constant is of type <B>int</B>, it is named START, and is initialized
+to the value 3. The compiler will not allow you to accidentally or purposefully
+change the value of START because it has been declared a constant. If you
+had a variable named STARTS in this program, the system would not allow
+you to slightly misspell STARTS as START and accidentally change it. The
+compiler would give you an error message so you could fix the error. Since
+it is not permissible to change the value of a constant, it is imperative
+that you initialize it when it is declared so it will have a useful value.
+
+<P>You will note that the keyword <B>const </B>is also used in the function
+header in line 23 to indicate that the formal parameter named <B>data_value</B>
+is a constant throughout the function. Any attempt to assign a new value
+to this variable will result in a compile error. This is a small thing
+you can add to your programs to improve the compiler's ability to detect
+errors for you.
+
+<P>The keyword <B>volatile </B>is also part of the ANSI-C standard but
+was not included in the original K&amp;R definition of C. Even though the
+value of a <B>volatile </B>variable can be changed by you, the programmer,
+there may be another mechanism by which the value could be changed, such
+as by a hardware interrupt timer causing the value to be incremented. The
+compiler needs to know that this value may be changed by some external
+force when it optimizes the code. A study of code optimization methods
+is very interesting, but beyond the scope of this tutorial. Note that a
+constant can also be volatile, which means that you cannot change it, but
+the system can modify it through some hardware function.
+
+<P>Ignore the output statement given in line 25 for a few minutes. We will
+study it in some detail later in this chapter. If you are experienced in
+the K&amp;R style of programming, you may find line 5 and 23 a little strange.
+This illustrates prototyping and the modern method of function definition
+as defined by the ANSI-C standard. Prototyping is optional in C but absolutely
+required in C++. For that reason, chapter 4 of this tutorial is devoted
+entirely to prototyping.
+
+<P>It would be advantageous for you to compile and execute this program
+with your C++ compiler to see if you get the same result as given in the
+comments at the end of the listing. One of the primary purposes of compiling
+it is to prove that your compiler is loaded and executing properly.
+
+<P><B>THE SCOPE OPERATOR</B>
+
+<P>Example program ------> <B>SCOPEOP.CPP</B>
+
+<P>The example program named SCOPEOP.CPP illustrates another construct
+that is new to C++. There is no corresponding construct in either K&amp;R
+or ANSI-C. This allows access to the global variable named <B>index </B>even
+though there is a local variable of the same name within the <B>main()
+</B>function. The use of the double colon in front of the variable name,
+in lines 11, 13, and 16, instructs the system that we are interested in
+using the global variable named <B>index</B>, defined in line 4, rather
+than the local variable defined in line 8.
+
+<P>The use of this technique allows access to the global variable for any
+use. It could be used in calculations, as a function parameter, or for
+any other purpose. It is not really good programming practice to abuse
+this construct, because it could make the code difficult to read. It would
+be best to use a different variable name instead of reusing this name,
+but the construct is available to you if you find that you need it sometime.
+
+<P>Be sure to compile and execute this program before proceeding on to
+the next example program where we will discuss the cout operator used in
+lines 10, 11, 15, and 16.
+
+<P><B>THE iostream LIBRARY</B>
+
+<P>Example program ------> <B>MESSAGE.CPP</B>
+
+<P>Examine the example program named MESSAGE.CPP for our first hint of
+object oriented programming, even though it is a very simple one. In this
+program, we define a few variables and assign values to them for use in
+the output statements illustrated in lines 17 through 20, and in lines
+23 through 26. <B>cout </B>is used to output data to the standard device,
+the monitor, but it works a little differently from our old familiar <B>printf()</B>
+function, because we do not have to tell the system what type we are outputting.
+Note that <B>cout </B>is not actually an output function, but we can sort
+of think of it as one until we fully define it later in this tutorial.
+For the time being, we will simply state that <B>cout </B>is an object
+used to send output data to the monitor.
+
+<P>C++, like the C language, has no input or output operations as part
+of the language itself, but defines the stream library to add input and
+output functions in a very elegant manner. A portion of the stream library
+is included in this program in line 2.
+
+<P>The operator &lt;&lt;, sometimes called the "put to" operator but more
+properly called the insertion operator, tells the system to output the
+variable or constant following it, but lets the system decide how to output
+the data. In line 17, we first tell the system to output the string, which
+it does by copying characters to the monitor, then we tell it to output
+the value of <B>index</B>. Notice however, that we fail to tell it what
+the type is or how to output the value. Since we don't tell the system
+what the type is, it is up to the system to determine what the type is
+and to output the value accordingly. After the system finds the correct
+type, we also leave it up to the system to use the built in default as
+to how many characters should be used for this output. In this case, we
+find that the system uses exactly as many characters as needed to output
+the data, with no leading or trailing blanks, which is fine for this output.
+Finally, the newline character is output as a single character string,
+and the line of code is terminated with a semicolon.
+
+<P>When we told the <B>cout </B>object to output some data in line 17,
+we actually called two different functions because we used it to output
+two strings and a variable of type <B>int</B>. This is the first hint at
+object oriented programming because we simply broadcast a message to the
+system to print out a value, and let the system find an appropriate function
+to do so. We are not required to tell the system exactly how to output
+the data, we only tell it to output it. This is a very weak example of
+object oriented programming, and we will study it in much more depth later
+in this tutorial.
+
+<P>In line 18, we tell the system to output a different string, followed
+by a floating point number, and another string of one character, the newline
+character. In this case, we told it to output a floating point number without
+telling it that it was a floating point number, once again letting the
+system choose the appropriate output means based on its type. We did lose
+a bit of control in the transaction, however, because we had no control
+over how many significant digits to print before or after the decimal point.
+We chose to let the system decide how to format the output data.
+
+<P>The variable named <B>letter </B>is of type <B>char</B>, and is assigned
+the value of the uppercase X in line 14, then printed as a letter in line
+19 because the <B>cout </B>object knows it is a character and outputs it
+accordingly.
+
+<P>Because C++ has several other operators and functions available with
+streams, you have complete flexibility in the use of the stream output
+functions. You should refer to your compiler documentation for details
+of other available formatting commands. Because it is expected to be mandated
+by the upcoming ANSI-C++ standard, the <B>cout </B>and <B>printf()</B>
+statements can be mixed in any way you desire. However all compilers do
+not yet conform to this standard and some use different forms of buffering
+for the two kinds of output. This could result in scrambled output, but
+it should be easy for the student to repair the output in such a way that
+only one form is used, either the <B>cout </B>or the <B>printf()</B>.
+
+<P><B>MORE ABOUT THE stream LIBRARY</B>
+
+<P>The stream library was defined for use with C++ in order to add to the
+execution efficiency of the language. The <B>printf()</B> function was
+developed early in the life of the C language and is meant to be all things
+to all programmers. As a result, it became a huge function with lots of
+extra baggage, most of which is used by only a few programmers. By defining
+the special purpose stream library, the design of C++ allows the programmer
+to use full formatting capabilities, but only load what is needed for the
+current programming job. Although it is not all illustrated here, there
+is a full set of formatting functions available in the C++ stream library.
+Check your compiler documentation for the complete list.
+
+<P>Lines 23 through 26 illustrate some of the additional features of the
+stream library which can be used to output data in a very flexible yet
+controlled format. The value of <B>index </B>is printed out in decimal,
+octal, and hexadecimal format in lines 23 through 25. When one of the special
+stream operators, <B>dec</B>, <B>oct</B>, or <B>hex</B>, is output, all
+successive output will be in that number base. Looking ahead to line 30,
+we find the value of <B>index </B>printed in hex format due to the selection
+of the hexadecimal base in line 25. If none of these special stream operators
+are output, the system defaults to decimal format.
+
+<P><B>THE cin OPERATOR</B>
+
+<P>In addition to the predefined stream object, named <B>cout</B>, there
+is a predefined <B>cin</B> stream object which is used to read data from
+the standard input device, usually the keyboard. The <B>cin </B>stream
+uses the >> operator, usually called the "get from" operator but properly
+called the extraction operator. It has most of the flexibility of the <B>cout</B>
+stream. A brief example of the use of the <B>cin </B>stream is given in
+lines 28 through 30. The special stream operators, <B>dec</B>, <B>oct</B>,
+and <B>hex</B>, also select the number base for the <B>cin </B>stream separately
+from the <B>cout </B>stream. If none is specified, the input stream also
+defaults to decimal.
+
+<P>In addition to the <B>cout </B>stream object and the <B>cin</B> stream
+object there is one more standard stream object, <B>cerr</B>, which is
+used to output to the error handling device. This device cannot be redirected
+to a file on some systems, like the output to the <B>cout </B>stream object
+can be. The three streams, <B>cout</B>, <B>cin</B>, and <B>cerr</B>, correspond
+to the <B>stdout</B>, the <B>stdin</B>, and the <B>stderr </B>stream pointers
+of the C programming language. Their use will be illustrated throughout
+the remainder of this tutorial.
+
+<P>The stream library also has file I/O capability which will be briefly
+illustrated in the next example program.
+
+<P>Be sure to compile and execute this program before going on to the next
+one. Remember that the system will ask you to enter an integer value which
+will be echoed back to the monitor, but changed to the hexadecimal base.
+
+<P><B>FILE STREAM OPERATIONS</B>
+
+<P>Example program ------> <B>FSTREAM.CPP</B>
+
+<P>Examine the example program named FSTREAM.CPP for examples of the use
+of streams with files. We will be using a few C++ objects in this program
+but we hAve not yet studied them, so you will not understand them at this
+point. Don't spend too much time trying to understand them yet.
+
+<P>In this program a file is opened for reading, another for writing, and
+a third stream is opened to the printer to illustrate the semantics of
+stream operations on a file. Both input and output files are of type FILE
+in C programs, but the ifstream type is used for file input and the <B>ofstream
+</B>is used for output files. This is illustrated in lines 8 through 10
+of this example program. Actually <B>ifstream </B>is a C++ class and <B>infile
+</B>is an object of that class as we will see later in this tutorial.
+
+<P>The only difference between the streams in the last program and the
+streams in this program is the fact that in the last program, the streams
+were already opened for us by the system. You will note that the stream
+object named <B>printer </B>is used in the same way we used the <B>cout
+</B>stream object in the last program. Finally, because we wish to exercise
+good programming practice, we close all of the files we have opened prior
+to ending the program.
+
+<P>This is our first example of object oriented programming because we
+are actually using objects in this program. The object named <B>infile
+</B>is told to open itself in line 17, then it is told to get one character
+at a time in line 44, and finally it is told to close itself in line 52.
+The "dot" notation is used with objects in a similar manner that structures
+are used in C. The name of the object is mentioned, followed by a "dot",
+and followed by the name of the action that the object is to execute. This
+terminology will be used in great profusion later in this tutorial, so
+don't worry about it at this time. The objects <B>outfile </B>and <B>printer
+</B>are manipulated in exactly the same manner.
+
+<P>For more information on the stream file I/O library, see Bjarne Stroustrup's
+book which is listed in the introduction to this tutorial, or refer to
+your compiler documentation. Don't worry too much about it yet, after you
+learn the terminology by studying the rest of this tutorial, you will be
+able to return to a personal study of the stream library, and profit greatly
+from the study.
+
+<P>Be sure to compile and execute this program. When you execute it, it
+will request a file to be copied. You can enter the name of any ASCII file
+that resides in the current directory.
+
+<P><B>VARIABLE DEFINITIONS</B>
+
+<P>Example program ------> <B>VARDEF.CPP</B>
+
+<P>Examine the file named VARDEF.CPP for a few more additions to the C++
+language which aid in writing a clear and easy to understand program. In
+C++, as in ANSI-C, global and static variables are automatically initialized
+to zero when they are declared. The variables named <B>index </B>in line
+4, and <B>goofy </B>in line 27 are therefore automatically initialized
+to zero. Of course, you can still initialize either to some other value
+if you so desire. Global variables are sometimes called external since
+they are external to any functions.
+
+<P>Automatic variables, those declared inside of any function, are not
+automatically initialized but will contain the value that happens to be
+in the location where they are defined, which must be considered a garbage
+value. The variable named <B>stuff </B>in line 8, therefore does not contain
+a valid value, but some garbage value which should not be used for any
+meaningful purpose. In line 11, it is assigned a value based on the initialized
+value of <B>index </B>and it is then displayed on the monitor for your
+examination.
+
+<P><B>THE C++ REFERENCE</B>
+
+<P>Notice the ampersand in line 9. This defines <B>another_stuff</B> as
+a reference which is a new addition to C++. The reference should not be
+used very often, if ever, in this context, but this is a very simple example
+used to introduce the reference and discuss its use and operation. The
+reference is not the same as any other entity used in C because it operates
+like a self dereferencing pointer. Following its initialization, the reference
+becomes a synonym for the variable <B>stuff</B>, and changing the value
+of <B>stuff </B>will change the value of <B>another_stuff</B> because they
+are both actually referring to the same variable. The synonym can be used
+to access the value of the variable <B>stuff </B>for any legal purpose
+in the language. It should be pointed out that a reference must be initialized
+to reference some variable when it is defined or the compiler will respond
+with an error. Following initialization, the reference cannot be changed
+to refer to a different variable. The reference is difficult to discuss
+because we want to call it a reference variable, but it is not a variable
+since it cannot be changed. Whether we like the name or not it is simply
+called a reference.
+
+<P>The use of the reference in this way can lead to very confusing code,
+but it has another use where it can make the code very clear and easy to
+understand. We will study the proper use of the reference in chapter 4
+of this tutorial.
+
+<P><B>DEFINITIONS ARE EXECUTABLE STATEMENTS</B>
+
+<P>Coming from your background of C, you will find the statement in line
+16 very strange, but this is legal in C++. Anyplace it is legal to put
+an executable statement, it is also legal to define a new variable because
+a data definition is an executable statement according to the definition
+of C++. In this case, we define the new variable named <B>more_stuff</B>
+and initialize it to the value of 13. It has a scope from the point where
+it is defined to the end of the block in which it is defined, so it is
+valid throughout the remainder of the <B>main() </B>program. The variable
+named <B>goofy </B>is defined even later in line 27.
+
+<P>It is significant that the variable is declared near its point of usage.
+This makes it easier to see just what the variable is used for, since it
+has a much more restricted scope of validity. When you are debugging a
+program, it is convenient if the variable declaration is located in close
+proximity to where you are debugging the code.
+
+<P><B>WHAT ABOUT definition AND declaration?</B>
+
+<P>The words definition and declaration refer to two different things in
+C++, and in ANSI-C also for that matter. They really are different and
+have different meanings, so we should spend a little time defining exactly
+what the words mean in C++. A declaration provides information to the compiler
+about the characteristics of something such as a type or a function but
+it doesn't actually define any code to be used in the executable program.
+A definition, on the other hand, actually defines something that will exist
+in the executable program, either some useful variables, or some executable
+code. You are required to have one and only one definition of each entity
+in the program. In short, a declaration introduces a name into the program
+and a definition introduces some code and requires memory space to store
+something.
+
+<P>If we declare a <B>struct</B>, we are only declaring a pattern to tell
+the compiler how to store data later when we define one or more variables
+of that type. But when we define some variables of that type, we are actually
+declaring their names for use by the compiler, and defining a storage location
+to store the values of the variables. Therefore, when we define a variable,
+we are actually declaring it and defining it at the same time.
+
+<P>C permits multiple definitions of a variable in any given namespace,
+provided the definitions are the same and it generates only a single variable
+for the multiple definitions. C++, however, does not permit redefinition
+of a variable or any other entity for a very definite reason that we will
+discuss later.
+
+<P>We will refer to these definitions many times throughout the course
+of this tutorial so if this is not clear now, it will clear up later.
+
+<P><B>A BETTER for LOOP</B>
+
+<P>Take careful notice of the <B>for </B>loop defined in line 20. This
+loop is a little clearer than the <B>for </B>loop that is available in
+ANSI-C, because the loop index is defined in the <B>for </B>loop itself.
+The scope of this loop index depends on how new your compiler is.
+
+<P>If your compiler is a little old, the scope of the loop index is from
+its definition to the end of the enclosing block. In this case its scope
+extends to line 32 since the closing brace in line 32 corresponds to the
+most recent opening brace prior to the definition of the variable. Since
+the variable is still available, it can be used for another loop index
+or for any other purpose which an integer type variable can legally be
+used for.
+
+<P>If your compiler is relatively new, the scope of the loop index is from
+its definition to the end of the loop. In this case its scope extends to
+line 25 because that is where the loop ends. This is a very new extension
+to the C++ language by the standards committee, and will only be available
+with the newest compilers.
+
+<P>Regardless of the age of your compiler, the variable named <B>count2
+</B>is defined and initialized during each pass through the loop because
+it is defined within the block controlled by the <B>for </B>loop. Its scope
+is only the extent of the loop, lines 23 to 25, so that it is automatically
+deallocated each time the loop is completed. It is therefore defined, initialized,
+used and deallocated five times, once for each pass through the loop.
+
+<P>You will notice that the variable <B>count2 </B>is assigned a numerical
+value in line 23 but when it is printed out, a character value is actually
+output. This is because C++ is careful to use the correct type for output.
+If you have a very old compiler, it may output a numerical value here.
+
+<P>Finally, as mentioned earlier, the static variable named <B>goofy </B>is
+defined and automatically initialized to zero in line 27. Its scope is
+from the point of its definition to the end of the block in which it is
+defined, line 32.
+
+<P>Be sure to compile and execute this program.
+
+<P><B>OPERATOR PRECEDENCE</B>
+
+<P>Operator precedence is identical to that defined for ANSI-C so no attempt
+will be made here to define it. There is a small difference when some operators
+are overloaded which we will study later in this tutorial. Some of the
+operators act slightly different when overloaded than the way they operate
+with elements of the predefined language.
+
+<P>Do not worry about the previous paragraph, it will make sense later
+in this tutorial after we have studied a few more topics.
+
+<P><B>PROGRAMMING EXERCISES</B>
+<OL>
+<LI>
+Write a program that displays your name and date of birth on the monitor
+three times using the <B>cout </B>stream object. Define any variables you
+use as near as possible to their point of usage.</LI>
+
+<LI>
+Write a program with a few <B>const </B>values and <B>volatile </B>variables
+and attempt to change the value of the constants to see what kind of error
+message your compiler gives you.</LI>
+
+<LI>
+Write a program that uses stream objects to interactively read in your
+birthday with three different <B>cin </B>statements. Print your birthday
+in octal, decimal, and hexadecimal notation just for the practice.</LI>
+</OL>
+<A HREF="Chap02.htm">Advance to Chapter 2</A>
+
+<P><A HREF="C++Starter.htm">Return to the Table of Contents</A>
+
+<P>
+<HR width="100%"><I><FONT SIZE=-1>Copyright &copy; 1989-1996 Coronado Enterprises
+- Last update, September 22, 1996</FONT></I>
+<BR><FONT SIZE=-1><I>Gordon Dodrill - dodrill@swcp.com - </I><A HREF="mailto:dodrill@swcp.com">Please
+email any comments or suggestions.</A></FONT>
+</BODY>
+</HTML>

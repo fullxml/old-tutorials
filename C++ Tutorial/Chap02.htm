@@ -1,0 +1,199 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Gordon Dodrill">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; I) [Netscape]">
+   <TITLE>Chap02</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<B>C++ Tutorial - Chapter 2</B>
+
+<P><B><FONT SIZE=+3>C</FONT><FONT SIZE=+2>OMPOUND</FONT><FONT SIZE=+3>
+T</FONT><FONT SIZE=+2>YPES</FONT></B>
+
+<P><B>ENUMERATED TYPES</B>
+
+<P>Example program ------> <B>ENUM.CPP</B>
+
+<P>Examine the file named ENUM.CPP for an example that uses an enumerated
+type variable. The enumerated type is used in C++ in a similar way that
+it was used in ANSI-C, but there are a lot of differences. The keyword
+<B>enum </B>is not required to be used again when defining a variable of
+that type, but it can be used if desired. The name <B>game_result</B> is
+defined as an enumerated type making the use of the keyword <B>enum </B>optional.
+However, it may be clearer for you to use the keyword when defining a variable
+in the same manner that it is required to be used in C, and you may choose
+to do so.
+
+<P>The example program uses the keyword <B>enum </B>in line 9, but omits
+it in line 8 to illustrate to you that it is indeed optional, but that
+is a trivial difference. There is a bigger difference in the way an enumerated
+type is used in C++. In C, the enumerated type is simply an <B>int </B>type
+variable, but in C++ it is not an <B>int</B>, but its own type. Mathematical
+operations can not be performed on it, nor can an integer be assigned to
+it. It cannot be incremented or decremented as it can be in C. In the example
+program, an integer is used as the loop index for the <B>for </B>loop because
+it can be incremented, then the value of the loop index named <B>count
+</B>is assigned to the enumerated variable by using a cast. The cast is
+required or a compile error is reported. The mathematical operations and
+the increment and decrement operators can be defined for the enumerated
+type, but they are not automatically available. Operator overloading will
+be studied later, and the last sentence will make much more sense at that
+time.
+
+<P>If you have an older compiler, the enumerated variable <B>game_result</B>
+can be used for the loop variable but your code would not be portable to
+a newer compiler.
+
+<P>The remainder of this program should be no problem for you to understand.
+After studying it, be sure to compile and execute it and examine the output.
+
+<P><B>A SIMPLE STRUCTURE</B>
+
+<P>Example program ------> <B>STRUCTUR.CPP</B>
+
+<P>Examine the example program named STRUCTUR.CPP for an illustration using
+a very simple structure. This structure is no different from that used
+in ANSI-C except for the fact that the keyword <B>struct </B>is not required
+to be used again when defining a variable of that type. Lines 12 and 13
+illustrate the definition of variables without the keyword, and line 14
+indicates that the keyword <B>struct </B>can be included if desired. It
+is up to you to choose which style you prefer to use in your C++ programs.
+
+<P>Once again, be sure to compile and execute this program after studying
+it carefully, because the next example program is very similar but it introduces
+a brand new construct not available in standard C, the <B>class</B>.
+
+<P><B>A VERY SIMPLE CLASS</B>
+
+<P>Example program ------> <B>CLASS1.CPP</B>
+
+<P>Examine the example program named CLASS1.CPP for our first example of
+a class in C++. This is the first class example, but it will not be the
+last, since the class is the major reason for using C++ over ANSI-C or
+some other programming language. You will notice the keyword <B>class </B>used
+in line 4, in exactly the same way that the keyword <B>struct </B>was used
+in the last program, and they are in fact very similar constructs. There
+is a definite difference, as we will see, but for the present time we will
+be concerned more with their similarities.
+
+<P>The word <B>animal </B>in line 4 is the name of the class, and when
+we define variables of this type in lines 13 through 15, we can either
+omit the keyword <B>class </B>or include it if desired as illustrated in
+line 15. In the last program, we declared 5 variables of a structure type,
+but in this program we declare 5 objects. They are called objects because
+they are of a class type. The differences are subtle, and as we proceed
+through this tutorial, we will see that the class construct is indeed very
+important and valuable. The class was introduced here only to give you
+a glimpse of what is to come later in this tutorial.
+
+<P>The class is a type which can be used to define objects in much the
+same way that a structure is a type that can be used to define variables.
+Your dog named King is a specific instance of the general class of dogs,
+and in a similar manner, an object is a specific instance of a class. It
+would be well to take note of the fact that the class is such a generalized
+concept that there are libraries of prewritten classes available in the
+marketplace. You can purchase classes which perform some generalized operations
+such as managing stacks, queues, or lists, sorting data, managing windows,
+etc. This is because of the generality and flexibility of the <B>class
+</B>construct.
+
+<P>The new keyword <B>public </B>in line 6, followed by a colon, is necessary
+in this case because the variables in a class are defaulted to a private
+type and we could not access them at all without making them public. Don't
+worry about this program yet, we will cover all of this in great detail
+later in this tutorial. Be sure to compile and run this example program
+to see that it does what we say it does with your compiler. Keep in mind
+that this is your first example of a class and it illustrates essentially
+nothing concerning the use of this powerful C++ construct.
+
+<P><B>THE FREE UNION OF C++</B>
+
+<P>Example program ------> <B>UNIONEX.CPP</B>
+
+<P>Examine the program named UNIONEX.CPP for an example of a free union.
+In ANSI-C, all unions must be named in order to be used, but this is not
+true in C++. When using C++ we can use a free union, a union without a
+name. The union is embedded within a simple structure and you will notice
+that there is not a variable name following the declaration of the union
+in line 13. In ANSI-C, we would have to name the union and give a triple
+name (three names dotted together) to access the members. Since it is a
+free union, there is no union name, and the variables are accessed with
+only a doubly dotted name as illustrated in lines 20, 24, 28, and others.
+
+<P>You will recall that a union causes all the data contained within the
+union to be stored in the same physical memory locations, such that only
+one variable is actually available at a time. This is exactly what is happening
+here. The variable named <B>fuel_load</B>, <B>bomb_load</B>, and <B>pallets
+</B>are stored in the same physical memory locations and it is up to the
+programmer to keep track of which variable is stored there at any given
+time. You will notice that the <B>transport</B> is assigned a value for
+<B>pallets</B> in line 28, then a value for <B>fuel_load</B> in line 30.
+When the value for <B>fuel_load</B> is assigned, the value for <B>pallets</B>
+is corrupted and is no longer available since it was stored where <B>fuel_load
+</B>is currently stored. The observant student will notice that this is
+exactly the way the union is used in ANSI-C except for the way components
+are named.
+
+<P>The remainder of the program should be easy for you to understand, so
+after you study and understand it, compile and execute it.
+
+<P><B>C++ TYPE CONVERSIONS</B>
+
+<P>Example program ------> <B>TYPECONV.CPP</B>
+
+<P>Examine the program named TYPECONV.CPP for a few examples of type conversions
+in C++. The type conversions are done in C++ in exactly the same manner
+as they are done in ANSI-C, but C++ gives you another form for doing the
+conversions.
+
+<P>Lines 10 through 17 of this program use the familiar "cast" form of
+type conversions used in ANSI-C, and there is nothing new to the experienced
+C programmer. You will notice that lines 10 through 13 are all the same.
+The only difference is that we are coercing the compiler to do the indicated
+type conversions prior to doing the addition and the assignment in some
+of the statements. In line 13, the <B>int </B>type variable will be converted
+to type <B>float </B>prior to the addition, then the resulting <B>float
+</B>will be converted to type <B>char </B>prior to being assigned to the
+variable <B>c</B>.
+
+<P>Additional examples of type coercion are given in lines 15 through 17
+and all three of these lines are essentially the same.
+
+<P>The examples given in lines 19 through 26 are unique to C++ and are
+not valid in ANSI-C. In these lines the type coercions are written as though
+they are function calls instead of the more familiar "cast" method as illustrated
+earlier. Lines 19 through 26 are identical to lines 10 through 17.
+
+<P>You may find this method of type coercion to be clearer and easier to
+understand than the "cast" method and in C++ you are free to use either,
+or to mix them if you so desire, but your code could be very difficult
+to read if you indescriminantly mix them.
+
+<P>Be sure to compile and execute this example program.
+
+<P><B>PROGRAMMING EXERCISES</B>
+<OL>
+<LI>
+Starting with the program ENUM.CPP, add the enumerated value of FORFEIT
+to the enumerated type <B>game_result</B>, and add a suitable message and
+logic to get the message printed in some way.</LI>
+
+<LI>
+Add the variable <B>height </B>of type <B>float </B>to the class of CLASS1.CPP
+and store some values in the new variable. Print some of the values out.
+Move the new variable ahead of the keyword <B>public: </B>and see what
+kind of error message results. We will cover this error in chapter 5 of
+this tutorial.</LI>
+</OL>
+<A HREF="Chap03.htm">Advance to Chapter 3</A>
+
+<P><A HREF="C++Starter.htm">Return to the Table of Contents</A>
+
+<P>
+<HR width="100%"><I><FONT SIZE=-1>Copyright &copy; 1989-1996 Coronado Enterprises
+- Last update, September 22, 1996</FONT></I>
+<BR><FONT SIZE=-1><I>Gordon Dodrill - dodrill@swcp.com - </I><A HREF="mailto:dodrill@swcp.com">Please
+email any comments or suggestions.</A></FONT>
+</BODY>
+</HTML>
