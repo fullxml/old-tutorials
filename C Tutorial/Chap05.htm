@@ -1,0 +1,636 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Gordon Dodrill">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; I) [Netscape]">
+   <TITLE>Chap05</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<B>C Tutorial - Chapter 5</B>
+
+<P><B><FONT SIZE=+3>F</FONT><FONT SIZE=+2>UNCTIONS,</FONT><FONT SIZE=+3>
+V</FONT><FONT SIZE=+2>ARIABLES, AND </FONT><FONT SIZE=+3>P</FONT><FONT SIZE=+2>ROTOTYPES</FONT></B>
+
+<P><B>OUR FIRST USER DEFINED FUNCTION</B>
+
+<P>Example program ------> <B>SUMSQRES.C</B>
+
+<P>Load and examine the file SUMSQRES.C for an example of a C program with
+functions. Actually this is not the first function we have encountered
+because the main program we have been using all along is technically a
+function, as is the <B>printf()</B> function. The <B>printf()</B> function
+is a library function that was supplied with your compiler.
+
+<P>We will finally define what line 3 is for in this chapter but not until
+we get to about the fourth example program, so continue to wait patiently
+and ignore that line for the time being.
+
+<P>Notice the executable part of this program which begins in line 10 with
+a line of code that simply says "<TT>header();</TT>", which is the way
+to call any function. The parentheses are required because the C compiler
+uses them to determine that it is a function call and not simply a misplaced
+variable. When the program comes to this line of code, the function named
+<B>header() </B>is called, its statements are executed, and control returns
+to the statement following this call. Continuing on, we come to a <B>for
+</B>loop which will be executed 7 times and which calls another function
+named <B>square()</B> each time through the loop. Finally, a function named
+<B>ending()</B> will be called and executed. For the moment ignore the
+variable name <B>index </B>in the parentheses of the call to <B>square()</B>.
+We have seen that this program calls a header, 7 square calls, and an ending.
+Now we need to define the functions.
+
+<P><B>DEFINING THE FUNCTIONS</B>
+
+<P>Following the main program you will see a function beginning in line
+19 that follows all of the rules set forth so far for a main program except
+that it is named <B>header()</B>. This is the function which is called
+from line 10 of the main program. Each of these statements are executed,
+and when they are all complete, control returns to the main program, or
+more properly, the <B>main()</B> function.
+
+<P>The first statement sets the variable named <B>sum </B>equal to zero
+because we plan to use it to accumulate a sum of squares. Since the variable
+named <B>sum </B>is defined prior to the main program, it is available
+for use in any of the functions which are defined after the variable is
+defined. It is called a global variable, and its scope is the entire program
+including all functions. It is also sometimes referred to as a file variable
+because it is available throughout the file. More will be said about the
+scope of variables near the end of this chapter. The statement in line
+22 outputs a header message to the monitor. Program control then returns
+to the <B>main()</B> function since there are no additional statements
+to execute in this function. Essentially, we drop out of the bottom of
+the function and return to the caller where we begin executing statements
+immediately following where the call was made from.
+
+<P>It should be clear to you that the two executable lines from this function
+could be moved to the main program, replacing the header call, and the
+program would do exactly the same thing that it does as it is now written.
+This does not minimize the value of functions, it merely illustrates the
+operation of this simple function in a simple way. You will find functions
+to be very valuable in C programming.
+
+<P><B>PASSING A VALUE TO A FUNCTION (CLASSIC METHOD)</B>
+
+<P>Going back to the main program, and the <B>for </B>loop specifically,
+we find the new construct from the end of the last lesson used in the last
+part of the <B>for </B>loop, namely the <TT>index++</TT> used in line 11.
+You should get familiar with this construct, as you will see it in a lot
+of C programs.
+
+<P>In the call to the function named <B>square()</B>, we have an added
+feature, the variable name <B>index </B>within the parentheses. This is
+an indication to the compiler that when you jump to the function, you wish
+to take along the value of <B>index </B>to use during the execution of
+that function. Looking ahead at the function named <B>square()</B> in line
+26, we find that another variable name is enclosed in its parentheses,
+the variable <B>number</B>. This is the name we prefer to call the variable
+passed to the function when we are executing code within the function.
+We can call it anything we wish as long as it follows the rules of naming
+an identifier and is not a keyword. Since the function must know what type
+the variable is, it is defined following the function name but before the
+opening brace of the function itself. Therefore, line 23 containing the
+expression "<TT>int number;</TT>" tells the function that the value passed
+to it will be an <B>int </B>type variable. With all of that out of the
+way, we now have the value of <B>index </B>from the main program passed
+to the function <B>square()</B>, but renamed <B>number</B>, and available
+for use within the function. This is the classic style of defining function
+variables and has been in use since C was originally defined. A newer and
+much better method is gaining in popularity due to its many benefits and
+will be discussed later in this chapter.
+
+<P>Following the opening brace of the function, we define another variable
+named <B>numsq </B>for use only within the function itself, (more about
+that later) and proceed with the required calculations. We set the variable
+named <B>numsq </B>equal to the square of the value of <B>number</B>, then
+add <B>numsq </B>to the current total stored in the variable named <B>sum</B>.
+You should remember that the expression "<TT>sum += numsq;</TT>" has the
+same meaning as "<TT>sum = sum + numsq;</TT>" from the last lesson. We
+print the number and its square in line 33, and return to the main program.
+
+<P><B>MORE ABOUT PASSING A VALUE TO A FUNCTION</B>
+
+<P>When we passed the value of the variable named <B>index </B>to the function,
+a little more happened than meets the eye. We didn't pass the variable
+named <B>index </B>to the function, we actually passed a copy of the value.
+In this way, the original value is protected from accidental corruption
+by the called function. We could have modified the variable named <B>number
+</B>in any way we wished in the function named <B>square(),</B> and when
+we returned to the main program, the variable named <B>index </B>would
+not have been modified. We thus protect the value of a variable in the
+calling function from being accidentally corrupted, but we cannot return
+a value to the calling function from a called function using this technique.
+We will find a well defined method of returning values to the <B>main()</B>
+function or to any calling function when we get to arrays and another method
+when we get to pointers. Until then, the only way you will be able to communicate
+back to the calling function will be with global variables. We have already
+hinted at global variables above, and will discuss them in detail later
+in this chapter.
+
+<P>Continuing in the <B>main()</B> function, we come to the last function
+call, the call to the function named <B>ending()</B> in line 13. This line
+calls the last function which has no local variables defined. It prints
+out a message with the value of the variable <B>sum </B>contained in it
+to end the program. The program ends by returning to the <B>main() </B>functoin
+and finding nothing else to do, so the program terminates. Compile and
+run this program and observe the output.
+
+<P><B>NOW TO CONFESS A LITTLE LIE</B>
+
+<P>I told you a short time ago that the only way to get a value back to
+the calling function was through use of a global variable, but there is
+another way which we will discuss after you load and display the program
+named SQUARES.C. In this example program we will see that it is simple
+to return a single value from a called function to the calling function.
+But once again, it is true that to return more than one value, we will
+need to study either arrays or pointers.
+
+<P>Example program ------> <B>SQUARES.C</B>
+
+<P>In the <B>main() </B>function, we define two integers and begin a <B>for
+</B>loop in line 8 which will be executed 8 times. The first statement
+within the <B>for </B>loop is "<TT>y = squ(x);</TT>", which is a new and
+rather strange looking construct. From past experience, we should have
+no trouble understanding that the <B>squ(x)</B> portion of the statement
+is a call to the function named <B>squ()</B> taking along the value of
+<B>x </B>as a parameter. Looking ahead to line 20 of the function itself,
+we find that the function prefers to call the input variable <B>input</B>,
+and it proceeds to square the value of <B>input </B>and call the result
+<B>square</B>. Finally, a new kind of a statement appears in line 26, the
+<B>return </B>statement. The value within the parentheses is assigned to
+the function itself and is returned as a usable value in the main program.
+Thus, the function call "<TT>squ(x)</TT>" is assigned the value of the
+square and returned to the main program such that the variable named <B>y
+</B>is then set equal to that value. If the variable named <B>x </B>were
+therefore assigned the value 4 prior to this call, <B>y </B>would then
+be set to 16 as a result of the code in line 10.
+
+<P>The parentheses around the return value in line 26 are not required,
+but are included by many experienced C programmers.
+
+<P>Another way to think of this is to consider the grouping of characters
+<B>squ(x)</B> as another variable with a value that is the square of <B>x</B>,
+and this new variable can be used any place it is legal to use a variable
+of its type. The values of the variables <B>x </B>and <B>y </B>are then
+printed out.
+
+<P>To illustrate that the grouping of <B>squ(x)</B> can be thought of as
+just another variable, another <B>for </B>loop is introduced in line 14
+in which the function call is placed within the <B>printf() </B>statement
+rather than assigning it to a new variable.
+
+<P>One last point must be made, the type of variable returned must be defined
+in order to make sense of the data, but the compiler will default the type
+to <B>int </B>if none is specified. If any other type is desired, it must
+be explicitly defined. How to do this will be demonstrated in the next
+example program. We are simply using the default return type in this program.
+
+<P>Be sure to compile and run this program which also uses the classic
+method of defining function variables. Once again, any warnings can be
+ignored.
+
+<P><B>FLOATING POINT FUNCTIONS</B>
+
+<P>Example program ------> <B>FLOATSQ.C</B>
+
+<P>Load the program FLOATSQ.C for an example of a function in the classic
+style with a <B>float </B>type of return. It begins by defining a global
+floating point variable named <B>z</B> which we will use later. Then in
+the main part of the program, an integer is defined, followed by two floating
+point variables, and then by two strange looking definitions. The expressions
+<B>sqr()</B> and <B>glsqr()</B> look like function calls. This is the proper
+way to define that a function will return a value that is not of type <B>int</B>,
+but of some other type, in this case <B>float</B>. This tells the compiler
+that when a value is returned from either of these two functions, it will
+be of type <B>float</B>. This is, once again, the classic method of defining
+functions and is all but obsolete now. Note that neither function is actually
+called by the code in line 9, these only declare the return type for these
+two functions.
+
+<P>Now refer to the function named <B>sqr()</B> starting in line 29 and
+you will see that the function name is preceded by the keyword <B>float</B>.
+This is an indication to the compiler that this function will return a
+value of type <B>float </B>to any program that calls it. The type of the
+function return is now compatible with the call to it. The line following
+the function name contains <TT>float inval;</TT>, which indicates to the
+compiler that the variable passed to this function from the calling program
+will be of type <B>float</B>. Since we told the caller we would be returning
+a <B>float </B>type, we actually return the value in line 35 so everything
+matches up.
+
+<P>The function named <B>glsqr()</B> beginning in line 39, will also return
+a <B>float </B>type variable, but it uses a global variable for input.
+It does the squaring right within the <B>return </B>statement and therefore
+has no need to define a separate variable to store the product. The function
+<B>sqr()</B> could have done the squaring right in the return also, but
+was done separately as an illustration of what can be done.
+
+<P>The overall structure of this program should pose no problem and will
+not be discussed in any further detail. As is customary with all example
+programs, compile and run this program and ignore any warnings you may
+get.
+
+<P><B>THE CLASSIC STYLE</B>
+
+<P>The three programs we have studied in this chapter so far use the classic
+style of function definition. Although this was the first style defined
+for C, it is rapidly being replaced with a more modern method of function
+definition because the modern method does so much for you in detecting
+and flagging errors. As you read articles on C, you will see programs written
+in the classic style, so you need to be capable of reading them. This is
+the reason the classic style was included in this chapter. It would be
+highly recommended, however, that you learn and use the modern method which
+will be covered shortly in this tutorial. In fact, you are advised to never
+use the classic style for any of your programming efforts.
+
+<P>The book by Kernigan and Ritchie, "The C Programming Language - Second
+Edition" is the definitive text of the classic style of C programming.
+
+<P>The remainder of this tutorial will use the modern method as recommended
+and defined by the ANSI-C standard. If you have an older compiler, it may
+not work on some of these files and it will be up to you to modify the
+programs as needed to conform to the classic style. Actually, the ANSI-C
+standard is used so universally, if you have a non-ANSI compiler you should
+use it only as a doorstop and purchase a good ANSI compatible compiler
+for the rest of your studies.
+
+<P><B>THE RETURN TYPE OF main()</B>
+
+<P>In the original K&amp;R definition of C, all functions returned an <B>int
+</B>type variable by default, unless the author specified something different.
+Since explicitly returning a value when leaving a function was optional,
+most C was written in the following manner;
+<PRE>&nbsp;&nbsp; main()
+&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp; }</PRE>
+When prototyping was added to the language (which we will study shortly),
+many programmers apparently thought the <B>main()</B> function didn't return
+anything, so used the <B>void </B>type for a return and it became a common
+practice to write the <B>main()</B> function as follows;
+<PRE>&nbsp;&nbsp; void main()
+&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp; }</PRE>
+When the ANSI-C standard was finalized the only return type approved by
+the standard is an <B>int </B>type variable. A good compiler will check
+that the program actually returns a value by requiring that an integer
+is returned from each exit point. This led to the following form for <B>main()</B>;
+<PRE>&nbsp;&nbsp; int main()
+&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0;
+&nbsp;&nbsp; }</PRE>
+Apparently because of the inertia behind the use of a <B>void </B>return,
+many compiler writers added the <B>void </B>return as an extension to permit
+the use of legacy code without modifications. Some compilers therefore
+support the <B>void </B>return but the <B>int </B>return is the only method
+approved by the ANSI-C standard.
+
+<P>In order to make your code as portable as possible, you should always
+use the last form above.
+
+<P>You can finally see why we have been adding the line that returns a
+value of zero to the operating system. This indicates to the operating
+system that the program executed normally.
+
+<P><B>SCOPE OF VARIABLES</B>
+
+<P>Example program ------> <B>SCOPE.C</B>
+
+<P>Load the next program, SCOPE.C, and display it for a discussion of the
+scope of variables in a program. You can ignore the 4 statements in lines
+2 through 5 of this program for a few moments. We will discuss them later.
+We will spend a good deal of time in this program and cover a lot of new
+topics. Many of the topics covered here will not seem to be particularly
+useful, but stay with it because they are very important.
+
+<P><B>WHAT IS A GLOBAL VARIABLE?</B>
+
+<P>The variable defined in line 7 is a global variable named <B>count </B>which
+is available to any function in the program since it is defined before
+any of the functions. It is always available because it exists during all
+the time that the program is being executed. (That will make sense shortly.)
+Farther down in the program, another global variable named <B>counter </B>is
+defined in line 29 which is also global but is not available to the <B>main()
+</B>function since it is defined following the <B>main()</B> function.
+A global variable is any variable that is defined outside of any function.
+Note that both of these variables are sometimes referred to as external
+variables because they are external to any functions, and they are sometimes
+also called file variables.
+
+<P>Global variables are automatically initialized to zero when they are
+defined. Therefore, the variables named <B>count </B>and <B>counter </B>will
+both be initialized to a value of 0.
+
+<P>Return to the <B>main()</B> function and you will see the variable named
+<B>index </B>defined as an <B>int </B>in line 11. Ignore the word <B>register
+</B>for the moment. This variable is only available within the <B>main()</B>
+function because that is where it is defined. In addition, it is an automatic
+variable, which means that it only comes into existence when the function
+in which it is contained is invoked, and ceases to exist when the function
+is finished. This really means nothing here because the <B>main()</B> function
+is always in operation, even when it gives control to another function.
+Another integer is defined within the <B>for </B>loop braces named <B>stuff</B>.
+Any pairing of braces can contain variable definitions which will be valid
+and available only while the program is executing statements within those
+braces. The variables will be automatic variables and will cease to exist
+when execution leaves the braces. The variable named <B>stuff </B>will
+therefore be created and destroyed 8 times, once for each pass through
+the loop.
+
+<P><B>MORE ON AUTOMATIC VARIABLES</B>
+
+<P>Observe the function named <B>head1()</B> in line 30 which looks a little
+funny because of <B>void </B>being used twice. The purpose of the use of
+the word <B>void </B>will be explained shortly. The function contains a
+variable named <B>index</B>, which has nothing to do with the variable
+named <B>index </B>in line 11 of the <B>main()</B> function, except that
+both are automatic variables. When the program is not actually executing
+statements in this function, this variable named <B>index </B>does not
+even exist. When <B>head1()</B> is called, the variable is generated, and
+when <B>head1()</B> completes its task, the variable in <B>head1()</B>
+named <B>index </B>is eliminated completely from existence. (The automatic
+variable is stored on the stack. This topic will be covered later.) Keep
+in mind however that this does not affect the variable of the same name
+in the <B>main()</B> function, since it is a completely separate entity.
+
+<P>Automatic variables therefore, are automatically generated and disposed
+of when needed. The important thing to remember is that from one call of
+a function to the next call, the value of an automatic variable is not
+preserved and must therefore be reinitialized.
+
+<P><B>WHAT ARE STATIC VARIABLES?</B>
+
+<P>An additional variable type must be mentioned at this point, the static
+variable. By putting the keyword <B>static </B>in front of a variable definition
+within a function, the variable or variables in that definition are static
+variables and will stay in existence from call to call of the particular
+function. A static variable is initialized once, at load time, and is never
+reinitialized during execution of the program.
+
+<P>By putting the <B>static </B>keyword in front of an external variable,
+one outside of any function, it makes the variable private and not accessible
+to use in any other file. (This is a completely different use of the same
+keyword.) This implies that it is possible to refer to external variables
+in other separately compiled files, and that is true. Examples of this
+usage will be given in chapter 14 of this tutorial. They are not illustrated
+here.
+
+<P><B>USING THE SAME NAME AGAIN</B>
+
+<P>Refer to the function named <B>head2()</B>. It contains another definition
+of the variable named <B>count</B>. Even though <B>count </B>has already
+been defined as a global variable in line 7, it is perfectly all right
+to reuse the name in this function. It is a completely new variable that
+has nothing to do with the global variable of the same name, and causes
+the global variable to be unavailable within this function. This allows
+you to write programs using existing functions without worrying about what
+names were used for global variables or in other functions because there
+can be no conflict. You only need to worry about the variables that interface
+with the functions.
+
+<P><B>WHAT IS A REGISTER VARIABLE?</B>
+
+<P>Now to fulfill a promise made earlier about what a <B>register </B>variable
+is. A computer can keep data in a register or in memory. A register is
+much faster in operation than memory but there are very few registers available
+for the programmer to use. If there are certain variables that are used
+extensively in a program, you can designate that those variables are to
+be stored in a register in order to speed up the execution of the program.
+The method of doing this is illustrated in line 11. Your compiler probably
+allows you to use one or more register variables and will ignore additional
+requests if you request more than are available. The documentation for
+your compiler should list how many registers are available with your compiler.
+It will also inform you of what types of variables can be stored in a register.
+If your compiler does not allow the use of register variables, the register
+request will simply be ignored.
+
+<P><B>WHAT IS PROTOTYPING?</B>
+
+<P>A prototype is a model of a real thing and when programming in ANSI-C,
+you have the ability to define a model of each function for the compiler.
+The compiler can then use the model to check each of your calls to the
+function and determine if you have used the correct number of arguments
+in the function call and if they are of the correct type. By using prototypes,
+you let the compiler do some additional error checking for you. The ANSI
+standard for C contains prototyping as part of its recommended standard.
+Every ANSI-C compiler will have prototyping available, so you should learn
+to use it. Much more will be said about prototyping throughout the remainder
+of this tutorial.
+
+<P>Returning to lines 3, 4, and 5 in SCOPE.C, we have the prototypes for
+the three functions contained within the program. The first <B>void </B>in
+each line tells the compiler that these particular functions do not return
+a value, so that the compiler would flag the statement <TT>index = head1();</TT>
+as an error because nothing is returned to assign to the variable named
+<B>index</B>. The word <B>void </B>within the parentheses tells the compiler
+that this function requires no parameters and if a variable were included,
+it would be an error and the compiler would issue a warning message. If
+you wrote the statement <TT>head1(index);</TT>, it would be a error. This
+allows you to use type checking when programming in C in much the same
+manner that it is used in Pascal, Modula-2, or Ada, although the type checking
+in C is relatively weak.
+
+<P>You should begin using prototype checking at this time, for all of the
+functions you define. Your compiler may have an option that will require
+a prototype for every function. This should be enabled and left enabled.
+Check your documentation for the details of how to do it. Prototyping will
+be used throughout the remainder of this tutorial. If your compiler does
+not support prototyping and the modern method of function definition, you
+will have to modify the remaining example programs. A much better solution
+would be to purchase a better compiler.
+
+<P>Line 2 of SCOPE.C tells the system to go to the standard directory where
+include files are stored and get a copy of the file named stdio.h which
+contains the prototypes for the standard input and output functions so
+they can be checked for proper variable types. Don't worry about the include
+yet, it will be covered in detail later in this tutorial. Be sure to compile
+and execute this program.
+
+<P><B>STANDARD FUNCTION LIBRARIES</B>
+
+<P>Every compiler comes with some standard predefined functions which are
+available for your use. These are mostly input/output functions, character
+and string manipulation functions, and math functions. We will cover many
+of these in subsequent chapters. Prototypes are defined for you by the
+writer of your compiler for all of the functions that are included with
+your compiler. A few minutes spent studying your reference guide will give
+you an insight in where the prototypes are defined for each of the functions.
+Most compilers have additional functions predefined that are not standard
+but allow the programmer to get the most out of his particular computer.
+In the case of the IBM-PC and compatibles, most of these functions allow
+the programmer to use the BIOS services available in the operating system,
+or to write directly to the video monitor or to any place in memory. These
+will not be covered in any detail as you will be able to study these unique
+aspects of your compiler on your own. Several of these kinds of functions
+are used in the example programs in chapter 14.
+
+<P><B>WHAT IS RECURSION?</B>
+
+<P>Example program ------> <B>RECURSON.C</B>
+
+<P>Recursion is another of those programming techniques that seem very
+intimidating the first time you come across it, but if you will load and
+display the example program named RECURSON.C, we will take all of the mystery
+out of it. This is probably the simplest recursive program that it is possible
+to write and it is therefore a stupid program in actual practice, but for
+purposes of illustration, it is excellent.
+
+<P>Recursion is nothing more than a function that calls itself. It is therefore
+in a loop which must have a way of terminating. In the program on your
+monitor, the variable named <B>index </B>is set to 8 in line 9, and is
+used as the argument to the function named <B>count_dn()</B>. The function
+simply decrements the variable, prints it out in a message, and if the
+variable is greater than zero, it calls itself, where it decrements the
+variable again, prints it, etc. etc. etc. Finally, the variable will reach
+zero, and the function will not call itself again. Instead, it will return
+to the prior time it called itself, and return again, and again, until
+finally it will return to the <B>main()</B> function and from there return
+to the operating system.
+
+<P>For purposes of understanding you can think of it as having 8 copies
+of the function named <B>count_dn()</B> available and it simply called
+all of them one at a time, keeping track of which copy it was in at any
+given time. That is not what actually happened, but it is a reasonable
+illustration for you to begin understanding what it was really doing.
+
+<P><B>WHAT DID IT DO?</B>
+
+<P>A better explanation of what actually happened is in order. When you
+called the function from itself, it stored all of the variables and all
+of the internal flags it needs to complete the function in a block somewhere.
+The next time it called itself, it did the same thing, creating and storing
+another block of everything it needed to complete that function call. It
+continued making these blocks and storing them away until it reached the
+last function when it started retrieving the blocks of data, and using
+them to complete each function call. The blocks were stored on an internal
+part of the computer called the stack. This is a part of memory carefully
+organized to store data just as described above. It is beyond the scope
+of this tutorial to describe the stack in detail, but it would be good
+for your programming experience to read some material describing the stack.
+A stack is used in nearly all modern computers for internal housekeeping
+chores.
+
+<P>In using recursion, you may desire to write a program with indirect
+recursion as opposed to the direct recursion described above. Indirect
+recursion would be when a function A calls the function B, which in turn
+calls A, etc. This is entirely permissible, the system will take care of
+putting the necessary things on the stack and retrieving them when needed
+again. There is no reason why you could not have three functions calling
+each other in a circle, or four, or five, etc. The C compiler will take
+care of all of the details for you.
+
+<P>The thing you must remember about recursion is that at some point, something
+must go to zero, or reach some predefined point to terminate the loop.
+If not, you will have an infinite loop, and the stack will fill up and
+overflow, giving you an error and stopping the program rather abruptly.
+
+<P><B>ANOTHER EXAMPLE OF RECURSION</B>
+
+<P>Example program ------> <B>BACKWARD.C</B>
+
+<P>The program named BACKWARD.C is another example of recursion, so load
+it and display it on your screen at this time. This program is similar
+to the last one except that it uses a character array. Each successive
+call to the function named <B>forward_and_backwards()</B> causes one character
+of the message to be printed. Additionally, each time the function ends,
+one of the characters is printed again, this time backwards as the string
+of recursive function calls is retraced.
+
+<P>This program uses the modern method of function definition and includes
+full prototype definitions. The modern method of function definition moves
+the types of the variables into the parentheses along with the variable
+names themselves. The final result is that the line containing the function
+definition looks more like the corresponding line in a language with relatively
+strong type checking such as Pascal, Modula-2, or Ada. The prototype in
+line 5 is simply a copy of the function header in line 20 followed by a
+semicolon. The designers of C even allow you to include a variable name
+along with each type. The name is ignored by the compiler but including
+the name in the prototype could give you a good idea of how the variable
+is used, acting like a comment.
+
+<P>Don't worry about the character array defined in line 9 or the other
+new material presented here. After you complete chapter 7 of this tutorial,
+this program will make sense. It was felt that introducing a second example
+of recursion was important so this file is included here. You will note
+that this program actually does something useful with recursion, but it
+would be mighty easy to duplicate the action of the program without recursion.
+We will study some programs later where recursion is required.
+
+<P>Compile and run this program and observe the results.
+
+<P><B>THE FLOAT SQUARE PROGRAM WITH PROTOTYPES</B>
+
+<P>Example program ------> <B>FLOATSQ2.C</B>
+
+<P>Load and display the program named FLOATSQ2.C which is an exact copy
+of the program FLOATSQ.C which we considered earlier with prototyping added.
+The use of prototyping is a good practice for all C programmers to get
+into.
+
+<P>Several things should be mentioned about this program. First, the word
+<B>float </B>at the beginning of lines 32 and 41 indicate to the compiler
+that these functions are functions that return <B>float </B>type values.
+Also, since prototypes for the functions are given before <B>main()</B>,
+the functions are not required to be identified in line 12 as they were
+in line 9 of FLOATSQ.C earlier in this chapter. Notice also that the type
+of the variable named <B>inval </B>is included within the parentheses in
+lines 4 and 32.
+
+<P>After you compile and execute this program, ignoring any warnings, remove
+the parameter from line 17 to see what kind of error message you get.
+
+<P><B>A CONFUSING PROBLEM THAT COMES UP AT TIMES</B>
+
+<P>Suppose we wrote the following line of code in the FLOATSQ2.C program,
+<PRE>&nbsp;&nbsp; printf(" ... ", sqr(5.0), glsqr());</PRE>
+It may come as a surprise to you, but the order in which the two functions
+are called, is undefined as far as the ANSI-C standard is concerned. One
+compiler writer may call <B>sqr()</B> first, and another may call <B>glsqr()</B>
+first, and either method is correct. In this case, it makes no difference
+which is called first, but in some cases it does matter such as if something
+is printed out in both functions. The result returned from each call will
+be used in the correct location, but the order of evaluation is undefined.
+Rest assured that this will come up at some point in your future programming
+efforts so you need to be aware of it.
+
+<P><B>MORE STYLE ISSUES</B>
+
+<P>Example program ------> <B>STYLE2.C</B>
+
+<P>The example named STYLE2.C is given as an illustration of various ways
+to format a function. You will note different ways to define the input
+parameters. Examples three and four are both the same style, but example
+four illustrates the style when nothing is passed in or returned. This
+style states very clearly that nothing is needed or returned and it cannot
+be construed as an oversight. Spend some time studying these function examples,
+then begin developing the style you will use. If you are like most programmers,
+you will develop a style that you plan to use forever, then change it every
+few months or on every new project.
+
+<P><B>PROGRAMMING EXERCISES</B>
+<OL>
+<LI>
+Rewrite TEMPCONV.C from an earlier chapter, and move the temperature calculation
+to a function.</LI>
+
+<LI>
+Write a program that writes your name on the monitor 10 times by calling
+a function to do the writing. Move the called function ahead of the main
+function to see if your C compiler will allow it.</LI>
+
+<LI>
+Add prototyping to the programs named SUMSQRES.C and SQUARES.C, and change
+the function definitions to the modern method.</LI>
+</OL>
+<A HREF="C-Starter.htm">Return to Table of Contents</A>
+
+<P><A HREF="Chap06.htm">Advance to Chapter 6</A>
+
+<P>
+<HR width="100%"><I><FONT SIZE=-1>Copyright &copy; 1988-1996 Coronado Enterprises
+- Last update, September 8, 1996</FONT></I>
+<BR><FONT SIZE=-1><I>Gordon Dodrill - dodrill@swcp.com - </I><A HREF="mailto:dodrill@swcp.com">Please
+email any comments or suggestions.</A></FONT>
+</BODY>
+</HTML>

@@ -1,0 +1,525 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Gordon Dodrill">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; I) [Netscape]">
+   <TITLE>Chap11</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<B>C Tutorial - Chapter 11</B>
+
+<P><B><FONT SIZE=+3>S</FONT><FONT SIZE=+2>TRUCTURES</FONT><FONT SIZE=+3>
+A</FONT><FONT SIZE=+2>ND</FONT><FONT SIZE=+3> U</FONT><FONT SIZE=+2>NIONS</FONT></B>
+
+<P><B>WHAT IS A STRUCTURE?</B>
+
+<P>Example program ------> <B>STRUCT1.C</B>
+
+<P>A structure is a user defined data type. Using a structure you have
+the ability to define a new type of data considerably more complex than
+the types we have been using. A structure is a combination of several different
+previously defined data types, including other structures we have defined.
+A simple definition is, "a structure is a grouping of related data in a
+way convenient to the programmer or user of the program." The best way
+to understand a structure is to look at an example, so if you will load
+and display STRUCT1.C, we will do just that.
+
+<P>The program begins with a structure definition. The keyword <B>struct
+</B>is followed by three simple variables between the braces, which are
+the components of the structure. After the closing brace, you will find
+two variable names listed, <B>boy</B>, and <B>girl</B>. According to the
+definition of a structure, <B>boy </B>is now a variable composed of three
+elements, <B>initial</B>, <B>age</B>, and <B>grade</B>. Each of the three
+fields are associated with <B>boy</B>, and each can store a variable of
+its respective type. The variable named <B>girl </B>is also a variable
+containing three fields with the same names as those of <B>boy </B>but
+are actually different variables. We have therefore defined 6 simple variables,
+but they are grouped into 2 variables of a structure type.
+
+<P><B>A SINGLE COMPOUND VARIABLE</B>
+
+<P>Let's examine the variable named <B>boy </B>more closely. As stated
+above, each of the three elements of <B>boy </B>are simple variables and
+can be used anywhere in a C program where a variable of their type can
+be used. For example, the <B>age </B>element is an <B>int </B>variable
+and can therefore be used anywhere in a C program where it is legal to
+use an <B>int </B>type variable, in calculations, as a counter, in I/O
+operations, etc. We now have the problem of defining how to use the simple
+variable named <B>age </B>which is a part of the compound variable named
+<B>boy</B>. To do so we use both names with a decimal point between them
+with the major name first. Thus <B>boy.age</B> is the complete variable
+name for the <B>age </B>field of <B>boy</B>. This construct can be used
+anywhere in a C program that it is desired to refer to this field. In fact,
+it is illegal to use the name <B>boy </B>or <B>age </B>alone because they
+are only partial definitions of the complete field. Alone, the names refer
+to nothing. (Actually the name <B>boy </B>alone does have meaning when
+used with a modern C compiler. We will discuss this later.)
+
+<P><B>ASSIGNING VALUES TO THE VARIABLES</B>
+
+<P><IMG SRC="Image/C1101.GIF" HSPACE=20 VSPACE=20 NOSAVE BORDER=0 HEIGHT=122 WIDTH=382 ALIGN=RIGHT>Using
+the above definition, we can assign a value to each of the three fields
+of <B>boy </B>and each of the three fields of <B>girl</B>. Note carefully
+that <B>boy.initial</B> is actually a <B>char </B>type variable, because
+it was defined as one in the structure, so it must be assigned a character
+of data. In line 12, <B>boy.initial</B> is assigned the character R in
+agreement with the above rules. The remaining two fields of <B>boy </B>are
+assigned values in accordance with their respective types. Finally the
+three fields of <B>girl </B>are assigned values but in a different order
+to illustrate that the order of assignment is not critical. You will notice
+that we used the value of the boy's age when we defined the girl's age.
+This illustrates the use of one member of the structure. Figure 11-1 is
+a graphical representation of the data following execution of line 18.
+
+<P><B>HOW DO WE USE THE RESULTING DATA?</B>
+
+<P>Now that we have assigned values to the six simple variables, we can
+do anything we desire with them. In order to keep this first example simple,
+we will simply print out the values to see if they really do exist as assigned.
+If you carefully inspect the <B>printf()</B> statements, you will see that
+there is nothing special about them. The compound name of each variable
+is specified because that is the only valid name by which we can refer
+to these variables.
+
+<P>Structures are a very useful method of grouping data together in order
+to make a program easier to write and understand. This first example is
+too simple to give you even a hint of the value of using structures, but
+continue on through these lessons and eventually you will see the value
+of using structures. Compile and run STRUCT1.C and observe the output.
+
+<P><B>AN ARRAY OF STRUCTURES</B>
+
+<P>Example program ------> <B>STRUCT2.C</B>
+
+<P>Load and display the next program named STRUCT2.C. This program contains
+the same structure definition as before but this time we define an array
+of 12 variables named <B>kids</B>. It should be clear that this program
+contains 12 times 3 = 36 simple variables, each of which can store one
+item of data provided that it is of the correct type. We also define a
+simple variable named <B>index </B>for use in the <B>for </B>loops.
+
+<P>In order to assign each of the fields a value, we use a <B>for </B>loop
+and each pass through the loop results in assigning a value to each of
+the fields of one structure variable. One pass through the loop assigns
+all of the values for one of the kids. This would not be a very useful
+way to assign data in a real situation, but a loop could read the data
+in from a file and store it in the correct fields in a real application.
+You might consider this the crude beginning of a data base, which it is.
+
+<P><IMG SRC="Image/C1102.GIF" HSPACE=20 VSPACE=20 NOSAVE BORDER=0 HEIGHT=188 WIDTH=576>
+
+<P>In the next few instructions of this program we assign new values to
+some of the fields to illustrate the method used to accomplish this. It
+should be self explanatory, so no additional comments will be given. Figure
+11-2 is a graphical representation of the data for this program following
+execution of line 25.
+
+<P><B>A RECENT UPGRADE TO THE C LANGUAGE</B>
+
+<P>All good C compilers will allow you to copy an entire structure with
+one statement. This was not always permitted in the C language but it is
+a part of the ANSI standard, so you should feel free to use it with your
+C compiler if it is available. Line 27 is an example of using a structure
+assignment. In this statement, all 3 fields of <B>kids[4]</B> are copied
+into their respective fields of <B>kids[10]</B>.
+
+<P><B>WE FINALLY DISPLAY ALL OF THE RESULTS</B>
+
+<P>The last few statements contain a <B>for </B>loop in which all of the
+generated values are displayed in a formatted list. Compile and run the
+program to see if it does what you expect it to do. You will need to remove
+line 27 if your compiler does not support structure assignments.
+
+<P><B>USING POINTERS AND STRUCTURES TOGETHER</B>
+
+<P>Example program ------><B> STRUCT3.C</B>
+
+<P>Examine the file named STRUCT3.C for an example of using pointers with
+structures. This program is identical to the last program except that it
+uses pointers for some of the operations.
+
+<P>The first difference shows up in the definition of variables following
+the structure definition. In this program we define a pointer named <B>point
+</B>which is defined as a pointer that points to the structure. It would
+be illegal to try to use this pointer to point to any other variable type.
+There is a very definite reason for this restriction in C as we have alluded
+to earlier and will review in the next few paragraphs.
+
+<P><IMG SRC="Image/C1103.GIF" HSPACE=20 VSPACE=20 NOSAVE BORDER=0 HEIGHT=215 WIDTH=585>
+
+<P>The next difference is in the <B>for </B>loop where we use the pointer
+for accessing the data fields. Recall from chapter 8 of this tutorial that
+we said that the name of an array is actually a pointer to the first element
+of the array. Since <B>kids </B>is a pointer constant that points to the
+first element of the array which is a structure, we can define <B>point
+</B>in terms of <B>kids</B>. The element named <B>kids </B>is a constant
+so it cannot be changed in value, but <B>point </B>is a pointer variable
+and can be assigned any value consistent with its being required to point
+to the structure. If we assign the value of <B>kids </B>to <B>point </B>then
+it should be clear that <B>point </B>will also point to the first element
+of the array, a structure containing three fields. Figure 11-3 is a graphical
+representation of the data space following the first pass through the loop
+starting in line 16.
+
+<P><B>POINTER ARITHMETIC</B>
+
+<P>Adding 1 to <B>point </B>will now cause it to point to the second field
+of the array because of the way pointers are handled in C. The system knows
+that the structure contains three variables and it knows how many memory
+elements are required to store the complete structure. Therefore if we
+tell it to add one to the pointer, it will actually add the number of memory
+elements required to get to the next element of the array. If, for example,
+we were to add 4 to the pointer, it would advance the value of the pointer
+4 times the size of the structure, resulting in it pointing 4 elements
+farther along the array. This is the reason a pointer cannot be used to
+point to any data type other than the one for which it was defined.
+
+<P>Now to return to the program displayed on your monitor. It should be
+clear from the previous discussion that as we go through the loop, the
+pointer will point to one of the array elements each time. We can therefore
+use the pointer to reference the various elements of each of the structures
+as we go through the loop. Referring to the elements of a structure with
+a pointer occurs so often in C that a special method of notation was devised.
+Using <TT>point->initial</TT> is the same as using <TT>(*point).initial</TT>
+which is really the way we did it in the last two programs. Remember that
+<B>*point</B> is the stored data to which the pointer points and the construct
+should be clear. The "->" is made up of the minus sign and the greater
+than sign. You will find experienced C programmers using this pointer dereference
+profusely when you read their code in magazines and other publications.
+
+<P>Since the pointer points to the structure, we must once again define
+which of the elements we wish to refer to each time we use one of the elements
+of the structure. There are, as we have seen, several different methods
+of referring to the members of the structure. When executing the <B>for
+</B>loop used for output at the end of the program, we use three different
+methods of referring to the structure elements. This would be considered
+very poor programming practice, but is done this way here to illustrate
+to you that they all lead to the same result. This program will probably
+require some study on your part to fully understand, but it will be worth
+your time and effort to grasp these principles.
+
+<P>Lines 34 and 35 are two additional examples of structure assignment
+which do nothing useful, but are included here for your benefit. Compile
+and run this program, and once again, if your compiler does not support
+structure assignment, you will need to remove lines 34 and 35.
+
+<P><B>NESTED AND NAMED STRUCTURES</B>
+
+<P>Example program ------> <B>NESTED.C</B>
+
+<P>Examine the file named NESTED.C for an example of a nested structure.
+The structures we have seen so far have been very simple, although useful.
+It is possible to define structures containing dozens and even hundreds
+or thousands of elements but it would be to the programmers advantage not
+to define all of the elements at one pass but rather to use a hierarchical
+structure definition. This will be illustrated with the program on your
+monitor.
+
+<P>The first structure contains three elements but is followed by no variable
+name. We therefore have not defined any variables, only a structure, but
+since we have included a name at the beginning of the structure, the structure
+is named <B>person</B>. The name <B>person </B>can be used to refer to
+the structure but not to any variable of this structure type. It is therefore
+a new type that we have defined, and we can use the new type in the same
+way we use <B>int</B>, <B>char</B>, or any other types that exist in C.
+The only restriction is that this new name must always be associated with
+the keyword <B>struct</B>.
+
+<P><IMG SRC="Image/C1104.GIF" HSPACE=20 VSPACE=20 NOSAVE BORDER=0 HEIGHT=176 WIDTH=480>
+
+<P>The next structure definition contains three fields with the middle
+field being the previously defined structure which we named <B>person</B>.
+The variable which has the type of <B>person </B>is named <B>descrip</B>.
+So the new structure contains two simple variables, <B>grade </B>and a
+string named <B>lunch</B>, and the structure named <B>descrip</B>. Since
+<B>descrip </B>contains three variables, the new structure actually contains
+5 variables. This structure is also given a name <B>alldat</B>, which is
+another type definition. Finally, within the <B>main()</B> function, we
+define an array of 53 variables each with the structure defined by the
+type <B>alldat</B>, and each with the name <B>student</B>. If that is clear,
+you will see that we have defined a total of 53 times 5 variables, each
+of which is capable of storing a value.
+
+<P>Since we have a new type definition we can use it to define two more
+variables. The variables <B>teacher </B>and <B>sub </B>are defined in line
+23 to be variables of the type <B>alldat</B>, so that each of these two
+variables contain 5 fields in which we can store data. Figure 11-4 is a
+graphical representation of the variable named <B>teacher </B>after it
+is defined in line 23.
+
+<P><B>NOW TO USE SOME OF THE FIELDS</B>
+
+<P>In lines 25 through 29 of the program, we will assign values to each
+of the fields of <B>teacher</B>. The first field is the <B>grade </B>field
+and is handled just like the other structures we have studied because it
+is not part of the nested structure. Next we wish to assign a value to
+her <B>age </B>which is part of the nested structure. To address this field
+we start with the variable name <B>teacher </B>to which we append the name
+of the group <B>descrip</B>, and then we must define which field of the
+nested structure we are interested in, so we append the variable name <B>age</B>.
+The teachers <B>status </B>is handled in exactly the same manner as her
+<B>age</B>, but the last two fields are assigned strings using the string
+copy function <B>strcpy()</B> which must be used for string assignment.
+Notice that the variable names in the <B>strcpy()</B> function are still
+variable names even though they are made up of several parts each. We included
+the string.h header file in line 2 so we could call the string copy function.
+
+<P>The variable <B>sub </B>is assigned nonsense values in much the same
+way, but in a different order since they do not have to occur in any required
+order. Finally, a few of the student variables are assigned values for
+illustrative purposes and the program ends. None of the values are printed
+for illustration since several were printed in the last examples.
+
+<P>Compile and run this program, but when you run it, you may get a stack
+overflow error. C uses its own internal stack to store the automatic variables,
+but some C compilers predefine a stack as small as 2048 bytes as a default.
+This program requires more than that for the defined structures so it will
+be necessary for you to increase the stack size. Consult your compiler
+documentation for details concerning the method of increasing the stack
+size. There is no standard way to do this. There is another way around
+this problem, and that is to move the variable definitions outside of the
+main program where they will be external variables and will not be allocated
+on the stack. The result is that they will not be kept on the internal
+stack and the stack will not overflow. It would be good experience for
+you to try both methods of fixing this problem.
+
+<P><B>MORE ABOUT STRUCTURES</B>
+
+<P>It is possible to continue nesting structures until you get totally
+confused. If you define them properly, the computer will not get confused
+because there is no stated limit as to how many levels of nesting are allowed.
+There is probably a practical limit of three beyond which you may get confused,
+but the language has no limit. In addition to nesting, you can include
+as many structures as you desire in any level of structures, such as defining
+another structure prior to <B>alldat </B>and using it in <B>alldat </B>in
+addition to using <B>person</B>. The structure named <B>person </B>could
+be included in <B>alldat </B>two or more times if desired, as could pointers
+to it.
+
+<P>Structures can contain arrays of other structures which in turn can
+contain arrays of simple types or other structures. It can go on and on
+until you lose all reason to continue. I am only trying to illustrate to
+you that structures are very valuable and you will find them great aids
+to programming if you use them wisely. Be conservative at first, and get
+bolder as you gain experience. Keep in mind that a structure is designed
+to group related data together.
+
+<P>More complex structures will not be illustrated here, but you will find
+examples of additional structures in the example programs included in the
+last chapter of this tutorial. For example, see the include file named
+VC.H on the distribution disk.
+
+<P><B>WHAT ARE UNIONS?</B>
+
+<P>Example program ------> <B>UNION1.C</B>
+
+<P>Examine the file named UNION1.C for an example of a union. Simply stated,
+a union allows you a way to look at the same data with different types,
+or to use the same data with different names.
+
+<P>In this example we have two elements to the union, the first part being
+the integer named <B>value</B>, which is stored as a two byte variable
+somewhere in the computers memory. The second element is made up of two
+character variables named <B>first </B>and <B>second</B>. These two variables
+are stored in the same storage locations that <B>value </B>is stored in,
+because that is what a union does. A union allows you to store different
+types of data in the same physical storage locations. In this case, you
+could put an integer number in <B>value</B>, then retrieve it in its two
+halves by getting each half using the two names <B>first </B>and <B>second</B>.
+This technique is often used to pack data bytes together when you are,
+for example, combining bytes to be used in the registers of the microprocessor.
+
+<P>Accessing the fields of the union are very similar to accessing the
+fields of a structure and will be left to you to determine by studying
+the example.
+
+<P>One additional note must be given here about the program. When it is
+run using some C compilers, the data will be displayed with leading f's
+due to the hexadecimal output promoting the <B>char </B>type variables
+to <B>int </B>and extending the sign bit to the left. Converting the <B>char
+</B>type data fields to <B>int </B>type fields prior to display should
+remove the leading f's from your display. This will involve defining two
+new <B>int </B>type variables and assigning the <B>char </B>type variables
+to them. This will be left as an exercise for you. Note that the same problem
+will come up in a few of the later files in this tutorial.
+
+<P>Compile and execute this program and observe that the data is displayed
+as an <B>int </B>and as two <B>char </B>variables. The <B>char </B>variables
+may be reversed in order because of the way an <B>int </B>variable is stored
+internally in your computer. If your system reverses these variables, don't
+worry about it. It is not a problem but it can be a very interesting area
+of study if you are so inclined.
+
+<P><B>ANOTHER UNION EXAMPLE</B>
+
+<P>Example program ------> <B>UNION2.C</B>
+
+<P>Examine the file named UNION2.C for another example of a union, one
+which is much more common. Suppose you wished to build a large database
+including information on many types of vehicles. It would be silly to include
+the number of propellers on a car, or the number of tires on a boat. In
+order to keep all pertinent data, however, you would need those data points
+for their proper types of vehicles. In order to build an efficient data
+base, you would need several different types of data for each vehicle,
+some of which would be common, and some of which would be different. That
+is exactly what we are doing in the example program on your monitor.
+
+<P>In this program, we will define a complete structure, then decide which
+of the various types can go into it. We will start at the top and work
+our way down. First, we define a few constants with the #defines, and begin
+the program itself. We define a structure named <B>automobile </B>containing
+several fields which you should have no trouble recognizing, but we define
+no variables at this time.
+
+<P><B>A NEW CONCEPT, THE TYPEDEF</B>
+
+<P>Next we define a new type of data with a <B>typedef</B>. This defines
+a complete new type that can be used in the same way that <B>int </B>or
+<B>char </B>can be used. Notice that the structure has no name, but at
+the end where there would normally be a variable name there is the name
+BOATDEF. We now have a new type, BOATDEF, that can be used to define a
+structure anyplace we would like to. Notice that this does not define any
+variables, only a new type. Using all caps for the name is a personal preference
+only and is not a C standard but is used by many experienced C programmers.
+It makes the <B>typedef </B>look different from a variable name.
+
+<P>We finally come to the big structure that defines our data using the
+building blocks already defined above. The structure is composed of 5 parts,
+two simple variables named <B>vehicle </B>and <B>weight</B>, followed by
+the union, and finally the last two simple variables named <B>value </B>and
+<B>owner</B>. Of course the union is what we need to look at carefully
+here, so focus on it for the moment. You will notice that it is composed
+of four parts, the first part being the variable <B>car </B>which is a
+structure of the type that we defined previously. The second part is a
+variable named <B>boat </B>which is a structure of the type BOATDEF previously
+defined. The third part of the union is the variable <B>airplane </B>which
+is a structure defined in place in the union. Finally we come to the last
+part of the union, the variable named <B>ship </B>which is another structure
+of the type BOATDEF.
+
+<P>I hope it is obvious to you that all four could have been defined in
+any of the three ways shown, but the three different methods were used
+to show you that any could be used. In practice, the clearest definition
+would probably have occurred by using the <B>typedef </B>for each of the
+parts.
+
+<P><B>WHAT DO WE HAVE NOW?</B>
+
+<P>We now have a structure that can be used to store any of four different
+kinds of data structures. The size of every record will be the size of
+that record containing the largest union. In this case part 1 is the largest
+union because it is composed of three integers, the others being composed
+of an integer and a character each. The first member of this union would
+therefore determine the size of all structures of this type. The resulting
+structure can be used to store any of the four types of data, but it is
+up to the programmer to keep track of what is stored in each variable of
+this type. The variable named <B>vehicle </B>was designed into this structure
+to keep track of the type of vehicle stored here. The four defines at the
+top of the page were designed to be used as indicators stored in the variable
+named <B>vehicle</B>.
+
+<P>A few examples of how to use the resulting structure are given in the
+next few lines of the program. Some of the variables are defined and a
+few of them are printed out for illustrative purposes.
+
+<P>The union is not used too frequently, and almost never by beginning
+programmers. You will encounter it occasionally so it is worth your effort
+to at least know what it is. You do not need to know the details of it
+at this time, so don't spend too much time studying it. When you do have
+a need for a variant structure, a union, you can learn it at that time.
+For your own benefit, however, do not slight the structure. You should
+use the structure often.
+
+<P><B>WHAT IS A BITFIELD?</B>
+
+<P>Example program ------> <B>BITFIELD.C</B>
+
+<P>Load and display the program named BITFIELD.C for an example of how
+to define and use a bitfield. In this program, we have a union made up
+of a single <B>int </B>type variable in line 6 and the structure defined
+in lines 7 through 12. The structure is composed of three bitfields named
+<B>x</B>, <B>y</B>, and <B>z</B>. The variable named <B>x </B>is only one
+bit wide, the variable <B>y </B>is two bits wide and adjacent to the variable
+<B>x</B>, and the variable <B>z </B>is two bits wide and adjacent to <B>y</B>.
+Moreover, because the union causes the bits to be stored in the same memory
+location as the variable <B>index</B>, the variable <B>x </B>is the least
+significant bit of the variable <B>index</B>, <B>y </B>is the next two
+bits, and <B>z </B>is stored in the next two bits of <B>index</B>.
+
+<P>Compile and run the program and you will see that as the variable <B>index
+</B>is incremented by one each time through the loop, and you will see
+the bitfields of the union counting due to their respective locations within
+the integer definition.
+
+<P>One thing must be pointed out, the bitfields must be defined as parts
+of an <B>unsigned int</B> or your compiler will issue an error message.
+
+<P><B>WHAT IS THE BITFIELD GOOD FOR?</B>
+
+<P>The bitfield is very useful if you have a lot of data to separate into
+individual bits or groups of bits. Many systems use some sort of a packed
+format to get lots of data stored in a few bytes. Your imagination is your
+only limitation to the efficient use of this feature of C.
+
+<P><B>MORE STYLE ISSUES</B>
+
+<P>Example program ------><B> STYLE3.H</B>
+
+<P>Examine the file named STYLE3.H for our first example of a header file
+that really looks like one. You will notice several constant declarations,
+a few structure declarations, and some prototypes. Nothing in this file
+generates anything that uses memory, since there are no variables defined
+and no code is defined here. Each of those use some memory, but all of
+the constructs in this file do nothing but create declarations which are
+then used by other portions of the program. This header file, if it is
+general enough, can be used by many different implementations.
+
+<P>Spend a few minutes and observe the style. Take notice especially of
+the order of the various entities. The constants are defined first, followed
+by the structures since they generally use one or more of the constants.
+Finally, the prototypes are defined since they often make use of one or
+more of the structures in their parameter lists or their return values.
+
+<P>Example program ------> <B>STYLE3.C</B>
+
+<P>Examine the file named STYLE3.C which uses some of the definitions in
+the header STYLE3.H header file. The observant student will notice that
+not everything that is defined in the header file is used in this implementation
+file, and it really doesn't need to be. Since a header file is meant to
+be general purpose, all things within the file will not be used every time
+the header file itself is used in a program.
+
+<P>In this case, the structure named <B>alldat </B>is used in lines 13
+and 14, after being included here in line 9. The rest of the program is
+written in exactly the same manner that it was written when we defined
+the structure locally. This program can be compiled and executed just like
+all of the other programs in this tutorial.
+
+<P><B>PROGRAMMING EXERCISES</B>
+<OL>
+<LI>
+Define a named structure containing a string for a name, an integer for
+feet, and another for arms. Use the new type to define an array of about
+6 items. Fill the fields with data and print them out as follows.</LI>
+
+<DL>
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp; A human being has 2 legs and 2 arms.
+&nbsp;&nbsp;&nbsp;&nbsp; A dog has 4 legs and 0 arms.
+&nbsp;&nbsp;&nbsp;&nbsp; A television set has 4 legs and 0 arms.
+&nbsp;&nbsp;&nbsp;&nbsp; A chair has 4 legs and 2 arms.</PRE>
+</DL>
+
+<LI>
+Rewrite exercise 1 using a pointer to print the data out.</LI>
+</OL>
+<A HREF="C-Starter.htm">Return to Table of Contents</A>
+
+<P><A HREF="Chap12.htm">Advance to Chapter 12</A>
+
+<P>
+<HR width="100%"><I><FONT SIZE=-1>Copyright &copy; 1988-1996 Coronado Enterprises
+- Last update, September 8, 1996</FONT></I>
+<BR><FONT SIZE=-1><I>Gordon Dodrill - dodrill@swcp.com - </I><A HREF="mailto:dodrill@swcp.com">Please
+email any comments or suggestions.</A></FONT>
+</BODY>
+</HTML>

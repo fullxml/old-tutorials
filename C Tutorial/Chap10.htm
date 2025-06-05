@@ -1,0 +1,439 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Gordon Dodrill">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; I) [Netscape]">
+   <TITLE>Chap10</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<B>C Tutorial - Chapter 10</B>
+
+<P><B><FONT SIZE=+3>F</FONT><FONT SIZE=+2>ILE </FONT><FONT SIZE=+3>I</FONT><FONT SIZE=+2>NPUT/</FONT><FONT SIZE=+3>O</FONT><FONT SIZE=+2>UTPUT</FONT></B>
+
+<P><B>OUTPUT TO A FILE</B>
+
+<P>Example program ------> <B>FORMOUT.C</B>
+
+<P>Load and display the file named FORMOUT.C for your first example of
+writing data to a file. We begin as before with the include statement for
+stdio.h, and include the header for the string functions. Then we define
+some variables for use in the example including a rather strange looking
+new type.
+
+<P>The type <B>FILE </B>is a structure (we will study structures in the
+next chapter) and is defined in the stdio.h file. It is used to define
+a file pointer for use in file operations. The definition of C requires
+a pointer to a <B>FILE </B>type to access a file, and as usual, the name
+can be any valid variable name. Many writers use <B>fp </B>for the name
+of this first example file pointer so I suppose we should start with it
+too.
+
+<P><B>OPENING A FILE</B>
+
+<P>Before we can write to a file, we must open it. What this really means
+is that we must tell the system that we want to write to a file and what
+the filename is. We do this with the <B>fopen()</B> function illustrated
+in line 11 of the program. The file pointer, <B>fp </B>in our case, will
+point to the structure for the file and two arguments are required for
+this function, the filename first, followed by the file attribute. The
+filename is any valid filename for your operating system, and can be expressed
+in upper or lower case letters, or even mixed if you so desire. It is enclosed
+in double quotes. For this example we have chosen the name TENLINES.TXT.
+This file should not exist on your disk at this time. If you have a file
+with this name, you should change its name or move it because when we execute
+this program, its contents will be overwritten. If you don't have a file
+by this name, this program will create one and write some data into it.
+
+<P>Note that we are not forced to use a string constant for the file name
+as we have done here. This is only done here for convenience. We can use
+a string variable which contains the filename then use any method we wish
+to fill in the name of the file to open. This will be illustrated later
+in this chapter.
+
+<P><B>READING ("r")</B>
+
+<P>The second parameter is the file attribute and can be any of three letters,
+"r", "w", or "a", and must be lower case. There are actually additional
+attributes available in C to allow more flexible I/O, and after you complete
+your study of this chapter, you should check the documentation for your
+compiler to study the additional file opening attributes. When an "r" is
+used, the file is opened for reading, a "w" is used to indicate a file
+to be used for writing, and an "a" indicates that you desire to append
+additional data to the data already in an existing file. Opening a file
+for reading requires that the file already exist. If it does not exist,
+the file pointer will be set to NULL and can be checked by the program.
+It is not checked in this program, but could be easily checked as follows.
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp; if (fp == NULL) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("File failed to open\n");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; exit (1);
+&nbsp;&nbsp;&nbsp;&nbsp; }</PRE>
+Good programming practice would dictate that all file pointers be checked
+to assure proper file opening in a manner similar to the above code. The
+value of 1 used as the parameter of <B>exit()</B> will be explained shortly.
+
+<P><B>WRITING ("w")</B>
+
+<P>When a file is opened for writing, it will be created if it does not
+already exist and it will be reset if it does, resulting in deletion of
+any data already there. If the file fails to open for any reason, a NULL
+will be returned so the pointer should be tested as above.
+
+<P><B>APPENDING ("a")</B>
+
+<P>When a file is opened for appending, it will be created if it does not
+already exist and it will be initially empty. If it does exist, the data
+input point will be set to the end of the data already contained in the
+file so that new data will be added to any data that already exists in
+the file. Once again, the return value can and should be checked for proper
+opening.
+
+<P><B>OUTPUTTING TO THE FILE</B>
+
+<P>The job of actually outputting to the file is nearly identical to the
+outputting we have already done to the standard output device. The only
+real differences are the new function names and the addition of the file
+pointer as one of the function arguments. In the example program, <B>fprintf()</B>
+replaces our familiar <B>printf()</B> function name, and the file pointer
+defined earlier is the first argument within the parentheses. The remainder
+of the statement looks like, and in fact is identical to, the <B>printf()</B>
+statement.
+
+<P><B>CLOSING A FILE</B>
+
+<P>To close a file, use the function <B>fclose()</B> with the file pointer
+in the parentheses. Actually, in this simple program, it is not necessary
+to close the file because the system will close all open files before returning
+to the operating system. It would be good programming practice for you
+to get in the habit of closing all files in spite of the fact that they
+will be closed automatically, because that would act as a reminder to you
+of what files are open at the end of each program.
+
+<P>You can open a file for writing, close it, and reopen it for reading,
+then close it, and open it again for appending, etc. Each time you open
+it, you could use the same file pointer, or you could use a different one.
+The file pointer is simply a tool that you use to point to a file and you
+decide what file it will point to.
+
+<P>Compile and run this program. When you run it, you will not get any
+output to the monitor because it doesn't generate any. After running it,
+look in your current directory for a file named TENLINES.TXT and examine
+it's contents. That is where your output will be. Compare the output with
+that specified in the program. It should agree. If you add the pointer
+test code described above, and if the file couldn't be opened for any reason,
+there will be one line of text on the monitor and the file will be empty.
+
+<P>Do not erase the file named TENLINES.TXT yet. We will use it in some
+of the other examples in this chapter.
+
+<P><B>OUTPUTTING A SINGLE CHARACTER AT A TIME</B>
+
+<P>Example program ------> <B>CHAROUT.C</B>
+
+<P>Load the next example file, CHAROUT.C, and display it on your monitor.
+This program will illustrate how to output a single character at a time.
+
+<P>The program begins with the include statements, then defines some variables
+including a file pointer. The file pointer is named <B>point </B>this time,
+but we could have used any other valid variable name. We then define a
+string of characters to use in the output function using a <B>strcpy()</B>
+function. We are ready to open the file for appending and we do so with
+the <B>fopen()</B> function, except this time we use the lower cases for
+the filename. This is done simply to illustrate that some operating systems
+don't care about the case of the filename. Some operating systems, including
+UNIX, are case sensitive for filenames, so you will need to fix the case
+before compiling and executing this program. Notice that the file will
+be opened for appending so we will add to the lines inserted during the
+last program. If the file could not be opened properly, a NULL value is
+returned by the <B>fopen()</B> function.
+
+<P>Lines 14 through 18 check to see if the file opened properly and returns
+an error indication to the operating system if it did not. The constant
+named EXIT_FAILURE is defined in the stdlib.h file and is usually defined
+to have the value of 1. The constant named EXIT_SUCCESS is also defined
+in the stdlib.h file and is usually defined to have the value of 0. The
+operating system can use the returned value to determine if the program
+operated normally and can take appropriate action if neccessary. For example,
+if a two part program is to be executed and the first part returns an error
+indication, there is no need to execute the second part of the program.
+Your compiler probably executes in several passes with each successive
+pass depending on successful completion of the previous pass.
+
+<P>The program is actually two nested <B>for </B>loops. The outer loop
+is simply a count to ten so that we will go through the inner loop ten
+times. The inner loop calls the function <B>putc()</B> repeatedly until
+a character in the string named <B>others </B>is detected to be a zero.
+This is the terminating null for the string.
+
+<P><B>THE putc() FUNCTION</B>
+
+<P>The part of the program we are interested in is the <B>putc()</B> function
+in line 23. It outputs one character at a time, the character being the
+first argument in the parentheses and the file pointer being the second
+and last argument. Why the designer of C made the pointer first in the
+<B>fprintf()</B> function, and last in the <B>putc()</B> function is a
+good question for which there may be no answer. It seems like this would
+have been a good place to have used some consistency.
+
+<P>When the textline <B>others </B>is exhausted, a newline is needed because
+a newline was not included in the definition above. A single <B>putc()</B>
+is then executed which outputs the <B>\n</B> character to return the carriage
+and do a linefeed.
+
+<P>When the outer loop has been executed ten times, the program closes
+the file and terminates. Compile and run this program but once again there
+will be no output to the monitor. You need to assure that TENLINES.TXT
+is in the current directory prior to execution.
+
+<P>Following execution of the program, examine the contents of the file
+named TENLINES.TXT and you will see that the 10 new lines were added to
+the end of the 10 that already existed. If you run it again, yet another
+10 lines will be added. Once again, do not erase this file because we are
+still not finished with it.
+
+<P><B>READING A FILE</B>
+
+<P>Example program ------> <B>READCHAR.C</B>
+
+<P>Load the file named READCHAR.C and display it on your monitor. This
+is our first program which can read from a file. This program begins with
+the familiar include statements, some data definitions, and the file opening
+statement which should require no explanation except for the fact that
+an "r" is used here because we want to read from this file. In this program,
+we check to see that the file exists, and if it does, we execute the main
+body of the program. If it doesn't exist, we print a message and quit.
+If the file does not exist, the system will set the pointer equal to NULL
+which we test in line 12. If the pointer is NULL we display a message and
+terminate the program.
+
+<P>The main body of the program is one <B>do while</B> loop in which a
+single character is read from the file and output to the monitor until
+an EOF (end of file) is detected from the input file. The file is then
+closed and the program is terminated.
+
+<P><B>CAUTION CAUTION CAUTION</B>
+
+<P>At this point, we have the potential for one of the most common and
+most perplexing problems of programming in C. The variable returned from
+the <B>getc()</B> function is a character, so we can use a <B>char </B>variable
+for this purpose. There is a problem that could develop here if we happened
+to use an <B>unsigned char</B> however, because C returns a minus one for
+an EOF. An <B>unsigned char</B> type variable is not capable of containing
+a negative value. An <B>unsigned char</B> type variable can only have the
+values of zero to 255, so it will return a 255 for a minus one which can
+never compare to the EOF. This is a very frustrating problem to try to
+find. The program can never find the EOF and will therefore never terminate
+the loop. This is easy to prevent. Always use a <B>int </B>type variable
+when the return can be an EOF, because an <B>int </B>is always signed.
+According to the ANSI-C standard, a <B>char </B>can be implemented as either
+a signed or an unsigned type by any particular compiler.
+
+<P>Some compilers use a char type that is not 8 bits long. If your compiler
+uses other than 8 bits for a char type variable, the same arguments apply.
+Do not use an unsigned type if you need to check for an EOF returned by
+the function, because an EOF is usually defined as -1 which cannot be returned
+in an unsigned type variable.
+
+<P>There is yet another problem with this program but we will worry about
+it when we get to the next program and solve it with the one following
+that.
+
+<P>After you compile and run this program and are satisfied with the results,
+it would be a good exercise to change the name of TENLINES.TXT and run
+the program again to see that the NULL test actually works as stated. Be
+sure to change the name back because we are still not finished with TENLINES.TXT.
+In a real production program, you would not actually terminate the program.
+You would give the user the opportunity to enter another filename for input.
+We are interested in illustrating the basic file handling techniques here,
+so we are using a very simple error handling method.
+
+<P><B>READING A WORD AT A TIME</B>
+
+<P>Example program ------> <B>READTEXT.C</B>
+
+<P>Load and display the file named READTEXT.C for an example of how to
+read a word at a time. This program is nearly identical to the last except
+that this program uses the <B>fscanf()</B> function to read in a string
+at a time. Because the <B>fscanf()</B> function stops reading when it finds
+a space or a newline character, it will read a word at a time, and display
+the results one word to a line. You will see this when you compile and
+run it, but first we must examine a programming problem.
+
+<P>It is left as an exercise for the student to include a check for proper
+file opening and performing a meaningful response if it does not open.
+A meaningful response is to simply output an error message and exit to
+the operating system.
+
+<P><B>THIS IS A PROBLEM</B>
+
+<P>Inspection of the program will reveal that when we read data in and
+detect the EOF, we print out something before we check for the EOF resulting
+in an extra line of printout. What we usually print out is the same thing
+printed on the prior pass through the loop because it is still in the buffer
+named <B>oneword</B>. We therefore must check for EOF before we execute
+the <B>printf()</B> function. This has been done in READGOOD.C, which you
+will shortly examine, compile, and execute.
+
+<P>Compile and execute the program we have been studying, READTEXT.C and
+observe the output. If you haven't changed TENLINES.TXT you will end up
+with "Additional" and "lines." on two separate lines with an extra "lines."
+displayed at the end of the output because of the <B>printf()</B> before
+checking for EOF. Note that some compilers apparently clear the buffer
+after printing so you may get an extra blank line instead of two lines
+with "lines." on them.
+
+<P>Notice that we failed to check that the file opened properly. This is
+very poor practice, and it will be left as an exercise for you to add the
+required code to do so in a fashion similar to that used in the READCHAR.C
+example program.
+
+<P><B>NOW LET'S FIX THE PROBLEM</B>
+
+<P>Example program ------> <B>READGOOD.C</B>
+
+<P>Compile and execute READGOOD.C and observe that the extra "lines." does
+not get displayed because of the extra check for the EOF in the middle
+of the loop. This was also the problem referred to when we looked at READCHAR.C,
+but I chose not to expound on it there because the error in the output
+was not so obvious.
+
+<P>Once again there is no check for the file opening properly, but you
+know how to fix it by now and you should do so as an exercise.
+
+<P>We should point out that an experienced C programmer would not write
+the code as given in this example because it compares <B>c </B>to EOF twice
+during each pass through the loop and this is inefficient. We have been
+using code that works and is very easy to understand, but as you gain experience
+with C, you will begin to use more efficient coding methods, even if they
+tend to become harder to read and understand. An experienced C programmer
+would code lines 12 through 17 of READGOOD.C in the following manner;
+<PRE>&nbsp;&nbsp; while((c = fscanf(fp1, "%s", oneword) != EOF)
+&nbsp;&nbsp; {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("%s\n", oneword);
+&nbsp;&nbsp; }</PRE>
+There is no question that this code is more difficult to read, but if you
+spend some time studying it, you will find that it is identical to the
+code in the example program. Even though is is more efficient, it is not
+clear whether the slight gain in efficiency is worth the reduced readability.
+If the program saves ten milliseconds when reading in a file once a day,
+and it takes a programmer an hour longer to make a modification to the
+code a year after the program is released, there is not much savings in
+using such code. Even though the time assumptions are all judgement calls
+in the above text, it is plain to see that there are often tradeoffs when
+writing a program. You will make many decisions concerning execution efficiency
+and readability when you are writing non-trivial programs.
+
+<P>This is a rather contrived example, because most experienced C programmers
+would not think this code is at all cryptic, but is written in a standard
+C notation. As you gain experience, you will come to accept this as clearly
+written C code. The philosophical argument about code complexity and readability
+has been made however, and should be considered for all software development.
+
+<P><B>FINALLY, WE READ A FULL LINE</B>
+
+<P>Example program ------> <B>READLINE.C</B>
+
+<P>Load and display the file READLINE.C for an example of reading a complete
+line. This program is very similar to those we have been studying except
+that we read a complete line in this example program.
+
+<P>We are using <B>fgets()</B> which reads an entire line, including the
+newline character, into a buffer. The buffer to be read into is the first
+argument in the function call, and the maximum number of characters to
+read is the second argument, followed by the file pointer. This function
+will read characters into the input buffer until it either finds a newline
+character, or it reads the maximum number of characters allowed minus one.
+It leaves one character for the end of string null character. In addition,
+if it finds an EOF, it will return a value of NULL. In our example, when
+the EOF is found, the pointer named <B>c </B>will be assigned the value
+of NULL. NULL is defined as zero in your stdio.h file.
+
+<P>When we find that the pointer named <B>c </B>has been assigned the value
+of NULL, we can stop processing data, but we must check before we print
+just like in the last program. Last of course, we close the file.
+
+<P><B>HOW TO USE A VARIABLE FILENAME</B>
+
+<P>Example propgram ------> <B>ANYFILE.C</B>
+
+<P>Load and display the program ANYFILE.C for an example of reading from
+any file. This program asks the user for the filename desired, and reads
+in the filename, storing it in a string. Then it opens that file for reading.
+The entire file is then read and displayed on the monitor. It should pose
+no problems to your understanding so no additional comments will be made.
+
+<P>Compile and run this program. When it requests a filename, enter the
+name and extension of any text file available, even one of the example
+C programs.
+
+<P>Enter an invalid file name to see what the system does when it cannot
+open the file. If you were a user of this program, and possibly not very
+computer literate, would you prefer that the program gave you a cryptic
+message of some sort, or would you prefer that the program displayed a
+neat message such as "The file you have asked for is not available. Would
+you like to enter another filename?". Of course this is the message that
+you can emit when you find that the file did not open properly. Your users
+will appreciate the effort you put into error handling for their program.
+
+<P><B>HOW DO WE PRINT?</B>
+
+<P>Example program ------> <B>PRINTDAT.C</B>
+
+<P>Load the last example program in this chapter, the one named PRINTDAT.C
+for an example of how to print. This program should not present any surprises
+to you, so we will move very quickly through it.
+
+<P>Once again, we open TENLINES.TXT for reading and we open PRN for writing.
+Printing is identical to writing data to a disk file except that we use
+a standard name for the filename. Many C compilers use the reserved filename
+of PRN that instructs the compiler to send the output to the printer. There
+are other names that are used occasionally such as LPT, LPT1, or LPT2.
+Check the documentation for your particular compiler. Some of the newest
+compilers use a predefined file pointer such as <B>stdprn </B>for the print
+file. Once again, check your documentation.
+
+<P>The program is simply a loop in which a character is read, and if it
+is not the EOF, it is displayed and printed. When the EOF is found, the
+input file and the printer output files are both closed. Note that good
+programming practice includes checking both file pointers to assure that
+the files opened properly. You can now erase TENLINES.TXT from your disk.
+We will not be using it in any of the later chapters.
+
+<P><B>A READING ASSIGNMENT</B>
+
+<P>Spend some time studying the documentation for your compiler and reading
+about the following functions. You will not understand everything about
+them but you will get a good idea of how the library functions are documented.
+
+<P>fopen(), fclose(), putc(), putchar(), printf(), fprintf(), scanf(),
+fgets()
+
+<P>Also spend some time studying stdio.h, looking for prototypes for the
+above functions and for the declaration of FILE.
+
+<P><B>PROGRAMMING EXERCISES</B>
+<OL>
+<LI>
+Write a program that will prompt for a filename for an input file, prompt
+for a filename for a write file, and open both plus a file to the printer.
+Enter a loop that will read a character, and output it to the file, the
+printer, and the monitor. Stop at EOF.</LI>
+
+<LI>
+Prompt for a filename to read. Read the file a line at a time and display
+it on the monitor with line numbers.</LI>
+
+<LI>
+Modify ANYFILE.C to test if the file exists and print a message if it doesn't.
+Use a method similar to that used in READCHAR.C.</LI>
+</OL>
+<A HREF="C-Starter.htm">Return to Table of Contents</A>
+
+<P><A HREF="Chap11.htm">Advance to Chapter 11</A>
+
+<P>
+<HR width="100%"><I><FONT SIZE=-1>Copyright &copy; 1988-1996 Coronado Enterprises
+- Last update, September 8, 1996</FONT></I>
+<BR><FONT SIZE=-1><I>Gordon Dodrill - dodrill@swcp.com - </I><A HREF="mailto:dodrill@swcp.com">Please
+email any comments or suggestions.</A></FONT>
+</BODY>
+</HTML>

@@ -1,0 +1,422 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Gordon Dodrill">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; I) [Netscape]">
+   <TITLE>Chap12</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<B>C Tutorial - Chapter 12</B>
+
+<P><B><FONT SIZE=+3>D</FONT><FONT SIZE=+2>YNAMIC </FONT><FONT SIZE=+3>A</FONT><FONT SIZE=+2>LLOCATION</FONT></B>
+
+<P><B>WHAT IS DYNAMIC ALLOCATION?</B>
+
+<P>Example program ------> <B>DYNLIST.C</B>
+
+<P>Dynamic allocation is very intimidating to a person the first time he
+comes across it, but that need not be. Simply relax and read this chapter
+carefully and you will have a good grounding in a very valuable programming
+resource. All of the variables in every program up to this point have been
+static variables as far as we are concerned. (Actually, some of them have
+been automatic and were dynamically allocated for you by the system, but
+it was transparent to you.) In this chapter, we will study some dynamically
+allocated variables. They are variables that do not exist when the program
+is loaded, but are created dynamically as they are needed while the program
+is running. It is possible, using these techniques, to create as many variables
+as needed, use them, and deallocate their memory space for reuse by other
+variables. As usual, the best teacher is an example, so examine the program
+named DYNLIST.C.
+
+<P>We begin by defining a named structure, <B>animal</B>, with a few fields
+pertaining to dogs. We do not define any variables of this type, only three
+pointers. If you search through the remainder of the program, you will
+find no variables defined, so we have nothing to store data in. All we
+have to work with are three pointers, each of which are capable of pointing
+to variables of the defined structure named <B>animal</B>. In order to
+do anything, we need some variables, so we will create some dynamically.
+
+<P><B>DYNAMIC VARIABLE CREATION</B>
+
+<P>The statement in line 16, which assigns something to the pointer <B>pet1
+</B>will create a dynamic structure containing three variables. The heart
+of the statement is the <B>malloc() </B>function buried in the middle of
+the statement. This is a memory allocate function that needs the rest of
+the code in this line to completely define it. The <B>malloc()</B> function,
+by default, will allocate a piece of memory on a heap that is "n" characters
+in length and will be of type character. The "n" must be specified as the
+only argument to the function. We will discuss "n" shortly, but first we
+need to define the heap.
+
+<P><B>WHAT IS A HEAP?</B>
+
+<P>A heap is a predefined area of memory which can be accessed by the program
+to store data and variables. The data and variables are allocated on the
+heap by the system as calls to <B>malloc()</B> are made. The system keeps
+track of where the data is stored. Data and variables can be deallocated
+as desired, leading to holes in the heap. The system knows where the holes
+are and will use them for additional data storage as more <B>malloc() </B>calls
+are made. The structure of the heap is therefore a very dynamic entity,
+changing constantly.
+
+<P><B>BACK TO THE MALLOC FUNCTION</B>
+
+<P>Hopefully the very brief description of the heap and the overall plan
+for dynamic allocation helped you to understand what we are doing with
+the <B>malloc()</B> function. It simply asks the system for a block of
+memory of the size specified, and returns a pointer which is pointing to
+the first element of the block. The only argument in the parentheses is
+the size of the block desired and in our present case, we desire a block
+that will hold one of the structures we defined at the beginning of the
+program. The <B>sizeof </B>operator is new, new to us at least. It returns
+the size in bytes of the argument within its parentheses. It therefore,
+returns the size of the structure named <B>animal</B>, in bytes, and that
+number is used as a parameter of the <B>malloc()</B> call. At the completion
+of that call, we have a block on the heap allocated to us, with the pointer
+named <B>pet1 </B>pointing to the block of data.
+
+<P><B>WHAT IF malloc() FAILS?</B>
+
+<P>If there is not enough memory available to supply you with the block
+of data requested, <B>malloc()</B> does not return a valid pointer but
+instead returns the value of NULL. The return value should always be checked
+before attempting to use it, but we are ignoring it in this program for
+two reasons. First, and foremost, there is a huge load of information already
+introduced here and we wish to keep it as simple as possible and study
+C in byte-sized chunks. And secondly, we are asking for a tiny amount of
+memory in this example program, so there should be no problem with allocating
+it.
+
+<P>Keep in mind that all dynamically allocated memory must be carefully
+checked in any meaningful program, and to illustrate it, we will be very
+careful to check the return value in the next two example programs as an
+illustration to you of exactly how to do it.
+
+<P><B>WHAT IS A CAST?</B>
+
+<P>We still have a funny looking construct at the beginning of the <B>malloc()</B>
+function call, which is called a cast. The <B>malloc()</B> function returns
+a pointer to type <B>void </B>by default. You really cannot use a pointer
+to <B>void</B>, so it must be changed to some other type. You can define
+the pointer type with the construct given on the example line. In this
+case we want the pointer to point to a structure of type <B>animal</B>,
+so we tell the compiler with this cast. Even if you omit the cast, most
+compilers will return a pointer correctly, give you a warning, and go on
+to produce a working program. It is better programming practice to provide
+the compiler with the cast to prevent getting a warning message.
+
+<P><IMG SRC="Image/C1201.GIF" HSPACE=20 VSPACE=20 NOSAVE BORDER=0 HEIGHT=200 WIDTH=411 ALIGN=RIGHT>The
+data space of the computer is depicted graphically by figure 12-1 following
+execution of line 16. The graphical notation defines the pointer as pointing
+to the structure. As far as the program is concerned, the pointer is actually
+pointing to all three members taken as a group rather than to only the
+first element.
+<BR>&nbsp;
+<BR><B></B>&nbsp;
+<BR><B></B>&nbsp;
+<BR><B></B>&nbsp;
+<BR><B></B>&nbsp;<B></B>
+
+<P><B>USING THE DYNAMICALLY ALLOCATED STRUCTURE</B>
+
+<P><IMG SRC="Image/C1202.GIF" HSPACE=20 VSPACE=20 NOSAVE BORDER=0 HEIGHT=200 WIDTH=411 ALIGN=RIGHT>If
+you remember our studies of structures and pointers, you will recall that
+if we have a structure with a pointer pointing to it, we can access any
+of the variables within the structure. In lines 20 through 22 of the program,
+we assign some silly data to the structure for illustration. It should
+come as no surprise to you that these assignment statements look just like
+assignments to statically defined variables. Figure 12-2 illustrates the
+state of the data space following execution of line 22.
+
+<P>In line 24, we assign the value of <B>pet1 </B>to <B>pet2 </B>also via
+a pointer assignment statement which we introduced in chapter 8. This creates
+no new data, we simply have two pointers to the same object. Since <B>pet2
+</B>is pointing to the structure we created above, <B>pet1 </B>can be reused
+to get another dynamically allocated structure which is just what we do
+next. Keep in mind that <B>pet2 </B>could have just as easily been used
+for the new allocation. The new structure is filled with silly data for
+illustration in lines 27 through 29.
+
+<P><IMG SRC="Image/C1203.GIF" HSPACE=20 VSPACE=20 NOSAVE BORDER=0 HEIGHT=311 WIDTH=431>
+
+<P>Finally, we allocate another block on the heap using the pointer <B>pet3</B>,
+and fill its block with illustrative data. Figure 12-3 illustrates the
+condition of the data space after execution of line 34 of the program.
+
+<P>Printing the data out should pose no problem to you since there is nothing
+new in the three print statements.
+
+<P>Even though it is not illustrated in this tutorial, you can dynamically
+allocate and use simple variables such as a single <B>char </B>type variable.
+This should be discouraged however since it is very inefficient.
+
+<P><B>GETTING RID OF THE DYNAMICALLY ALLOCATED DATA</B>
+
+<P>Another new function is used to get rid of the data and free up the
+space on the heap for reuse, the function <B>free()</B>. To use it, you
+simply call it with the pointer to the dynamically allocated block of data
+as the only argument, and the block is deallocated.
+
+<P>In order to illustrate another aspect of the dynamic allocation and
+deallocation of data, an additional step is included in the program on
+your monitor. The pointer <B>pet1 </B>is assigned the value of <B>pet3
+</B>in line 47. In doing this, the block that <B>pet1 </B>was pointing
+to is effectively lost since there is no pointer that is now pointing to
+that block. It can therefore never again be referred to, changed, or deallocated.
+That memory, which is a block on the heap, is wasted from this point on.
+This is not something that you would ever purposely do in a program. It
+is only done here for illustration.
+
+<P><IMG SRC="Image/C1204.GIF" HSPACE=20 VSPACE=20 NOSAVE BORDER=0 HEIGHT=179 WIDTH=407 ALIGN=RIGHT>The
+first <B>free()</B> function call removes the block of data that <B>pet1
+</B>and <B>pet3 </B>were pointing to, which deallocates the structure and
+returns the memory to the heap for further use. The second <B>free()</B>
+call deallocates the block of data that <B>pet2 </B>was pointing to. We
+therefore have lost access to all of our data generated earlier. There
+is still one block of data that is on the heap but there is no pointer
+to it since we lost the address to it. Figure 12-4 illustrates the data
+space as it now appears. Trying to free the data pointed to by <B>pet1
+</B>would result in an error because it has already been freed by the use
+of <B>pet3</B>. There is no need to worry, however. When we return to the
+operating system, the entire heap will be disposed of with no regard to
+what we have put on it. The point does need to made that, if you lose a
+pointer to a block of the heap, it forever removes that block of data storage
+from our use and we may need that storage later.
+
+<P>Compile and run the program to see if it does what you think it should
+do based on this discussion.
+
+<P><B>THAT WAS A LOT OF DISCUSSION</B>
+
+<P>It took several pages to get through the discussion of the last program
+but it was time well spent. It should be somewhat exciting to you to know
+that there is nothing else to learn about dynamic allocation, the previous
+discussion covered it all. Of course, there is a lot to learn about the
+technique of using dynamic allocation, and for that reason, there are two
+more example programs to study.
+
+<P><B>AN ARRAY OF POINTERS</B>
+
+<P>Example program ------> <B>BIGDYNL.C</B>
+
+<P>Load and display the file BIGDYNL.C for another example of dynamic allocation.
+This program is very similar to the last one since we use the same structure,
+but this time we define an array of pointers to illustrate the means by
+which you could build a large database using an array of pointers rather
+than a single pointer to each element. To keep it simple we define 12 elements
+in the array and another working pointer named <B>point</B>.
+
+<P>The <B>*pet[12]</B> is new to you so a few words would be in order.
+What we have defined is an array of 12 pointers, the first being <B>pet[0]</B>,
+and the last <B>pet[11]</B>. Actually, since an array is itself a pointer,
+the name <B>pet </B>by itself is a constant pointer to a pointer. This
+is valid in C, and in fact you can go farther if needed but you will get
+quickly confused. There is no limit as to how many levels of pointing are
+possible, so the definition <B>int ****pt</B>; is legal as a pointer to
+a pointer to a pointer to a pointer to an integer type variable, if I counted
+right. Such usage is discouraged until you gain considerable experience.
+
+<P>Now that we have 12 pointers which can be used like any other pointer,
+it is a simple matter to write a loop to allocate a data block dynamically
+for each and to fill the respective fields with any data desirable. In
+this case, the fields are filled with simple data for illustrative purposes,
+but we could be reading from a database, from some test equipment, or from
+any other source of data.
+
+<P>You will note that this time we carefully check the return value from
+the <B>malloc()</B> function to see that it contains a non-zero value.
+If it returns a NULL value, we print a message that the allocation failed
+and exit the program. In a real production program, you would not simply
+terminate the program. It would be much more agreeable with the user to
+report the error to him and give him the opportunity to make more memory
+available before actually terminating the program. Error handling and recovery
+is a topic you will need to study someday, but it is beyond the scope of
+your programming experience at this point.
+
+<P>A few fields are randomly picked in lines 33 through 35 to receive other
+data to illustrate that simple assignments can be used, and the data is
+printed out to the monitor. The pointer <B>point </B>is used in the printout
+loop only to serve as an illustration. The data could have been easily
+printed using the <B>pet[n]</B> means of definition. Finally, all 12 blocks
+of data are freed before terminating the program.
+
+<P>Compile and run this program to aid in understanding this technique.
+There was nothing new here about dynamic allocation, only about an array
+of pointers.
+
+<P><B>A LINKED LIST</B>
+
+<P>Example program ------> <B>DYNLINK.C</B>
+
+<P>We finally come to the granddaddy of all programming techniques as far
+as being intimidating. Load the program DYNLINK.C for an example of a dynamically
+allocated linked list. It sounds terrible, but after a little time spent
+with it, you will see that it is simply another programming technique made
+up of simple components that can be a powerful tool.
+
+<P>In order to set your mind at ease, consider the linked list you used
+when you were a child. Your sister gave you your birthday present, and
+when you opened it, you found a note that said, "Look in the hall closet."
+You went to the hall closet, and found another note that said, "Look behind
+the TV set." Behind the TV you found another note that said, "Look under
+the coffee pot." You continued this search, and finally you found your
+pair of socks under the dogs feeding dish. What you actually did was to
+execute a linked list, the starting point being the wrapped present and
+the ending point being under the dogs feeding dish. The list ended at the
+dogs feeding dish since there were no more notes.
+
+<P>In the program DYNLINK.C, we will be doing the same thing your sister
+forced you to do. However, we will do it much faster and we will leave
+a little pile of data at each of the intermediate points along the way.
+We will also have the capability to return to the beginning and traverse
+the entire list again and again if we so desire.
+
+<P><B>THE DATA DEFINITIONS</B>
+
+<P>This program starts similarly to the last two with the addition of a
+constant declaration to be used later. The structure is nearly the same
+as that used in the last two programs except for the addition of another
+field within the structure in line 13, the pointer. This pointer is a pointer
+to another structure of this same type and will be used to point to the
+next structure in order. To continue the above analogy, this pointer will
+point to the next note, which in turn will contain a pointer to the next
+note after that.
+
+<P>We define three pointers to this structure for use in the program, and
+one integer to be used as a counter, and we are ready to begin using the
+defined structure for whatever purpose we desire. In this case, we will
+once again generate nonsense data for illustrative purposes.
+
+<P><B>THE FIRST FIELD</B>
+
+<P><IMG SRC="Image/C1205.GIF" HSPACE=20 VSPACE=20 NOSAVE BORDER=0 HEIGHT=294 WIDTH=410 ALIGN=RIGHT>Using
+the <B>malloc()</B> function, we request a block of storage on the heap
+and fill it with data being careful to check the return to assure that
+we did get a good allocation. The additional field in this example, the
+pointer, is assigned the value of NULL, which is used to indicate that
+this is the end of the list. We will leave the pointer named <B>start </B>pointing
+at this structure, so that it will always point to the first structure
+of the list. We also assign <B>prior </B>the value of <B>start </B>for
+reasons we will see soon. Keep in mind that the end points of a linked
+list will always have to be handled differently than those in the middle
+of a list. We have a single element of our list now and it is filled with
+representative data. Figure 12-5 is the graphical representation of the
+data space following execution of line 33.
+
+<P><B>FILLING ADDITIONAL STRUCTURES</B>
+
+<P>The next group of assignments and control statements are included within
+a <B>for </B>loop so we can build our list fast once it is defined. We
+will go through the loop a number of times equal to the constant RECORDS
+defined at the beginning of the program. Each time we go through the loop,
+we allocate memory, test the allocation return, fill the first three fields
+with nonsense, and fill the pointers. The pointer in the last record is
+given the address of this new record because the <B>prior </B>pointer is
+pointing to the prior record. Thus <B>prior->next </B>is given the address
+of the new record we have just filled. The pointer in the new record is
+assigned the value NULL, and the pointer <B>prior </B>is given the address
+of this new record because the next time we create a record, this one will
+be the prior one at that time. That may sound confusing but it really does
+make sense if you spend some time studying it.
+
+<P>Figure 12-6 illustrates the data space following execution of the loop
+two times. The list is growing downward by one element each time we execute
+the statements in the loop. When we have gone through the <B>for </B>loop
+6 times, we will have a list of 7 structures including the one we generated
+prior to the loop. The list will have the following characteristics.
+
+<P><IMG SRC="Image/C1206.GIF" HSPACE=20 VSPACE=20 NOSAVE BORDER=0 HEIGHT=389 WIDTH=453>
+<OL>
+<LI>
+The pointer named <B>start </B>points to the first structure in the list.</LI>
+
+<LI>
+Each structure contains a pointer to the next structure.</LI>
+
+<LI>
+The last structure has a pointer containing the value NULL which can be
+used to detect the end.</LI>
+</OL>
+It should be clear to you, if you understand the overall data structure,
+that it is not possible to simply jump into the middle of the list and
+change a few values. The only way to get to the third structure is by starting
+at the beginning and working your way down through the list one record
+at a time. Although this may seem like a large price to pay for the convenience
+of putting so much data outside of the program area, it is actually a very
+good way to store some kinds of data.
+
+<P>A word processor would be a good application for this type of data structure
+because you would never need to have random access to the data. In actual
+practice, this is the basic type of storage used for the text in a word
+processor with one line of text per record. Actually, a program with any
+degree of sophistication would use a doubly linked list. This would be
+a list with two pointers per record, one pointing down to the next record,
+and the other pointing up to the record just prior to the one in question.
+Using this kind of a record structure would allow traversing the data in
+either direction.
+
+<P><B>PRINTING THE DATA OUT</B>
+
+<P>To print the data out, a similar method is used as that used to generate
+the data. The pointers are initialized and are then used to go from record
+to record, reading and displaying each record one at a time. Printing is
+terminated when the NULL in the last record is found, so the program doesn't
+even need to know how many records are in the list. Finally, the entire
+list is deleted to make room in memory for any additional data that may
+be needed, in this case, none. Care must be taken to assure that the last
+record is not deleted before the NULL is checked. Once the data is gone,
+it is impossible to know if you are finished yet.
+
+<P><B>MORE ABOUT DYNAMIC ALLOCATION AND LINKED LISTS</B>
+
+<P>It is not difficult, nor is it trivial, to add elements into the middle
+of a linked list. It is necessary to create the new record, fill it with
+data, and point its pointer to the record it is desired to precede. If
+the new record is to be installed between the 3rd and 4th, for example,
+it is necessary for the new record to point to the 4th record, and the
+pointer in the 3rd record must point to the new one. Adding a new record
+to the beginning or end of a list are each special cases. Consider what
+must be done to add a new record in a doubly linked list.
+
+<P>Entire books are written describing different types of linked lists
+and how to use them, so no further detail will be given. The amount of
+detail given should be sufficient for a beginning understanding of C and
+its capabilities.
+
+<P><B>TWO MORE FUNCTIONS</B>
+
+<P>Two additional functions must be mentioned, the <B>calloc()</B> and
+the <B>realloc()</B> functions. The <B>calloc()</B> function allocates
+a block of memory and clears it to all zeros which may be useful in some
+circumstances. It is similar to <B>malloc()</B> and will be left as an
+exercise for you to read about and use <B>calloc() </B>if you desire. Generally,
+you allocate a block of memory and immediately fill it with meaningful
+data so it wastes time to fill it with zeros in the <B>calloc()</B>, then
+fill it with real data. For this reason, the <B>calloc() </B>function is
+rarely used.
+
+<P>The <B>realloc()</B> is used to change the size of an allocated block,
+either bigger or smaller. You should ignore this until you gain a lot of
+experience with C. It is rarely used, even by experienced programmers.
+
+<P><B>PROGRAMMING EXERCISES</B>
+<OL>
+<LI>
+Rewrite the example program STRUCT1.C from chapter 11 to dynamically allocate
+the two structures.</LI>
+
+<LI>
+Rewrite the example program STRUCT2.C from chapter 11 to dynamically allocate
+the 12 structures.</LI>
+</OL>
+<A HREF="C-Starter.htm">Return to Table of Contents</A>
+
+<P><A HREF="Chap13.htm">Advance to Chapter 13</A>
+
+<P>
+<HR width="100%"><I><FONT SIZE=-1>Copyright &copy; 1988-1996 Coronado Enterprises
+- Last update, September 8, 1996</FONT></I>
+<BR><FONT SIZE=-1><I>Gordon Dodrill - dodrill@swcp.com - </I><A HREF="mailto:dodrill@swcp.com">Please
+email any comments or suggestions.</A></FONT>
+</BODY>
+</HTML>

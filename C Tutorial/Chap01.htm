@@ -1,0 +1,171 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Gordon Dodrill">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; I) [Netscape]">
+   <TITLE>Chap01</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<B>C Tutorial - Chapter 1</B>
+
+<P><B><FONT SIZE=+3>G</FONT><FONT SIZE=+2>ETTING</FONT><FONT SIZE=+3> S</FONT><FONT SIZE=+2>TARTED</FONT></B>
+
+<P><B>WHAT IS AN IDENTIFIER?</B>
+
+<P>Before you can do anything in any language, you must know how to name
+an identifier. An identifier is used for any variable, function, data definition,
+etc. In the C programming language, an identifier is a combination of alphanumeric
+characters, the first being a letter of the alphabet or an underline, and
+the remaining being any letter of the alphabet, any numeric digit, or the
+underline.
+
+<P>Two rules must be kept in mind when naming identifiers.
+<OL>
+<LI>
+The case of alphabetic characters is significant. Using <B>INDEX </B>for
+a variable name is not the same as using <B>index</B> and neither of them
+is the same as using <B>InDeX</B> for a variable name. All three refer
+to different variables.</LI>
+
+<LI>
+According to the ANSI-C standard, at least 31 significant characters can
+be used and will be considered significant by a conforming ANSI-C compiler.
+If more than 31 are used, all characters beyond the 31st may be ignored
+by any given compiler.</LI>
+</OL>
+<B>WHAT ABOUT THE UNDERLINE?</B>
+
+<P>The underline can be used as part of a variable name, and adds greatly
+to the readability of the resulting code. It is used by some, but not all,
+experienced C programmers. A few underlines are used for illustration in
+this tutorial. Since most compiler writers use the underline as the first
+character for variable names internal to the system, you should refrain
+from using the underline to begin an identifier to avoid the possibility
+of a name clash. To get specific, identifiers with two leading underscores
+are reserved for the compiler as well as identifiers beginning with a single
+underscore and using an upper case alphabetic character for the second.
+If you make it a point of style to never use an identifier with a leading
+underline, you will not have a naming clash with the system.
+
+<P>It adds greatly to the readability of a program to use descriptive names
+for variables and it would be to your advantage to do so. Pascal and Ada
+programmers tend to use long descriptive names, but most C programmers
+tend to use short cryptic names. Most of the example programs in this tutorial
+use very short names for that reason, but a few longer names are used for
+illustrative purposes.
+
+<P><B>KEYWORDS</B>
+
+<P>There are 32 words defined as keywords in C. These have predefined uses
+and cannot be used for any other purpose in a C program. They are used
+by the compiler as an aid to compiling the program. They are always written
+in lower case. A complete list follows;
+<PRE><B>&nbsp;&nbsp;&nbsp;&nbsp; auto&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; double&nbsp;&nbsp;&nbsp;&nbsp; int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; struct
+&nbsp;&nbsp;&nbsp;&nbsp; break&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; switch
+&nbsp;&nbsp;&nbsp;&nbsp; case&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; enum&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; register&nbsp;&nbsp; typedef
+&nbsp;&nbsp;&nbsp;&nbsp; char&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; extern&nbsp;&nbsp;&nbsp;&nbsp; return&nbsp;&nbsp;&nbsp;&nbsp; union
+&nbsp;&nbsp;&nbsp;&nbsp; const&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; float&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; short&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; unsigned
+&nbsp;&nbsp;&nbsp;&nbsp; continue&nbsp;&nbsp; for&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; signed&nbsp;&nbsp;&nbsp;&nbsp; void
+&nbsp;&nbsp;&nbsp;&nbsp; default&nbsp;&nbsp;&nbsp; goto&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sizeof&nbsp;&nbsp;&nbsp;&nbsp; volatile
+&nbsp;&nbsp;&nbsp;&nbsp; do&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; static&nbsp;&nbsp;&nbsp;&nbsp; while</B></PRE>
+In addition to this list of keywords, your compiler may define a few more.
+If it does, they will be listed in the documentation that came with your
+compiler. Each of the above keywords will be defined, illustrated, and
+used in this tutorial.
+
+<P><B>WE NEED DATA AND A PROGRAM</B>
+
+<P>Any computer program has two entities to consider, the data, and the
+program. They are highly dependent on one another and careful planning
+of both will lead to a well planned and well written program. Unfortunately,
+it is not possible to study either completely without a good working knowledge
+of the other. For that reason, this tutorial will jump back and forth between
+teaching methods of program writing and methods of data definition. Simply
+follow along and you will have a good understanding of both. Keep in mind
+that, even though it seems expedient to sometimes jump right into coding
+the program, time spent planning the data structures will be well spent
+and the quality of the final program will reflect the original planning.
+
+<P><B>HOW THIS TUTORIAL IS WRITTEN</B>
+
+<P>As you go through the example programs, you will find that every program
+is complete. There are no program fragments that could be confusing. This
+allows you to see every requirement that is needed to use any of the features
+of C as they are presented. Some tutorials I have seen give very few, and
+very complex examples. They really serve more to confuse the student. This
+tutorial is the complete opposite because it strives to cover each new
+aspect of programming in as simple a context as possible. This method,
+however, leads to a lack of knowledge in how the various parts are combined.
+For that reason, chapter 14 is devoted entirely to using the features taught
+in the earlier chapters. It will illustrate how to put the various features
+together to create a usable program. They are given for your study, and
+are not completely explained. Enough details of their operation are given
+to allow you to understand how they work after you have completed all of
+the previous lessons.
+
+<P>Throughout this tutorial, <B>keywords, variable names,</B> and <B>function
+names</B> will be given in boldface as an aid to clarity. These terms will
+be completely defined throughout the tutorial.
+
+<P><B>RESULT OF EXECUTION</B>
+
+<P>The result of executing each program will be given in comments at the
+end of the program listing after the comment is defined in about the fourth
+program of chapter 2. If you feel confident that you completely understand
+the program, you can simply refer to the result of execution to see if
+you understand the result. In this case, it will not be necessary for you
+to compile and execute every program. It would be a good exercise for you
+to compile and execute some of them however, because all C compilers will
+not generate exactly the same results and you need to get familiar with
+your own compiler.
+
+<P>Example program ------> <B>FIRSTEX.C</B>
+
+<P>At this point, you should compile and execute FIRSTEX.C if you have
+not yet done so, to see that your C compiler is properly loaded and operating.
+Don't worry about what the program does yet. In due time you will understand
+it completely.
+
+<P>Note that this program will compile and execute properly with any good
+compiler.
+
+<P><B>A WORD ABOUT COMPILERS</B>
+
+<P>All of the example programs in this tutorial will compile and execute
+correctly with any good ANSI compatible C compiler. Some compilers have
+gotten extremely complex and hard to use for a beginning C programmer,
+and some only compile and build Microsoft Windows programs. Fortunately,
+most of the C compilers available have a means of compiling a standard
+C program which is written for the DOS environment and includes none of
+the Windows extensions. You should check your documentation for the capabilities
+and limitations of your compiler. If you have not yet purchased a C compiler,
+you should find one that is ANSI-C compliant, and that also has the ability
+to generate a DOS executable if you are planning to use the DOS operating
+system.
+
+<P><B>ANSWERS TO PROGRAMMING EXERCISES</B>
+
+<P>There are programming exercises at the end of most of the chapters.
+You should attempt to do original work on each of the exercises before
+referring to the answers (all of which are zipped into cans.zip) in order
+to gain your own programming experience. These answers are given for your
+information in case you are completely stuck on how to solve a particular
+problem. These answers are not meant to be the only answer, since there
+are many ways to program anything, but they are meant to illustrate one
+way to solve the suggested programming problem.
+
+<P>The answers are all in source files named in the format CHnn_m.C where
+nn is the chapter number, and m is the exercise number. If more than one
+answer is required, an A, B, or C is included following the exercise number.
+
+<P><A HREF="C-Starter.htm">Return to Table of Contents</A>
+
+<P><A HREF="Chap02.htm">Advance to Chapter 2</A>
+
+<P>
+<HR width="100%"><I><FONT SIZE=-1>Copyright &copy; 1988-1996 Coronado Enterprises
+- Last update, September 8, 1996</FONT></I>
+<BR><FONT SIZE=-1><I>Gordon Dodrill - dodrill@swcp.com - </I><A HREF="mailto:dodrill@swcp.com">Please
+email any comments or suggestions.</A></FONT>
+</BODY>
+</HTML>

@@ -1,0 +1,151 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Gordon Dodrill">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; I) [Netscape]">
+   <TITLE>Chap13</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<B>C Tutorial - Chapter 13</B>
+
+<P><B><FONT SIZE=+3>C</FONT><FONT SIZE=+2>HARACTER </FONT><FONT SIZE=+3>A</FONT><FONT SIZE=+2>ND
+</FONT><FONT SIZE=+3>B</FONT><FONT SIZE=+2>IT </FONT><FONT SIZE=+3>M</FONT><FONT SIZE=+2>ANIPULATION</FONT></B>
+
+<P><B>UPPER AND LOWER CASE</B>
+
+<P>Example program ------> <B>UPLOW.C</B>
+
+<P>Examine the program named UPLOW.C for an example of a program that does
+lots of character manipulation. More specifically, it changes the case
+of alphabetic characters. It illustrates the use of four functions that
+have to do with case. It should be no problem for you to study this program
+on your own and understand how it works. The four functions on display
+in this program are all within the user written function, <B>mix_up_the_chars()</B>.
+Compile and run the program with the file of your choice. The four functions
+are;
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp; isupper(c);&nbsp;&nbsp;&nbsp; Is the character upper case?
+&nbsp;&nbsp;&nbsp;&nbsp; islower(c);&nbsp;&nbsp;&nbsp; Is the character lower case?
+&nbsp;&nbsp;&nbsp;&nbsp; toupper(c);&nbsp;&nbsp;&nbsp; Make the character upper case.
+&nbsp;&nbsp;&nbsp;&nbsp; tolower(c);&nbsp;&nbsp;&nbsp; Make the character lower case.</PRE>
+Many more classification and conversion routines are listed in the reference
+material for your compiler. You should spend time studying these at this
+time to get an idea of what functions are available.
+
+<P><B>CLASSIFICATION OF CHARACTERS</B>
+
+<P>Example program ------> <B>CHARCLAS.C</B>
+
+<P>Load and display the next program, CHARCLAS.C for an example of character
+counting. We have repeatedly used the backslash n character representing
+a new line. These are called escape sequences, and some of the more commonly
+used are defined in the following table;
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp; \n&nbsp;&nbsp;&nbsp; Newline&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; \t&nbsp;&nbsp;&nbsp; Tab&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; \"&nbsp;&nbsp;&nbsp; Double quote&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; \\&nbsp;&nbsp;&nbsp; Backslash
+&nbsp;&nbsp;&nbsp;&nbsp; \0&nbsp;&nbsp;&nbsp; NULL (zero)</PRE>
+Consult your compiler documentation for a complete list of escape sequences
+available with your compiler.
+
+<P>By preceding each of the above characters with the backslash character,
+the character can be included in a line of text for display, or printing.
+In the same way that it is perfectly all right to use the letter n in a
+line of text as a part of someone's name, and as an end-of-line, the other
+characters can be used as parts of text or for their particular functions.
+
+<P>This example program uses three of the functions that can determine
+the class of a character, and counts the characters in each class. The
+number of each class is displayed along with the line itself. The three
+functions are as follows;
+<PRE>&nbsp;&nbsp;&nbsp; isalpha(c); Is the character alphabetic?
+&nbsp;&nbsp;&nbsp; isdigit(c); Is the character a numeral?
+&nbsp;&nbsp;&nbsp; isspace(c); Is the character any of, \n, \t, or blank?</PRE>
+As noted above, many more classification routines are available with your
+compiler.
+
+<P>This program should be simple for you to find your way through, so no
+explanation will be given. It was necessary to give an example with these
+functions used. Compile and run this program with any file you choose.
+
+<P><B>THE LOGICAL FUNCTIONS</B>
+
+<P>Example program ------> <B>BITOPS.C</B>
+
+<P>Load and display the program BITOPS.C. The functions in this group of
+functions are used to do bitwise operations, meaning that the operations
+are performed on the bits as though they were individual bits. No carry
+from bit to bit is performed as would be done with a binary addition. Even
+though the operations are performed on a single bit basis, an entire byte
+or integer variable can be operated on in one instruction. The operators
+and the operations they perform are given in the following table;
+<PRE>&nbsp;&nbsp; &amp;&nbsp;&nbsp; Logical AND, if both bits are 1, the result is 1.&nbsp;
+&nbsp;&nbsp; |&nbsp;&nbsp; Logical OR, if either bit is one, the result is 1.&nbsp;
+&nbsp;&nbsp; ^&nbsp;&nbsp; Logical XOR, (exclusive OR), if one and only one&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bit is 1, the result is 1.&nbsp;
+&nbsp;&nbsp; ~&nbsp;&nbsp; Logical invert, if bit is 1, the result is 0, and&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if bit is 0, the result is 1.
+</PRE>
+The example program uses several fields that are combined in each of the
+ways given above. The data is in hexadecimal format. It will be assumed
+that you already know hexadecimal format if you need to use these operations.
+If you don't, you will need to study it on your own. Teaching the hexadecimal
+format of numbers is beyond the scope of this tutorial. Be sure to compile
+and execute this program and observe the output.
+
+<P><B>THE SHIFT INSTRUCTIONS</B>
+
+<P>Example program ------> <B>SHIFTER.C</B>
+
+<P>The last two operations to be covered in this chapter are the left shift
+and the right shift instructions. Load the example program SHIFTER.C for
+an example using these two instructions. The two operations use the following
+operators;
+<PRE>&nbsp;&nbsp;&nbsp; &lt;&lt;&nbsp;&nbsp;&nbsp; n Left shift n places.
+&nbsp;&nbsp;&nbsp; >>&nbsp;&nbsp;&nbsp; n Right shift n places.</PRE>
+Once again the operations are carried out and displayed using the hexadecimal
+format. The program should be simple for you to understand on your own,
+there is no tricky code.
+
+<P><B>WHERE DO I GO FROM HERE?</B>
+
+<P>Now that you have completed this tutorial, you are filled with knowledge
+of the C programming language, but you have relatively little experience
+with using it. I can make three recommendations to improve your knowledge
+of C and to give you additional exposure to it.
+
+<P>First, obtain a copy of the second edition of "The C Programming Language"
+written by Brian Kernighan and Dennis Ritchie, Prentice Hall, 1988. A careful
+reading of this book will provide you with a wealth of knowledge of the
+C programming language including many details which I felt were beyond
+the scope of this beginning tutorial. The book does not cover prototyping,
+since it was added later by the ANSI-C standardization committee, but that
+is the only major deficiency in the book and is easily compensated for.
+Simply use prototypes and the modern method of function definition when
+studying any of the example programs.
+
+<P>Secondly, and probably the most important recommendation, is to write
+programs in C. Writing C code, finding and fixing the errors that you will
+inadvertently introduce into the code, and finally seeing your program
+execute just the way you intended it to, provides a great feeling of accomplishment.
+
+<P>The third recommendation is to read current information on the language.
+Good sources for information are programming magazines, possibly a new
+book on C, or time spent reading Usenet newsgroups such as comp.lang.c
+or comp.lang.c.moderated. There are other newsgroups devoted to various
+operating systems, or to specific compilers which you may find interesting
+and informative.
+
+<P>The more you expose yourself to the C programming language, the more
+you will learn about it, and the more you will enjoy using it.
+
+<P>Good luck!
+
+<P><A HREF="C-Starter.htm">Return to Table of Contents</A>
+
+<P>
+<HR width="100%"><I><FONT SIZE=-1>Copyright &copy; 1988-1996 Coronado Enterprises
+- Last update, September 8, 1996</FONT></I>
+<BR><FONT SIZE=-1><I>Gordon Dodrill - dodrill@swcp.com - </I><A HREF="mailto:dodrill@swcp.com">Please
+email any comments or suggestions.</A></FONT>
+</BODY>
+</HTML>

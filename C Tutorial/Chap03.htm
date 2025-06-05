@@ -1,0 +1,351 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Gordon Dodrill">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; I) [Netscape]">
+   <TITLE>Chap03</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<B>C Tutorial - Chapter 3</B>
+
+<P><B><FONT SIZE=+3>P</FONT><FONT SIZE=+2>ROGRAM</FONT><FONT SIZE=+3> C</FONT><FONT SIZE=+2>ONTROL</FONT></B>
+
+<P><B>THE WHILE LOOP</B>
+
+<P>The C programming language has several structures for looping and conditional
+branching. We will cover them all in this chapter and we will begin with
+the <B>while </B>loop.
+
+<P>The <B>while </B>loop continues to loop while some condition is true.
+When the condition becomes false, the looping is discontinued. It therefore
+does just what it says it does, the name of the loop being very descriptive.
+
+<P>Example program ------> <B>WHILE.C</B>
+
+<P>Load the program WHILE.C and display it for an example of a <B>while
+</B>loop. We begin with a comment and the program entry point <B>main()</B>,
+then go on to define an integer variable named <B>count </B>within the
+body of the program. The variable is set to zero and we come to the <B>while
+</B>loop itself. The syntax of a <B>while </B>loop is just as shown here.
+The keyword <B>while</B> is followed by an expression of something in parentheses,
+followed by a compound statement bracketed by braces. As long as the expression
+in the parenthesis is true, all statements within the braces will be repeatedly
+executed. In this case, since the variable <B>count </B>is incremented
+by one every time the statements are executed, it will eventually reach
+6. At that time the statement will not be executed because <B>count </B>is
+not less than 6, and the loop will be terminated. The program control will
+resume at the statement following the statements in braces.
+
+<P>We will cover the compare expression, the one in parentheses, in the
+next chapter. Until then, simply accept the expressions for what you think
+they should do and you will be correct for these simple cases.
+
+<P>Several things must be pointed out regarding the <B>while </B>loop.
+First, if the variable <B>count </B>were initially set to any number greater
+than 5, the statements within the loop would not be executed at all, so
+it is possible to have a <B>while </B>loop that never is executed. Secondly,
+if the variable were not incremented in the loop, then in this case, the
+loop would never terminate, and the program would never complete. Finally,
+if there is only one statement to be executed within the loop, it does
+not need delimiting braces but can stand alone.
+
+<P>Compile and run this program after you have studied it enough to assure
+yourself that you understand its operation completely. Note that the result
+of execution is given for this program, (and will be given for all of the
+remaining example programs in this tutorial) so you do not need to compile
+and execute every program to see the results. Be sure to compile and execute
+some of the programs however, to gain experience with your compiler.
+
+<P>You should make some modifications to any programs that are not completely
+clear to you and compile them until you understand them completely. The
+best way to learn is to try various modifications yourself.
+
+<P>We will continue to ignore the <B>#include</B> statement and the <B>return
+</B>statement in the example programs in this chapter. We will define them
+completely later in this tutorial.
+
+<P><B>THE DO-WHILE LOOP</B>
+
+<P>Example program ------> <B>DOWHILE.C</B>
+
+<P>A variation of the <B>while </B>loop is illustrated in the program DOWHILE.C,
+which you should load and display. This program is nearly identical to
+the last one except that the loop begins with the keyword <B>do</B>, followed
+by a compound statement in braces, then the keyword <B>while</B>, and finally
+an expression in parentheses. The statements in the braces are executed
+repeatedly as long as the expression in the parentheses is true. When the
+expression in parentheses becomes false, execution is terminated, and control
+passes to the statements following this statement.
+
+<P>Several things must be pointed out regarding the <B>do-while</B> loop.
+Since the test is done at the end of the loop, the statements in the braces
+will always be executed at least once. Secondly, if the variable <B>i</B>
+were not changed within the loop, the loop would never terminate, and hence
+the program would never terminate.
+
+<P>It should come as no surprise to you that these loops can be nested.
+That is, one loop can be included within the compound statement of another
+loop, and the nesting level has no limit. This will be illustrated later.
+
+<P>Compile and run this program to see if it does what you think it should
+do.
+
+<P><B>THE FOR LOOP</B>
+
+<P>Example program ------> <B>FORLOOP.C</B>
+
+<P>Load and display the file named FORLOOP.C on your monitor for an example
+of a program with a <B>for </B>loop. The <B>for </B>loop consists of the
+keyword <B>for </B>followed by a rather large expression in parentheses.
+This expression is really composed of three fields separated by semi-colons.
+The first field contains the expression <TT>"index = 0"</TT> and is an
+initializing field. Any expressions in this field are executed prior to
+the first pass through the loop. There is essentially no limit as to what
+can go here, but good programming practice would require it to be kept
+simple. Several initializing statements can be placed in this field, separated
+by commas.
+
+<P>The second field, in this case containing <TT>"index &lt; 6"</TT>, is
+the test which is done at the beginning of each pass through the loop.
+It can be any expression which will evaluate to a true or false. (More
+will be said about the actual value of true and false in the next chapter.)
+
+<P>The expression contained in the third field is executed each time the
+loop is exercised but it is not executed until after those statements in
+the main body of the loop are executed. This field, like the first, can
+also be composed of several operations separated by commas.
+
+<P>Following the <B>for()</B> expression is any single or compound statement
+which will be executed as the body of the loop. A compound statement is
+any group of valid C statements enclosed in braces. In nearly any context
+in C, a simple statement can be replaced by a compound statement that will
+be treated as if it were a single statement as far as program control goes.
+Compile and run this program.
+
+<P>The <B>while </B>is convenient to use for a loop when you don't have
+any idea how many times the loop will be executed, and the <B>for </B>loop
+is usually used in those cases when you are doing a fixed number of iterations.
+The <B>for </B>loop is also convenient because it moves all of the control
+information for a loop into one place, between the parentheses, rather
+than at both ends of the code. It is your choice as to which you would
+rather use. Depending on how they are used, it is possible with each of
+these two loops to never execute the code within the loop at all. This
+is because the test is done at the beginning of the loop, and the test
+may fail during the first iteration. The <B>do-while</B> loop however,
+due to the fact that the code within the loop is executed prior to the
+test, will always execute the code at least once.
+
+<P><B>THE IF STATEMENT</B>
+
+<P>Example program ------> <B>IFELSE.C</B>
+
+<P>Load and display the file IFELSE.C for an example of our first conditional
+branching statement, the <B>if</B>. Notice first, that there is a <B>for
+</B>loop with a compound statement as its executable part containing two
+<B>if </B>statements. This is an example of how statements can be nested.
+It should be clear to you that each of the <B>if </B>statements will be
+executed 10 times.
+
+<P>Consider the first <B>if </B>statement. It starts with the keyword <B>if
+</B>followed by an expression in parentheses. If the expression is evaluated
+and found to be true, the single statement following the <B>if </B>is executed,
+and if false, the following statement is skipped. Here too, the single
+statement can be replaced by a compound statement composed of several statements
+bounded by braces. The expression <TT>"data == 2"</TT> is simply asking
+if the value of <B>data </B>is equal to 2. This will be explained in detail
+in the next chapter. (Simply suffice for now that if <TT>"data = 2"</TT>
+were used in this context, it would mean a completely different thing.
+You must use the double equal sign for comparing values.)
+
+<P><B>NOW FOR THE IF-ELSE</B>
+
+<P>The second <B>if </B>is similar to the first with the addition of a
+new keyword, the <B>else </B>in line 17. This simply says that if the expression
+in the parentheses evaluates as true, the first expression is executed,
+otherwise the expression following the <B>else </B>is executed. Thus, one
+of the two expressions will always be executed, whereas in the first example
+the single expression was either executed or skipped. Both will find many
+uses in your C programming efforts. Compile and run this program to see
+if it does what you expect.
+
+<P><B>THE BREAK AND CONTINUE</B>
+
+<P>Example program ------> <B>BREAKCON.C</B>
+
+<P>Load the file named BREAKCON.C for an example of two new statements.
+Notice that in the first <B>for </B>loop, there is an <B>if </B>statement
+that calls a <B>break </B>if <B>xx </B>equals 8. The <B>break </B>will
+jump out of the loop you are in and begin executing statements immediately
+following the loop, effectively terminating the loop. This is a valuable
+statement when you need to jump out of a loop depending on the value of
+some results calculated in the loop. In this case, when <B>xx </B>reaches
+the value of 8, the loop is terminated and the last value printed will
+be the previous value, namely 7. The <B>break </B>always jumps out of the
+loop just past the terminating brace.
+
+<P>The next <B>for </B>loop starting in line 15, contains a <B>continue
+</B>statement which does not cause termination of the loop but jumps out
+of the present iteration. When the value of <B>xx </B>reaches 8 in this
+case, the program will jump to the end of the loop and continue executing
+the loop, effectively eliminating the <B>printf()</B> statement during
+the pass through the loop when <B>xx </B>is eight. The <B>continue </B>statement
+always jumps to the end of the loop just prior to the terminating brace.
+At that time the loop is terminated or continues based on the result of
+the loop test.
+
+<P>Be sure to compile and execute this program.
+
+<P><B>THE SWITCH STATEMENT</B>
+
+<P>Example program ------> <B>SWITCH.C</B>
+
+<P>Load and display the file SWITCH.C for an example of the biggest construct
+yet in the C language, the <B>switch</B>. The <B>switch </B>is not difficult,
+so don't let it intimidate you. It begins with the keyword <B>switch </B>followed
+by a variable in parentheses which is the switching variable, in this case
+<B>truck</B>. As many cases as needed are then enclosed within a pair of
+braces. The reserved word <B>case </B>is used to begin each case, followed
+by the value of the variable for that case, then a colon, and the statements
+to be executed.
+
+<P>In this example, if the variable named <B>truck </B>contains the value
+3 during this pass of the <B>switch </B>statement, the <B>printf()</B>
+in line 13 will cause <TT>"The value is three\n"</TT> to be displayed,
+and the <B>break </B>statement will cause us to jump out of the <B>switch</B>.
+The <B>break </B>statement here works in much the same manner as the loop,
+it jumps out just past the closing brace.
+
+<P>Once an entry point is found, statements will be executed until a <B>break
+</B>is found or until the program drops through the bottom of the <B>switch
+</B>braces. If the variable <B>truck </B>has the value 5, the statements
+will begin executing at line 17 where <TT>"case 5 :"</TT> is found, but
+the first statements found are where the case 8 statements are. These are
+executed and the <B>break </B>statement in line 21 will direct the execution
+out of the bottom of the switch just past the closing brace. The various
+case values can be in any order and if a value is not found, the default
+portion of the switch will be executed.
+
+<P>It should be clear that any of the above constructs can be nested within
+each other or placed in succession, depending on the needs of the particular
+programming project at hand. Note that the <B>switch </B>is not used as
+frequently as the loop and the <B>if </B>statements. In fact, the <B>switch
+</B>is used infrequently but should be completely understood by the serious
+C programmer. Be sure to compile and run SWITCH.C and examine the results.
+
+<P><B>THE EVIL GOTO STATEMENT</B>
+
+<P>Example program ------> <B>GOTOEX.C</B>
+
+<P>Load and display the file GOTOEX.C for an example of a file with some
+<B>goto </B>statements in it. To use a <B>goto </B>statement, you simply
+use the reserved word <B>goto </B>followed by the symbolic name to which
+you wish to jump. The name is then placed anywhere in the program followed
+by a colon. You can jump nearly anywhere within a function, but you are
+not permitted to jump into a loop, although you are allowed to jump out
+of a loop.
+
+<P>This particular program is really a mess but it is a good example of
+why software writers are trying to eliminate the use of the <B>goto </B>statement
+as much as possible. The only place in this program where it is reasonable
+to use the <B>goto </B>is the one in line 23 where the program jumps out
+of the three nested loops in one jump. In this case it would be rather
+messy to set up a variable and jump successively out of each of the three
+nested loops but one <B>goto </B>statement gets you out of all three in
+a very concise manner.
+
+<P>Some persons say the <B>goto </B>statement should never be used under
+any circumstances, but this is narrow minded thinking. If there is a place
+where a <B>goto </B>will clearly do a neater control flow than some other
+construct, feel free to use it. It should not be abused however, as it
+is in the rest of the program on your monitor.
+
+<P>Entire books are written on "gotoless" programming, better known as
+Structured Programming.
+
+<P>Compile and run GOTOEX.C and study its output. It would be a good exercise
+to rewrite it and see how much more readable it is when the statements
+are listed in order.
+
+<P><B>FINALLY, A MEANINGFUL PROGRAM</B>
+
+<P>Example program ------> <B>TEMPCONV.C</B>
+
+<P>Load the file named TEMPCONV.C for an example of a useful, even though
+somewhat limited program. This is a program that generates a list of centigrade
+and fahrenheit temperatures and prints a message out at the freezing point
+of water and another at the boiling point of water.
+
+<P>Of particular importance is the formatting. The header is several lines
+of comments describing what the program does in a manner that catches the
+readers attention and is still pleasing to the eye. You will eventually
+develop your own formatting style, but this is a good way to start. Also
+if you observe the <B>for </B>loop, you will notice that all of the contents
+of the compound statement are indented 3 spaces to the right of the <B>for
+</B>keyword, and the opening and closing braces are lined up under the
+"f" in <B>for</B>. This makes debugging a bit easier because the construction
+becomes very obvious. (The next example program will illustrate two additional
+methods of formatting braces.) You will also notice that the <B>printf()</B>
+statements that are in the <B>if </B>statements within the big <B>for </B>loop
+are indented three additional spaces because they are part of yet another
+construct.
+
+<P>This is the first program in which we used more than one variable. The
+three variables are simply defined on three different lines and are used
+in the same manner as a single variable was used in previous programs.
+By defining them on different lines, we have an opportunity to define each
+with a comment. It would be possible to define them on one line, but to
+do so would remove the ability to include a comment on each line. This
+is illustrated in the next program. Be sure to compile and execute the
+current program.
+
+<P><B>ANOTHER POOR PROGRAMMING EXAMPLE</B>
+
+<P>Example program ------> <B>DUMBCONV.C</B>
+
+<P>Recalling UGLYFORM.C from the last chapter, you saw a very poorly formatted
+program. If you load and display DUMBCONV.C you will have an example of
+poor formatting which is much closer to what you will find in practice.
+This is the same program as TEMPCONV.C with the comments removed and the
+variable names changed to remove the descriptive aspect of the names. Although
+this program does exactly the same as the last one, it is much more difficult
+to read and understand. You should begin to develop good programming practices
+now by studying this program to learn what not to do.
+
+<P>It would be beneficial for you to remove the indentation from the last
+two example programs to see how much more difficult it is to understand
+the structure of the program without the indentations.
+
+<P><B>OUR FIRST STYLE PROGRAM</B>
+
+<P>Example program ------> <B>STYLE1.C</B>
+
+<P>This program does nothing practical except to illustrate various styles
+of formatting and how to combine some of the constructs introduced in this
+chapter. There is nothing in this program that we have not studied so far
+in this tutorial. The program is heavily commented and should be studied
+in detail by the diligent C student to begin learning proper C programming
+style. Like all other example programs, this one can be compiled and executed,
+and should be.
+
+<P><B>PROGRAMMING EXERCISES</B>
+<OL>
+<LI>
+Write a program that writes your name on the monitor ten times. Write this
+program three times, once with each looping method.</LI>
+
+<LI>
+Write a program that counts from one to ten, prints the values on a separate
+line for each, and includes a message of your choice when the count is
+3 and a different message when the count is 7.</LI>
+</OL>
+<A HREF="C-Starter.htm">Return to Table of Contents</A>
+
+<P><A HREF="Chap04.htm">Advance to Chapter 4</A>
+
+<P>
+<HR width="100%"><I><FONT SIZE=-1>Copyright &copy; 1988-1996 Coronado Enterprises
+- Last update, September 8, 1996</FONT></I>
+<BR><FONT SIZE=-1><I>Gordon Dodrill - dodrill@swcp.com - </I><A HREF="mailto:dodrill@swcp.com">Please
+email any comments or suggestions.</A></FONT>
+</BODY>
+</HTML>

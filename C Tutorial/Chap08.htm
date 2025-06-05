@@ -1,0 +1,404 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Gordon Dodrill">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; I) [Netscape]">
+   <TITLE>Chap08</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<B>C Tutorial - Chapter 8</B>
+
+<P><B><FONT SIZE=+3>P</FONT><FONT SIZE=+2>OINTERS</FONT></B>
+
+<P><B>WHAT IS A POINTER?</B>
+
+<P>Example program ------> <B>POINTER.C</B>
+
+<P>Simply stated, a pointer is an address. Instead of being a variable,
+it is a pointer to a variable stored somewhere in the address space of
+the program. It is always best to use an example so load the file named
+POINTER.C and display it on your monitor for an example of a program with
+some pointers in it.
+
+<P>For the moment, ignore the data definition statement where we define
+<B>index </B>and two other fields beginning with a star. It is properly
+called an asterisk, but for reasons we will see later, let's agree to call
+it a star. If you observe the statement in line 8, it should be clear that
+we assign the value of 39 to the variable named <B>index</B>. This is no
+surprise, we have been doing it for several programs now. The statement
+in line 9 however, says to assign to <B>pt1 </B>a strange looking value,
+namely the variable <B>index </B>with an ampersand in front of it. In this
+example, <B>pt1 </B>and <B>pt2 </B>are pointers, and the variable named
+<B>index </B>is a simple variable. Now we have a problem similar to the
+old chicken and egg problem. We need to learn how to use pointers in a
+program, but to do so requires that first we define the means of using
+the pointers in the program.
+
+<P>The following two rules will be somewhat confusing to you at first,
+but we need to state the definitions before we can use them. Take your
+time, and the whole thing will clear up very quickly.
+
+<P><B>TWO VERY IMPORTANT RULES</B>
+
+<P>The following two rules are very important when using pointers and must
+be thoroughly understood.
+<OL>
+<LI>
+A variable name with an ampersand in front of it defines the address of
+the variable and therefore points to the variable. You can therefore read
+line nine as "<B>pt1 </B>is assigned the value of the address of <B>index</B>".</LI>
+
+<LI>
+A pointer with a star in front of it refers to the value of the variable
+pointed to by the pointer. Line twelve of the program can be read as "The
+stored (starred) value to which the pointer <B>pt1 </B>points is assigned
+the value 13". This is commonly referred to as dereferencing the pointer.
+Now you can see why it is convenient to think of the asterisk as a star,
+it sort of sounds like the word store.</LI>
+</OL>
+MEMORY AIDS
+<OL>
+<LI>
+Think of &amp; as an address.</LI>
+
+<LI>
+Think of * as a star referring to stored.</LI>
+</OL>
+<A HREF="Chap08.htm"><IMG SRC="Image/C0801.GIF" HSPACE=20 VSPACE=20 NOSAVE BORDER=0 HEIGHT=116 WIDTH=240 ALIGN=RIGHT></A>Assume
+for the moment that <B>pt1 </B>and <B>pt2 </B>are pointers (we will see
+how to define pointers shortly). As pointers, they do not contain a variable
+value but an address of a variable and can be used to point to a variable.
+Figure 8-1 is a graphical representation of the data space as it is configured
+just prior to executing line 8. A box represents a variable, and a box
+with a dot in it represents a pointer. At this time the pointers are not
+pointing at anything, so they have no arrows emanating from the boxes.
+Executing line 8 stores the value 39 in index.
+
+<P><A HREF="Chap08.htm"><IMG SRC="Image/C0802.GIF" HSPACE=20 VSPACE=20 NOSAVE BORDER=0 HEIGHT=116 WIDTH=240 ALIGN=RIGHT></A>Continuing
+execution of the program, we come to line 9 which assigns the address of
+the variable <B>index </B>to the pointer <B>pt1 </B>which causes <B>pt1
+</B>to point to <B>index</B>. Since we have a pointer to <B>index</B>,
+we can manipulate the value of <B>index </B>by using either the variable
+name itself, or the pointer. Figure 8-2 depicts the condition of the data
+space after executing line 9 of the program.
+
+<P>Jumping ahead a little in the program, line 12 modifies the value of
+<B>index </B>by using the pointer. Since the pointer <B>pt1 </B>points
+to the variable named <B>index</B>, putting a star in front of the pointer
+name refers to the memory location to which it is pointing. Line 12 therefore
+assigns the value of 13 to <B>index</B>. Anyplace in the program where
+it is permissible to use the variable name <B>index</B>, it is also permissible
+to use the name <B>*pt1</B> since they are identical in meaning until the
+pointer is reassigned to some other variable.
+
+<P><B>ANOTHER POINTER</B>
+
+<P><A HREF="Chap08.htm"><IMG SRC="Image/C0803.GIF" HSPACE=20 VSPACE=20 NOSAVE BORDER=0 HEIGHT=116 WIDTH=240 ALIGN=RIGHT></A>Just
+to add a little intrigue to the system, we have another pointer defined
+in this program, <B>pt2</B>. Since <B>pt2 </B>has not been assigned a value
+prior to statement 10, it doesn't point to anything, it contains garbage.
+Of course, that is also true of any local variable until a value is assigned
+to it. The statement in line 10 assigns <B>pt2 </B>the same address as
+<B>pt1</B>, so that now <B>pt2 </B>also points to the variable named <B>index</B>.
+We have copied the address from one pointer to another pointer. To continue
+the definition from the last paragraph, anyplace in the program where it
+is permissible to use the variable <B>index</B>, it is also permissible
+to use the name <B>*pt2</B> because they are now identical in meaning.
+This fact is illustrated in the <B>printf()</B> statement in line 11 since
+this statement uses the three means of identifying the same variable to
+print out the same variable three times. Refer to figure 8-3 for the representation
+of the data space at this time.
+
+<P><B>THERE IS ONLY ONE VARIABLE</B>
+
+<P><A HREF="Chap08.htm"><IMG SRC="Image/C0804.GIF" HSPACE=20 VSPACE=20 NOSAVE BORDER=0 HEIGHT=116 WIDTH=240 ALIGN=RIGHT></A>Note
+carefully that, even though it appears that there are three variables,
+there is really only one variable. The two pointers each point to the single
+variable. This is illustrated in the statement in line 12 which assigns
+the value of 13 to the variable <B>index</B>, because that is where the
+pointer <B>pt1 </B>is pointing. The <B>printf() </B>statement in line 13
+causes the new value of 13 to be printed out three times. Keep in mind
+that there is really only one variable to be changed or printed, not three.
+We do have three aliases for one variable, <B>index</B>, <B>*pt1</B>, and
+<B>*pt2.</B> Figure 8-4 is the graphical representation of the data space
+at this time.
+
+<P>This is admittedly a very difficult concept, but since it is used extensively
+in all but the most trivial C programs, it is well worth your time to stay
+with this material until you understand it thoroughly.
+
+<P><B>HOW DO YOU DEFINE A POINTER?</B>
+
+<P>Now to keep a promise and tell you how to define a pointer. Refer to
+line 6 of the program and you will see our old familiar way of defining
+the variable <B>index</B>, followed by two more definitions. The second
+definition can be read as "the storage location to which <B>pt1 </B>points
+will be an <B>int </B>type variable". Therefore, <B>pt1 </B>is a pointer
+to an <B>int </B>type variable. Likewise, <B>pt2 </B>is another pointer
+to an <B>int </B>type variable, because it has a star (asterisk) in front
+of it. These two pointers can point to the same <B>int </B>variable or
+to two different <B>int </B>variables.
+
+<P>A pointer must be defined to point to a specific type of variable. Following
+a proper definition, it cannot be used to point to any other type of variable
+or it will result in a type incompatibility error.
+
+<P>Compile and run this program and observe that there is only one variable
+and the single statement in line 12 changes the one variable which is displayed
+three times. This material is so important that you should review it carefully
+if you do not fully understand it at this time. It would be a good exercise
+for you to draw the graphics yourself as you review the code for this program.
+
+<P><B>THE SECOND PROGRAM WITH POINTERS</B>
+
+<P>Example program ------> <B>POINTER2.C</B>
+
+<P>In these few pages so far on pointers, we have covered a lot of territory,
+but it is important territory. We still have a lot of material to cover
+so stay in tune as we continue this important aspect of C. Load the next
+file named POINTER2.C and display it on your monitor so we can continue
+our study.
+
+<P><A HREF="Chap08.htm"><IMG SRC="Image/C0805.GIF" HSPACE=20 VSPACE=20 NOSAVE BORDER=0 HEIGHT=243 WIDTH=389 ALIGN=RIGHT></A>In
+this program we have defined several variables and two pointers. The first
+pointer named <B>there </B>is a pointer to a <B>char </B>type variable
+and the second named <B>pt </B>points to an <B>int </B>type variable. Notice
+also that we have defined two array variables named <B>strg </B>and <B>list</B>.
+We will use them to show the correspondence between pointers and array
+names.
+
+<P>Figure 8-5 depicts the data just prior to executing line 10. There are
+three variables, two pointers, a string, and an array of ints, or we could
+say there are three variables, two pointers, and two arrays. Each array
+is composed of the array itself and a pointer which points to the beginning
+of the array according to the definition of an array in C. This will be
+completely defined in the next paragraph. Each array is composed of a number
+of identical elements of which only a few at the beginning and a few at
+the end are depicted graphically for convenience.
+
+<P><B>AN ARRAY NAME IS ACTUALLY A POINTER</B>
+
+<P>In the C programming language, an array name is defined to be a constant
+pointer to the beginning of the array. This will take some explaining.
+Refer to the example program on your monitor. You will notice that in line
+10 we assign a string constant to the string variable named <B>strg </B>so
+we will have some data to work with. Next, we assign the value of the first
+element to the variable <B>one</B>, a simple <B>char </B>variable. Next,
+since the string name is a constant pointer to the first element of the
+string, by definition of the C language, we can assign the same value to
+<B>two </B>by using the star and the string name (<B>*strg</B>). Observe
+that the box with a dot pointing to a variable can be used to access the
+variable just like in the last program. The result of the two assignments
+are such that <B>one </B>now has the same value as <B>two</B>, and both
+contain the character T, the first character in the string. Note that it
+would be incorrect to write line 10 as <TT>two = *strg[0];</TT> because
+the star takes the place of the square brackets, or does the same job.
+
+<P>For all practical purposes, <B>strg </B>is a pointer to a <B>char </B>type
+variable. It does, however, have one restriction that a true pointer does
+not have. It cannot be changed like a variable, but must always contain
+the address of the first element of the string and therefore always points
+to the beginning of its string. It is a pointer constant. Even though it
+cannot be changed, it can be used to refer to other values than the one
+it is defined to point to, as we will see in the next section of the program.
+
+<P>Moving ahead to line 16, the variable <B>one </B>is assigned the value
+of the ninth character in the string (since the indexing starts at zero)
+and <B>two </B>is assigned the same value because we are allowed to index
+a pointer to get to values farther ahead in the string. Both variables
+now contain the character 'a'. Line 17 says to add 8 to the value of the
+pointer <B>strg</B>, then get the value stored at that location and store
+it in the variable <B>two</B>.
+
+<P><B>POINTER INDEXING</B>
+
+<P>The C programming language takes care of indexing for us automatically
+by adjusting the indexing for the type of variable the pointer is pointing
+to. In this case, the index of 8 is simply added to the pointer value before
+looking up the desired result because a <B>char </B>type variable is one
+byte long. If we were using a pointer to an <B>int </B>type variable, the
+index would be doubled and added to the pointer before looking up the value
+because an <B>int </B>type variable uses two bytes per value on most 16
+bit microcomputers. It would multiply the index value by 4 before adding
+it to the pointer if an <B>int </B>used four bytes, as it does on most
+32 bit systems. When we get to the chapter on structures, we will see that
+a variable can have many, even into the hundreds or thousands, of bytes
+per variable, but the indexing will be handled automatically for us by
+the system.
+
+<P><A HREF="Chap08.htm"><IMG SRC="Image/C0806.GIF" HSPACE=20 VSPACE=20 NOSAVE BORDER=0 HEIGHT=243 WIDTH=389 ALIGN=RIGHT></A>The
+data space is now in the state defined graphically in figure 8-6. The string
+named <B>strg </B>has been filled and the two variables named <B>one </B>and
+<B>two </B>have the letter "a" stored in them. Since the pointer variable
+<B>there </B>is already a pointer, it can be assigned the address of the
+11th element of <B>strg </B>by the statement in line 20 of this program.
+Remember that since <B>there </B>is a pointer to type <B>char</B>, it can
+be assigned any value as long as that value represents a <B>char </B>type
+of address. It should be clear that the pointers must be typed in order
+to allow the pointer arithmetic described in the last paragraph to be done
+properly. The third and fourth outputs will be the same, namely the letter
+c.
+
+<P><B>POINTER ARITHMETIC</B>
+
+<P>Not all forms of arithmetic are permissible on a pointer. Only those
+things that make sense, considering that a pointer is an address somewhere
+in the computer. It would make sense to add a constant to an address, thereby
+moving it ahead in memory that number of places. Likewise, subtraction
+is permissible, moving it back some number of locations. Adding two pointers
+together would not make sense because absolute memory addresses are not
+additive. Pointer multiplication is also not allowed, as that would be
+a funny number. If you think about what you are actually doing, it will
+make sense to you what is allowed, and what is not.
+
+<P><B>NOW FOR AN INTEGER POINTER</B>
+
+<P><A HREF="Chap08.htm"><IMG SRC="Image/C0807.GIF" HSPACE=20 VSPACE=20 NOSAVE BORDER=0 HEIGHT=257 WIDTH=389 ALIGN=RIGHT></A>The
+array named <B>list </B>is assigned a series of values from 100 to 199
+in order to have some data to work with in lines 24 and 25. Next, we assign
+the pointer <B>pt </B>the address of the 28th element of the list and print
+out the same value both ways to illustrate that the system truly will adjust
+the index for the <B>int </B>type variable. You should spend some time
+in this program until you feel you fairly well understand these lessons
+on pointers.
+
+<P>Compile and execute POINTER2.C and study the output. At the termination
+of execution, the data space will be as depicted in figure 8-7. Once again,
+it would be a good exercise for you to attempt to draw the graphic for
+this program as you review the code.
+
+<P><B>FUNCTION DATA RETURN WITH A POINTER</B>
+
+<P>Example program ------> <B>TWOWAY.C</B>
+
+<P>You may recall that back in the lesson on functions we mentioned that
+there were two ways to get variable data back from a function. One way
+is through use of the array, and you should be right on the verge of guessing
+the other way. If your guess is through use of a pointer, you are correct.
+Load and display the example program named TWOWAY.C for an example of this.
+
+<P>In TWOWAY.C, there are two variables defined in the main program, <B>pecans
+</B>and <B>apples</B>. Notice that neither of these is defined as a pointer.
+We assign values to both of these and print them out, then call the function
+named <B>fixup() </B>taking both of these values along with us. The variable
+<B>pecans </B>is simply sent to the function, but the address of the variable
+<B>apples </B>is sent to the function. Now we have a problem. The two arguments
+are not the same, the second is a pointer to a variable. We must somehow
+alert the function to the fact that it is supposed to receive an integer
+variable and a pointer to an integer variable. This turns out to be very
+simple. Notice that the parameter definitions in line 23 defines <B>nuts
+</B>as an integer, and <B>fruit </B>as a pointer to an integer. The call
+in the main program therefore is now in agreement with the function heading
+and the program interface will work just fine.
+
+<P><A HREF="Chap08.htm"><IMG SRC="Image/C0808.GIF" HSPACE=20 VSPACE=20 NOSAVE BORDER=0 HEIGHT=140 WIDTH=282 ALIGN=RIGHT></A>In
+the body of the function, we print the two values sent to the function,
+then modify them and print the new values out. This should be perfectly
+clear to you by now. The surprise occurs when we return to the <B>main()</B>
+function and print out the two values again. We will find that the value
+of <B>pecans </B>will be restored to the value it had prior to the function
+call because the C language makes a copy of the item in question and takes
+the copy to the called function, leaving the original intact as we explained
+earlier. In the case of the variable <B>apples</B>, we made a copy of a
+pointer to the variable and took the copy of the pointer to the function.
+Since we had a pointer to the original variable, even though the pointer
+was a local copy, it pointed to the original variable and we could change
+the value of <B>apples </B>from within the function. When we returned to
+the main program, we found a changed value in <B>apples </B>when we printed
+it out.
+
+<P>This is illustrated graphically in figure 8-8. The state of the system
+is illustrated following execution of line 27 of the program. The observant
+student will notice the prototype in line 3. This allows the compiler to
+check the type of both parameters when it gets to line 14 where the function
+is called.
+
+<P>By using a pointer in a function call, we can have access to the original
+data while excuting code within the function and change it in such a way
+that when we return to the calling program, we have a changed value of
+the original variable. In this example, there was no pointer in the main
+program because we simply sent the address to the function, but in many
+programs you will use pointers in function calls. One of the places you
+will find need for pointers in function calls will be when you request
+data input using standard input/output routines. These will be covered
+in the next two chapters. Compile and run TWOWAY.C and observe the output.
+
+<P><B>POINTERS ARE VALUABLE</B>
+
+<P>Even though you are probably somewhat intimidated by this time about
+the proper use of pointers, you will find that after you gain experience,
+you will use them profusely in many ways. You will also use pointers in
+every program you write other than the most trivial because they are so
+useful. You should probably go over this material carefully several times
+until you feel comfortable with it because it is very important in the
+area of input/output which is next on the agenda.
+
+<P><B>A POINTER TO A FUNCTION</B>
+
+<P>Example program ------> <B>FUNCPNT.C</B>
+
+<P>Examine the example program named FUNCPNT.C for the most unusual pointer
+yet. This program contains a pointer to a function, and illustrates how
+to use it.
+
+<P>Line 8 of this program defines <B>function_pointer</B> as a pointer
+to a function and not to just any function, it points to a function with
+a single formal parameter of type <B>float</B>. The function must also
+return nothing because of the <B>void </B>before the pointer definition.
+The parentheses are required around the pointer name as illustrated or
+the system will think it is a prototype definition for a function that
+returns a pointer to <B>void</B>.
+
+<P>You will note the prototypes given in lines 4 through 6 that declare
+three functions that use the same parameter and return type as the pointer.
+Since they are the same as the pointer, the pointer can be used to refer
+to them as is illustrated in the executable part of the program. Line 15
+contains a call to the <B>print_stuff()</B> function, and line 16 assigns
+the value of <B>print_stuff</B> to <B>function_pointer</B>. Because the
+name of a function is defined as a pointer to that function, its name can
+be assigned to a function pointer variable. You will recall that the name
+of an array is actually a pointer constant to the first element of the
+array. In like manner, a function name is actually a pointer constant which
+is pointing to the function itself. The pointer is successively assigned
+the address of each of the three functions and each is called once or twice
+as an illustration of how a pointer to a function can be used.
+
+<P>A function pointer can be passed to another function as a parameter
+and can be used within the function to call the function which is pointed
+to. You are not permitted to increment or add a constant to a function
+pointer, it can only be assigned the value of a function with the same
+parameters and return with which it was initially declared. It may take
+you a little time to appreciate the value of this construct, but when you
+do understand it, you will see the flexibility built into the C programming
+language.
+
+<P>A pointer to a function is not used very often but it is a very powerful
+construct when needed. You should plan to do a lot of C programming before
+you find a need for this technique. I mention it here only to prevent you
+being unduly intimidated by this difficult concept. We will continue to
+study pointers by examining their use in additional example programs.
+
+<P><B>PROGRAMMING EXERCISES</B>
+<OL>
+<LI>
+Define a character array and use <B>strcpy()</B> to copy a string into
+it. Print the string out by using a loop with a pointer to print out one
+character at a time. Initialize the pointer to the first element and use
+the double plus sign to increment the pointer. Use a separate integer variable
+to count the characters to print.</LI>
+
+<LI>
+Modify the program from programming exercise 1 to print out the string
+backwards by pointing to the end and using a decrementing pointer.</LI>
+</OL>
+<A HREF="C-Starter.htm">Return to Table of Contents</A>
+
+<P><A HREF="Chap09.htm">Advance to Chapter 9</A>
+
+<P>
+<HR width="100%"><I><FONT SIZE=-1>Copyright &copy; 1988-1996 Coronado Enterprises
+- Last update, September 8, 1996</FONT></I>
+<BR><FONT SIZE=-1><I>Gordon Dodrill - dodrill@swcp.com - </I><A HREF="mailto:dodrill@swcp.com">Please
+email any comments or suggestions.</A></FONT>
+</BODY>
+</HTML>

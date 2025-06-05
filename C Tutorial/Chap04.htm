@@ -1,0 +1,711 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Gordon Dodrill">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; I) [Netscape]">
+   <TITLE>Chap04</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<B>C Tutorial - Chapter 4</B>
+
+<P><B><FONT SIZE=+3>A</FONT><FONT SIZE=+2>SSIGNMENT &amp;</FONT><FONT SIZE=+3>
+L</FONT><FONT SIZE=+2>OGICAL </FONT><FONT SIZE=+3>C</FONT><FONT SIZE=+2>OMPARES</FONT></B>
+
+<P>Throughout this chapter, references are given to various ranges of variables.
+This refers to the range of values that can be stored in any given variable.
+Your compiler may use a different range for some of the variables since
+the ANSI standard does not define specific limits for all data types. Consult
+the documentation for your compiler for the exact range of each of the
+variable types.
+
+<P><B>INTEGER ASSIGNMENT STATEMENTS</B>
+
+<P>Example program ------> <B>INTASIGN.C</B>
+
+<P>Load the file named INTASIGN.C and display it for an example of assignment
+statements. Three variables are defined for use in the program and the
+remainder of the program is merely a series of illustrations of various
+kinds of assignment statements. All three variables are defined on one
+line and have unknown values stored in them initially.
+
+<P>The first two lines of the assignment statements, lines 8 and 10, assign
+numerical values to the variables named <B>a</B> and <B>b</B>, and the
+next five lines illustrate the five basic arithmetic functions and how
+to use them. The fifth is the modulo operator and gives the remainder if
+the two variables were divided. It can only be applied to integral type
+variables, which will be defined later. Lines 15 and 16 illustrate how
+to combine some of the variables in relatively complex math expressions.
+All of the above examples should require no comment except to say that
+none of the equations are meant to be particularly useful except as illustrations.
+
+<P>Precedence of operators is a very important topic that you will need
+to study in detail at some point, but for now we will only need a few rules.
+When you have mixed arithmetic expressions, the multiplication and division
+operations are completed before the addition and subtraction operations
+when they are all at the same logical level. Therefore when evaluating
+<B>a * b + c / d</B>, the multiplication and division are done first, then
+the addition is performed. However in the expression <B>a * (b + c / d)</B>,
+the addition follows the division, but preceeds the multiplication because
+the operations are at two different logical levels as defined by the parentheses.
+
+<P>The expressions in lines 17 and 18 are perfectly acceptable as given,
+but we will see later in this chapter that there is another way to write
+these for more compact code.
+
+<P><B>VERY STRANGE LOOKING CODE</B>
+
+<P>This brings us to lines 20 and 21 which may appear to you as being very
+strange. The C compiler scans the assignment statement from right to left,
+(which may seem a bit odd since we do not read that way), resulting in
+a very useful construct, namely the one given here. The compiler finds
+the value 20, assigns it to <B>c</B>, then continues to the left finding
+that the latest result of a calculation should be assigned to <B>b</B>.
+Thinking that the latest calculation resulted in a 20, it assigns that
+value to <B>b </B>also, and continues the leftward scan assigning the value
+20 to <B>a </B>also. This is a very useful construct when you are initializing
+a group of variables. The statement in line 21 illustrates that it is possible
+to actually do some calculations to arrive at the value which will be assigned
+to all three variables. The values of <B>a</B>, <B>b</B>, and <B>c</B>,
+prior to the beginning of the statement in line 21 are used to calculate
+a value, which is then assigned to each of the three variables.
+
+<P>As an aid to understanding, line 23 is given which contains parentheses
+to group the terms together in a meaningful way. Lines 20 and 23 are identical
+statements.
+
+<P>The program has no output, so compiling and executing this program will
+be very uninteresting. Since you have already learned how to display some
+integer results using the <B>printf()</B> function, it would be to your
+advantage to add some output statements to this program to see if the various
+statements do what you think they should do. You will need to add <B>#include
+&lt;stdio.h></B> to the beginning of the program if you are going to add
+<B>printf() </B>statements to the program.
+
+<P>You can add your own assignment statements also to gain experience with
+them.
+
+<P><B>DEFINITIONS FIRST THEN EXECUTABLE STATEMENTS</B>
+
+<P>This would be a good time for a preliminary definition of a rule to
+be followed in C. The variable definitions are always given before any
+executable statements in any program block. This is why the variables are
+defined at the beginning of a block in this program and in every C program.
+If you try to define a new variable after some executable statements, your
+compiler will issue an error. A program block is any unit of one or more
+statements surrounded by braces. Actually, the block can even be empty
+but then there is no real need for it, except as a placeholder in early
+phases of code development. More will be said about blocks later.
+
+<P><B>ADDITIONAL DATA TYPES</B>
+
+<P>Example program ------> <B>MORTYPES.C</B>
+
+<P>Loading and editing MORTYPES.C will illustrate how some additional data
+types can be used. Once again we have defined a few integer type variables
+which you should be fairly familiar with by now, but we have added two
+new types, the <B>char</B>, and the <B>float</B>.
+
+<P>The <B>char </B>type of data is nearly the same as the integer except
+that it can only be assigned numerical values between -128 and 127 on most
+microcomputer implementations of C, since it is usually stored in one byte
+of memory. Some implementations of C use a larger memory element for a
+<B>char </B>and will therefore cover a wider range of usable values. The
+<B>char </B>type of data is usually used for ASCII data, more commonly
+known as text. The text you are reading was originally written on a computer
+with a word processor that stored the words in the computer one character
+per byte. In contrast, the <B>int </B>data type is stored in two bytes
+of computer memory on nearly all microcomputers, but can be larger on some
+machines. In fact, most modern microcomputers are 32 bit machines that
+store an <B>int </B>in four bytes.
+
+<P>Keep in mind that, even though the <B>char </B>type variable was designed
+to hold a representation of an ASCII character, it can be used very effectively
+to store a very small value if desired. Much more will be discussed on
+this topic in chapter 7 when we discuss strings.
+
+<P><B>DATA TYPE MIXING</B>
+
+<P>It would be profitable at this time to discuss the way C handles the
+two types <B>char </B>and <B>int</B>. Most operations in C that are designed
+to operate with integer type variables will work equally well with character
+type variables because they are an integral variable, which means that
+they have no fractional part. Those operations, when called on to use a
+<B>char </B>type variable, will actually promote the <B>char </B>data into
+integer data before using it. For this reason, it is possible to mix <B>char
+</B>and <B>int </B>type variables in nearly any way you desire. The compiler
+will not get confused, but you might. It is good not to rely on this too
+much, but to carefully use only the proper types of data where they should
+be used.
+
+<P>The second new data type is the <B>float </B>type of data, commonly
+called floating point data. This is a data type which usually has a very
+large range, a relatively large number of significant digits, and a large
+number of computer words are required to store it. The <B>float </B>data
+type has a decimal point associated with it and several bytes of memory
+are required to store a single <B>float </B>type variable.
+
+<P><B>HOW TO USE THE NEW DATA TYPES</B>
+
+<P>The first three lines of the program assign values to all nine of the
+defined variables so we can manipulate some of the data between the different
+types.
+
+<P>Since, as mentioned above, a <B>char </B>data type is in reality an
+integral data type which is automatically promoted to <B>int </B>when necessary,
+no special considerations need be taken to promote a <B>char </B>to an
+<B>int</B>, and a <B>char </B>type data field can be assigned to an <B>int
+</B>variable. When going the other way, an <B>int </B>type variable can
+be assigned to a <B>char </B>type variable and will translate correctly
+to a <B>char </B>type variable if the value is within the range of the
+<B>char</B>, possibly -128 to 127. If the value is outside of the range
+of <B>char</B>, most C compilers simply truncate the most significant bits
+and use the least significant bits.
+
+<P>Line 16 illustrates the simplicity of translating an <B>int </B>into
+a <B>float</B>. Simply assign it the new value and the system will do the
+proper conversion. When converting from <B>float </B>to <B>int </B>however,
+there is an added complication. Since there may be a fractional part of
+the floating point number, the system must decide what to do with it. By
+definition, it will truncate it and throw away the fractional part.
+
+<P>This program produces no output, and we haven't covered a way to print
+out <B>char </B>and <B>float </B>type variables, so you can't really get
+in to this program and play with the results. The next program will cover
+these topics for you.
+
+<P>Be sure to compile and run this program after you are sure you understand
+it completely. Note that the compiler may issue warnings about type conversions
+when compiling this program. They can be ignored because of the small values
+we are using to illustrate the various type conversions.
+
+<P><B>SOME TYPICAL SIZES</B>
+
+<P>This list gives you some typical values for the various types available
+in C. Your compiler may offer different limits and sizes since there is
+a lot of latitude in what a compiler may offer. The values in this list
+are for Microsoft Visual C++ version 1.5 (16 bits) and Visual C++ version
+2.0 (32 bits).
+<PRE>Type Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bytes&nbsp;&nbsp; Range
+&nbsp; ------------- 16 bit system -------------
+char&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -128 to 127
+signed char&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -128 to 127
+unsigned char&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 to 255
+short&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -32,768 to 32,767
+unsigned short&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 to 65,535
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -32,768 to 32,767
+unsigned int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 to 65,535
+long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -2,147,483,648 to 2,147,483,647
+unsigned long&nbsp;&nbsp;&nbsp;&nbsp; 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 to 4,294,967,295
+float&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3.4E+/-38 (7 digits)
+double&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.7E+/-308 (15 digits)
+long double&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.2E+/-4932 (19 digits)
+
+&nbsp; ------------- 32 bit system -------------
+char&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -128 to 127
+signed char&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -128 to 127
+unsigned char&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 to 255
+short&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -32,768 to 32,767
+unsigned short&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 to 65,535
+int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -2,147,483,648 to 2,147,483,647
+unsigned int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 to 4,294,967,295
+long&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -2,147,483,648 to 2,147,483,647
+unsigned long&nbsp;&nbsp;&nbsp;&nbsp; 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 to 4,294,967,295
+float&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3.4E+/-38 (7 digits)
+double&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.7E+/-308 (15 digits)
+long double&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.2E+/-4932 (19 digits)</PRE>
+The diligent student will notice that the only difference in these two
+lists are in the sizes and ranges of the <B>int</B> type variables, both
+signed and unsigned. The ANSI-C standard says that an <B>int </B>type has
+the "natural size suggested by the architecture of the execution environment",
+so the ranges for the compiler listed above matches the standard exactly.
+
+<P>One other point about the above table must be made at this time. The
+unadorned <B>char </B>is permitted to be either signed or unsigned at the
+discretion of the compiler writer. The writers of the Microsoft compiler
+chose to make <B>char </B>default to a <B>signed char</B>, as do most compiler
+writers, but you have a choice since most compilers provide a switch to
+select the default to <B>unsigned char</B>.
+
+<P>Some useful constants are available for your use in determining the
+range limits of the standard types. For example, the names INT_MIN and
+INT_MAX are available in the file "limits.h" as constants which can be
+used in your code. INT_MAX is the largest possible number that can be stored
+in an <B>int </B>type variable using the compiler that you are currently
+using. When you switch to a new compiler, which you will almost certainly
+do someday, INT_MAX will refer to the largest value that can be stored
+with that compiler. Even if you switch to a new operating system with 64
+bits or even 128 bits, INT_MAX will still refer to the largest <B>int </B>available
+on your new system. The file "limits.h" contains a large number of such
+limits, all of which are available for your use simply by including the
+file in your program. It is a text file which can be opened in any editor
+and studied, a highly recommended exercise for you at this time.
+
+<P><B>LOTS OF VARIABLE TYPES</B>
+
+<P>Example program ------> <B>LOTTYPES.C</B>
+
+<P>Load the file LOTTYPES.C and display it on your screen. This file contains
+most of the standard simple data types available in the programming language
+C. Consult your compiler documentaion for a complete list of all types
+avialable with your compiler. There are other types, but they are the compound
+types (ie - arrays and structures) that we will cover in due time in this
+tutorial.
+
+<P>Observe the file. First we define a simple <B>int</B>, followed by a
+<B>long int</B> . Next we have a <B>short int</B> which has a range that
+may be identical to that for the <B>int </B>variable. The <B>unsigned </B>is
+next and is defined as the same size as the <B>int </B>but with no sign.
+It should be pointed out that when the <B>long</B>, <B>short</B>, or <B>unsigned
+</B>is desired, the <B>int </B>is optional and is left out by most experienced
+programmers. Your compiler may differ significantly from the ranges given
+in the above table, so you should check the documentation for your compiler
+for the exact ranges for each type.
+
+<P>The <B>double </B>is a floating point number but covers a greater range
+than the <B>float </B>and has more significant digits for more precise
+calculations. It also requires more memory to store a value than the simple
+<B>float</B>. The<B> long double </B>will cover a much larger range and
+store more significant digits, but it will also take longer to do calculations
+because of the increased size of data being used.
+
+<P>Another diversion is in order at this point. Your compiler probably
+has no provision for floating point math, only <B>double </B>floating point
+math. It will promote a <B>float </B>to a <B>double </B>before doing calculations
+and therefore only one math library will be needed. Of course, this is
+transparent to you, so you don't need to worry about it. Because of this,
+you may think that it would be best to simply define every floating point
+variable as <B>double</B>, since they are promoted before use in any calculations,
+but that may not be a good idea. A <B>float </B>variable may require only
+4 bytes of storage and a <B>double</B> may<B> </B>require 8 bytes of storage,
+so if you have a large volume of floating point data to store, the <B>double
+</B>will obviously require much more memory. If you don't need the additional
+range or significant digits, you should use the <B>float </B>type rather
+than the <B>double</B>. The compiler makes all floating point literals,
+such as the value 3.14159 in line 19, <B>double </B>constants by default.
+Some compilers will then issue a warning about line 19 because we are assigning
+a <B>double </B>to a <B>float.</B> You can safely ignore the warning at
+this time.
+
+<P>After defining the data types in the program under consideration, a
+numerical value is assigned to each of the defined variables in order to
+demonstrate the means of outputting each to the monitor.
+
+<P><B>SOME LATE ADDITIONS</B>
+
+<P>As any programming language evolves, additional constructs are added
+to fill some previously overlooked need. Two new keywords have been added
+to C with the release of the ANSI-C standard. They are not illustrated
+in example programs, but they will be discussed here. The two new keywords
+are <B>const </B>and <B>volatile </B>and are used to tell the compiler
+that variables of these types will need special consideration. A constant
+is declared with the <B>const </B>keyword and declares a value that cannot
+be changed by the program. If you inadvertently try to modify an entity
+defined as a <B>const</B>, the compiler will generate an error. This is
+an indication to you that something is wrong. Declaring an entity as <B>const
+</B>allows the optimizer to do a better job which could make your program
+run a little faster. Since constants can never have a value assigned to
+them in the executable part of the program, they must always be initialized.
+If <B>volatile </B>is used, it declares a value that may be changed by
+the program but it may also be changed by some outside influence such as
+a clock update pulse incrementing the stored value. This prevents the optimizer
+from getting too ambitious and optimizing away something that it thinks
+will never be changed.
+
+<P>Examples of use in declaring constants of these two types are given
+as;
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp; const int index1 = 2;
+&nbsp;&nbsp;&nbsp;&nbsp; const index2 = 6;
+&nbsp;&nbsp;&nbsp;&nbsp; const float big_value = 126.4;
+&nbsp;&nbsp;&nbsp;&nbsp; volatile const int index3 = 12;
+&nbsp;&nbsp;&nbsp;&nbsp; volatile int index4;</PRE>
+<B>THE CONVERSION CHARACTERS</B>
+
+<P>Following is a list of some of the conversion characters and the way
+they are used in the <B>printf()</B> statement. A complete list of all
+of the conversion characters should be included with the documentation
+for your compiler. You do not need to understand all of these at this time,
+but you should know that there is a lot of flexibility available when you
+are ready to use it.
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; d&nbsp;&nbsp;&nbsp; decimal notation
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; i&nbsp;&nbsp;&nbsp; decimal notation (new ANSI standard extension)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; o&nbsp;&nbsp;&nbsp; octal notation
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x&nbsp;&nbsp;&nbsp; hexadecimal notation
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; u&nbsp;&nbsp;&nbsp; unsigned notation
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c&nbsp;&nbsp;&nbsp; character notation
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s&nbsp;&nbsp;&nbsp; string notation
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f&nbsp;&nbsp;&nbsp; floating point notation</PRE>
+Each of these is used following a percent sign to indicate the type of
+output conversion desired. The following fields may be added between those
+two characters.
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp; -&nbsp;&nbsp;&nbsp;&nbsp; left justification in its field
+&nbsp;&nbsp;&nbsp;&nbsp; (n)&nbsp;&nbsp; a number specifying minimum field width
+&nbsp;&nbsp;&nbsp;&nbsp; .&nbsp;&nbsp;&nbsp;&nbsp; to separate n from m
+&nbsp;&nbsp;&nbsp;&nbsp; (m)&nbsp;&nbsp; significant fractional digits for a float
+&nbsp;&nbsp;&nbsp;&nbsp; l&nbsp;&nbsp;&nbsp;&nbsp; to indicate a long</PRE>
+These are all used in the examples which are included in the program named
+LOTTYPES.C, with the exception of the string notation which will be covered
+later in this tutorial. Lines 33 through 35 illustrate how to set the field
+width to a desired width, and lines 39 and 40 illustrate how to set the
+field width under program control. The field width for the float type output
+in lines 43 through 47 should be self explanatory. Compile and run this
+program to see what effect the various fields have on the output.
+
+<P>You now have the ability to display any of the data fields in the previous
+programs and it would be to your advantage to go back and see if you can
+display some of the fields anyway you desire.
+
+<P><B>COMBINING THE VARIOUS TYPES</B>
+
+<P>Example program ------> <B>COMBINE.C</B>
+
+<P>Examine the file named COMBINE.C for examples of combining variables
+of the various types in a program. Many times it is necessary to multiply
+an <B>int </B>type variable times a <B>float </B>type variable and C allows
+this by providing a strict set of rules it will follow in order to do such
+combinations.
+
+<P>Five variables of three different types are declared in lines 4 through
+6, and three of them are initialized so we have some data to work with.
+Line 8 gives an example of adding an <B>int </B>variable to a <B>float
+</B>variable and assigning the result to a <B>char </B>type variable. The
+cast is used to control the type of addition and is indicated by defining
+the desired type within parentheses in front of the variable as shown.
+This forces each of the two variables to the <B>char</B> type prior to
+doing the addition. In some cases, when the cast is used, the actual bit
+patterns must be modified internally in order to do the type coercion.
+Lines 9 through 11 perform the same addition by using different kinds of
+type casting to achieve the final result. Note that the addition is not
+the same in all three cases because the addition is done using different
+types, so could conceivably result in different answers.
+
+<P>Lines 13 through 15 illustrate the use of the cast to multiply two <B>float
+</B>variables. In two of the cases the intermediate results are cast to
+the <B>int </B>type, with the result being cast back to the <B>float </B>type.
+The observant student will notice that these three lines will not necessarily
+produce the same result.
+
+<P>Be sure to compile and execute this program. When you do, you may get
+a lot of type conversion warnings which can be ignored at this point. In
+this program, we are illustrating things that can be done with no regard
+to whether it is good to do so in a production program. Note that all of
+the warnings can be eliminated by including the proper cast when we use
+different types.
+
+<P><B>LOGICAL COMPARES</B>
+
+<P>Example program ------> <B>COMPARES.C</B>
+
+<P>Load and view the file named COMPARES.C for many examples of compare
+statements in C. We begin by defining and initializing nine variables to
+use in the following compare statements.
+
+<P>The first group of compare statements represents the simplest kinds
+of compares because they simply compare two variables. Either variable
+could be replaced with a constant and still be a valid compare, but using
+two variables for the compare is the general case. The first compare checks
+to see if the value of <B>x </B>is equal to the value of <B>y </B>and it
+uses the double equal sign for the comparison. Since <B>x </B>is equal
+to <B>y</B>, the variable <B>z </B>will be assigned the value of -13. A
+single equal sign could be used here but it would have a different meaning
+as we will see shortly. The second comparison checks to see if the current
+value of <B>x </B>is greater than the current value of <B>z</B>.
+
+<P>The third compare introduces the not operator, the exclamation, which
+can be used to invert the result of any logical compare. The fourth checks
+for the value of <B>b </B>less than or equal to the value of <B>c</B>,
+and the last checks for the value of <B>r </B>not equal to the value of
+<B>s</B>. As we learned in the last chapter, if the result of the compare
+is true, the statement following the <B>if </B>clause will be executed
+and the results are given in the comments.
+
+<P>Note that "less than" and "greater than or equal to" are also available,
+but are not illustrated here.
+
+<P>It would be well to mention the different format used for the <B>if
+</B>statement in this example program. A carriage return is not required
+as a statement separator and by putting the conditional clause on the same
+line as the <B>if</B>, it adds to the readability of the overall program
+in this case.
+
+<P><B>MORE COMPARES</B>
+
+<P>The compares in the second group are a bit more involved. Starting with
+the first compare, we find a rather strange looking set of conditions in
+the parentheses. To understand this we must understand just what a true
+or false is in the C language. A false is defined as a value of zero, and
+true is defined as any non-zero value. Any integer or character type of
+variable can be used for the result of a true/false test, or the result
+can be an implied integer or character.
+
+<P>Look at the first compare of the second group of compare statements.
+The conditional expression <TT>"r != s"</TT> will evaluate as a true since
+the value of <B>r </B>was set to 0.0 in line 13, so the result of the compare
+will be a non-zero value. With all ANSI-C compilers, it will be set to
+a 1. Good programming practice would be to not use the resulting 1 in any
+calculations, but only for logical control. Even though the two variables
+that are compared are <B>float </B>variables, the logical result will be
+of type <B>int</B>. There is no explicit variable to which it will be assigned
+so the result of the compare is an implied <B>int</B>. Finally, the resulting
+number, is assigned to the integer variable <B>x</B>. If double equal signs
+were used, the phantom value, namely 1, would be compared to the value
+of <B>x</B>, but since the single equal sign is used, the value 1 is simply
+assigned to the variable named <B>x</B>, as though the statement were not
+in parentheses. Finally, since the result of the assignment in the parentheses
+was non-zero, the entire expression is evaluated as true, and <B>z </B>is
+assigned the value of 1000. Thus we accomplished two things in this statement,
+we assigned <B>x </B>a new value, and we assigned <B>z </B>the value of
+1000. We covered a lot in this statement so you may wish to review it before
+going on. The important things to remember are the values that define true
+and false, and the fact that several things can be assigned in a conditional
+statement. The value assigned to the variable <B>x </B>was probably a 1,
+but remember that the only requirement is that it is nonzero. The ANSI-C
+standard says that the result of a comparison operation, ( >, >=, &lt;,
+or &lt;=) must be 1 or 0, but does not state the result of an equality
+operation. If you assume 0 or 1 will be returned, and only use it for control,
+you will not get into trouble.
+
+<P>The example in line 20 should help clear up some of the above in your
+mind. In this example, <B>x </B>is assigned the value of <B>y</B>, and
+since the result is 11, the condition is non-zero, which is true, and the
+variable <B>z </B>is assigned 222.
+
+<P>The third example of the second group in line 21, compares the value
+of <B>x </B>to zero. If the result is true, meaning that if <B>x </B>is
+not zero, then <B>z</B> is assigned the value of 333, which it will be.
+The last example in this group illustrates the same concept, since the
+result will be true if <B>x </B>is non-zero. The compare to zero in line
+21 is not actually needed and the result of the compare is true. The third
+and fourth examples of this group are therefore logically identical. Of
+course we assign a different value to <B>z </B>in each case.
+
+<P><B>ADDITIONAL COMPARE CONCEPTS</B>
+
+<P>The third group of compares will introduce some additional concepts,
+namely the logical "and" and the logical "or" operators. We assign the
+value of 77 to the three integer variables simply to get started again
+with some defined values. The first compare of the third group contains
+the new control &amp;&amp;, which is the logical "and" which results in
+a true if both sides of the "and" are true. The entire statement reads,
+if <B>x </B>equals <B>y </B>and if <B>x </B>equals 77 then the result is
+true. Since this is true, the variable <B>z </B>is set equal to 33. Note
+that only integral types can be "anded", so <B>float </B>and <B>double
+</B>types cannot be used here.
+
+<P>The next compare in this group introduces the || operator which is the
+logical "or" operator which results in a true if either side of the "or"
+is true. The statement reads, if <B>x </B>is greater than <B>y </B>or if
+<B>z </B>is greater than 12 then the result is true. Since <B>z </B>is
+greater than 12, it doesn't matter if <B>x </B>is greater than <B>y</B>,
+because only one of the two conditions must be true for the result to be
+true. The result is true, therefore <B>z </B>will be assigned the value
+of 22. Once again, <B>float </B>and <B>double </B>cannot be "ored".
+
+<P><B>LOGICAL EVALUATION (SHORT CIRCUIT)</B>
+
+<P>When a compound expression is evaluated, the evaluation proceeds from
+left to right and as soon as the result of the outcome is assured, evaluation
+stops. Therefore, in the case of an "and" evaluation, when one of the terms
+evaluates to false, evaluation is discontinued because additional true
+terms cannot make the result ever become true. In the case of an "or" evaluation,
+if any of the terms is found to be true, evaluation stops because it will
+be impossible for additional terms to cause the result to be false. In
+the case of additionally nested terms, the above rules will be applied
+to each of the nested levels. This is called short-circuit evaluation since
+the remaining terms are not evaluated.
+
+<P>Going on to the next example in group three in line 29, we find three
+simple variables used in the conditional part of the compare. Since all
+three are non-zero, all three are true, and therefore the "and" of the
+three variables is true, leading to the result being true, and <B>z </B>is
+assigned the value of 11. Note that since the variables, <B>r</B>, <B>s</B>,
+and <B>t </B>are <B>float </B>type variables, they could not be used this
+way.
+
+<P>Continuing on to line 30 we find three assignment statements in the
+compare part of the <B>if </B>statement. If you understood the above discussion,
+you should have no difficulty understanding that the three variables are
+assigned their respective new values, and the result of all three are non-zero,
+leading to a resulting value of true.
+
+<P><B>THIS IS A TRICK, BE CAREFUL</B>
+
+<P>The last example of the third group contains a bit of a trick, but since
+we have covered it above, it is nothing new to you. Notice that the first
+part of the compare evaluates to false since <B>x </B>is not currently
+2. The remaining parts of the compare are not evaluated, because it is
+a logical "and" so it will definitely be resolved as a false because the
+first term is false. If the program was dependent on the value of <B>y
+</B>being set to 3 in the next part of the compare, it will fail because
+evaluation will cease following the false found in the first term. Likewise,
+the variable named <B>z </B>will not be set to 4, and the variable <B>r
+</B>will not be changed. This is because C uses short circuit evaluation
+as discussed earlier.
+
+<P><B>POTENTIAL PROBLEM AREAS</B>
+
+<P>The last group of compares illustrate three possibilities for getting
+into a bit of trouble. All three have the common result that the variable
+<B>z </B>will not be handled properly, but for different reasons. In line
+37, the compare evaluates as true, but the semicolon following the second
+parentheses terminates the <B>if </B>clause, and the assignment statement
+involving <B>z </B>is always executed as the next statement. The <B>if
+</B>therefore has no effect because of the misplaced semicolon. This is
+actually a null statement and is legal in C, but the programmer probably
+did not intend to include the extra semicolon.
+
+<P>The statement in line 38 is much more straightforward because the variable
+<B>x </B>will always be equal to itself, therefore the inequality will
+never be true, and the entire statement will never do a thing, but is wasted
+effort. The statement in line 39 will always assign 0 to <B>x </B>and the
+compare will therefore always be false, never executing the conditional
+part of the <B>if </B>statement.
+
+<P>The conditional statement is extremely important and must be thoroughly
+understood to write efficient C programs. If any part of this discussion
+is unclear in your mind, restudy it until you are confident that you understand
+it thoroughly before proceeding onward. Compile and run this program. You
+may gets lots of conversion warnings which you can either ignore or fix
+up the code with casts to eliminate. Add some printout to see the results
+of some of the operations.
+
+<P><B>THE CRYPTIC PART OF C</B>
+
+<P>Example program ------> <B>CRYPTIC.C</B>
+
+<P>There are three constructs used in C that make no sense at all when
+first encountered because they are not intuitive, but they may increase
+the efficiency of the compiled code and are used extensively by experienced
+C programmers. You should therefore be exposed to them and learn to use
+them because they will appear in most, if not all, of the programs you
+see in the publications. Load and examine the file named CRYPTIC.C for
+examples of the three new constructs.
+
+<P>In this program, some variables are defined and initialized in the same
+statements for use later. The statement in line 8 simply adds 1 to the
+value of <B>x</B>, and should come as no surprise to you. The next two
+statements also add one to the value of <B>x</B>, but it is not intuitive
+that this is what happens. It is simply by definition that this is true.
+Therefore, by definition of the C language, a double plus sign either before
+or after a variable increments that variable by 1. Additionally, if the
+plus signs are before the variable, the variable is incremented before
+it is used, and if the plus signs are after the variable, the variable
+is used, then incremented. In line 11, the value of <B>y </B>is assigned
+to the variable <B>z</B>, then <B>y </B>is incremented because the plus
+signs are after the variable <B>y</B>. In the last statement of the incrementing
+group of example statements, line 12, the value of <B>y </B>is incremented
+then its value is assigned to the variable <B>z</B>. To use the proper
+terminology, line 9 uses the postincrement operator and line 10 uses the
+preincrement operator.
+
+<P>The next group of statements illustrate decrementing a variable by one.
+The definition works exactly the same way for decrementing as it does for
+incrementing. If the minus signs are before the variable, the variable
+is decremented, then used, and if the minus signs are after the variable,
+the variable is used, then decremented. The proper terminology is the postdecrement
+operator and the predecrement operator.
+
+<P>You will use this construct a lot in your C programs.
+
+<P><B>THE CRYPTIC ARITHMETIC OPERATOR</B>
+
+<P>Another useful but cryptic operator is the arithmetic operator. This
+operator is used to modify any variable by some constant value. The statement
+in line 23 adds 12 to the value of the variable <B>a</B>. The statement
+in line 24 does the same, but once again, it is not intuitive that they
+are the same. Any of the four basic functions of arithmetic, +, -, *, or
+/, can be handled in this way, by putting the operation desired in front
+of the equal sign and eliminating the second reference to the variable
+name. It should be noted that the expression on the right side of the arithmetic
+operator can be any valid expression, the examples are kept simple for
+your introduction to this new operator.
+
+<P>Just like the incrementing and decrementing operators, the arithmetic
+operator is used extensively by experienced C programmers and it would
+pay you well to understand it thoroughly.
+
+<P><B>THE CONDITIONAL EXPRESSION</B>
+
+<P>The conditional expression is just as cryptic as the last two, but once
+again it is very useful so it would pay you to understand it. It consists
+of three expressions separated by a question mark and a colon. The expression
+prior to the question mark is evaluated to determine if it is true or false.
+If it is true, the expression between the question mark and the colon is
+evaluated, and if the compare expression is not true, the expression following
+the colon is evaluated. The result of one of the evaluations is used for
+the assignment as illustrated in line 30. The final result is identical
+to that of an <B>if </B>statement with an <B>else </B>clause. This is illustrated
+by the example in lines 32 through 35 of this group of statements. The
+conditional expression has the advantage of more compact code that may
+compile to fewer machine instructions in the final program.
+
+<P>Lines 37 and 38 of this example program are given to illustrate a very
+compact way to assign the greater of the two variables <B>a </B>or <B>b
+</B>to the variable <B>c</B>, and to assign the lessor of the same two
+variables to the variable <B>c</B>. Notice how efficient the code is in
+these two examples.
+
+<P><B>TO BE CRYPTIC OR NOT TO BE CRYPTIC</B>
+
+<P>Several students of C have stated that they didn't like these three
+cryptic constructs and that they would simply never use them. This would
+be fine if they never have to read anybody else's program, or use any other
+programs within their own. You will find many functions that you wish to
+use within a program but need a small modification to use it, requiring
+you to understand another person's code. It would therefore be to your
+advantage to learn these new constructs, and use them. They will be used
+in the remainder of this tutorial, so you will be exposed to them.
+
+<P>This has been a long chapter but it contained important material to
+get you started in using C. In the next chapter, we will go on to the building
+blocks of C, the functions. At that point, you will have enough of the
+basic materials to allow you to begin writing meaningful programs.
+
+<P><B>STYLE ISSUES</B>
+
+<P>We have no specific issues of style in this chapter other than some
+of the coding styles illustrated in the example programs. Most of these
+programs are very nontypical of real C programs because there is never
+a need to list all of the possible compares in a real program, for example.
+You can use the example programs as a guide to good style even though they
+are not real programs.
+
+<P><B>WHAT IS AN l-value AND AN r-value?</B>
+
+<P><A HREF="Chap04.htm"><IMG SRC="Image/C0401.GIF" ALT="Figure 4-1" HSPACE=20 VSPACE=20 NOSAVE BORDER=0 HEIGHT=123 WIDTH=276 ALIGN=RIGHT></A>You
+will sometimes see a reference to an l-value or a r-value in writings about
+C or in the documentation for your C compiler. Every variable has an r-value
+which is defined as the actual value stored in the variable, and it also
+has an l-value which is defined as the name of the variable. Therefore,
+the variable depicted graphically in figure 4-1 has an l-value of <B>index</B>,
+and an r-value of 137 since 137 is the value stored in the variable at
+this time.
+
+<P>The definition for this variable would be given as follows;
+<PRE>int index = 137;</PRE>
+<B>PROGRAMMING EXERCISES</B>
+<OL>
+<LI>
+Write a program that will count from 1 to 12 and print the count, and its
+square, for each count.</LI>
+
+<LI>
+Write a program that counts from 1 to 12 and prints the count and its inversion
+to 5 decimal places for each count. This will require a floating point
+number.</LI>
+
+<LI>
+Write a program that will count from 1 to 100 and print only those values
+between 32 and 39, one to a line. Use the incrementing operator for this
+program.</LI>
+</OL>
+<A HREF="C-Starter.htm">Return to Table of Contents</A>
+
+<P><A HREF="Chap05.htm">Advance to Chapter 5</A>
+
+<P>
+<HR width="100%"><I><FONT SIZE=-1>Copyright &copy; 1988-1996 Coronado Enterprises
+- Last update, September 8, 1996</FONT></I>
+<BR><FONT SIZE=-1><I>Gordon Dodrill - dodrill@swcp.com - </I><A HREF="mailto:dodrill@swcp.com">Please
+email any comments or suggestions.</A></FONT>
+</BODY>
+</HTML>
