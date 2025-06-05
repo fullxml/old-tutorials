@@ -1,0 +1,48 @@
+<HTML><HEAD><TITLE>SYS tables are chaining... </TITLE></HEAD><PRE>
+> 
+> Hi Ari,
+> 
+> Question:
+> 
+> I have a new database that has an Oracle block size of 8092, and I have
+> chaining of SYS tables COL$, IND$, IDL_UB1$, IDL_UB2$, and IDL_SB4$.
+> 
+> Should I have made the db_block_size larger? Is this something that I
+> even need to worry about?
+> 
+> Thanks.
+> 
+> Mike Killough
+> 
+Hi Mike,
+
+When you say "chaining", it typically refers to records
+spanning more than one data block. I can understand the IDL% views because
+they contain LONG RAW columns, which would probably chain regardless of the
+block size if you have large enough values for your data dictionary (which
+includes and packages/stored procedures, among other items).
+
+If you meant that they grew to several extents, then you have fragmentation,
+not chaining. This is typical in many sites, especially those that have many
+stored packages/procedures. Oracle specifically acknowledges that they may
+grow in extents, but cautions not to change their INIT/NEXT storage parameters.
+
+So basically my advice is not to worry about the data dictionary tables, and
+8K block sizes are fine for them.
+
+Best regards,
+
+
+-Ari Kaplan
+Independent Oracle DBA Consultant
+
+<-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><->
+<-> For 175+ Oracle tips, visit my Web Page:                      <->
+<->                                                               <->
+<->             http://homepage.interaccess.com/~akaplan          <->
+<->                                                               <->
+<->             email: akaplan@interaccess.com                    <->
+<-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><->
+<P><IMG SRC="purpball.gif"><A HREF="http://homepage.interaccess.com/~akaplan">
+Back to Ari Kaplan's Home Page</A>
+</PRE></BODY></HTML> 

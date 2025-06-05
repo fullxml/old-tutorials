@@ -1,0 +1,114 @@
+<html>
+<head>
+<title>Oracle Data Definition</title>
+</head>
+<body>
+<h1>Oracle Data Definition</h1>
+[<a href="#Create">Creating Tables</a> |<a
+href="#Alter">Altering Tables</a> |<a
+href="#Remove">Removing Tables</a>]
+<h2><a name="Create">Creating Tables</a></h2>
+<h3>Easy Format</h3>
+<pre>
+     Create Table <em>tablename</em>
+         (<em>attribute name</em> datatype constraint,
+          <em>attribute name</em> datatype constraint,
+            .
+            .
+            .)</pre>
+An example table is<pre>
+    Create Table Patron
+       (PID NUMBER(6) Constraint pk_patron PRIMARY KEY,
+        Name VARCHAR2(30) Constraint nn_Name NOT NULL
+        Gender VARCHAR2(1))</pre>
+The above table is called patron. It contains a PID that is
+the key, a name attribute and a gender
+attribute. PID is defined to be a 6 digit integer. Name and
+gender are defined to be character
+strings with 30 and 1 char. length respectively. Note that
+all constraints (e.g., Primary Key) must
+have a constraint name (e.g., pk_patron).<p>
+In the case where a table has a composite primary key, the
+constraint must be formed differently.  For example,
+<pre>
+    Create table Request
+      ( CallNo VARCHAR2(10) Constraint fk_callno References Book (CallNo),
+      PID NUMBER(6) Constraint fk_pid References Patron (PID),
+      RDate DATE,
+      Constraint pk_Request PRIMARY KEY (CallNo, PID))
+</pre>
+Notice that Constraints are placed after the attributes. The
+References constraint says
+that the PID in Request must match a PID in patron (i.e.
+Foreign Key). The data type of RDate is a
+special data type called DATE.<p>
+<a href="cnstrnt.htm">More complex table specifications</a>
+can also be created.
+<h3>Legal Data Types</h3>
+<dl>
+<dt>VARCHAR2(size)
+<dd>Variable length character string having max. length of
+size
+<dt>CHAR(size)
+<dd>Fixed length character string with number of bytes equal
+to size
+<dt>NUMBER(p,s)
+<dd>Number having a precision p and s digits to the right of
+the decimal. If you leave off p and s (e.g., NUMBER), then
+it is a floating point number.
+<dt>LONG
+<dd>Character data of variable length up to 2 gigabytes
+(cannot be a key)
+<dt>DATE
+<dd>A date field
+<dt>RAW(size)
+<dd>Raw binary data of length size. Max. size is 255 bytes
+<dt>LONG RAW
+<dd>Raw binary data up to 2 gigabytes (cannot be a key)
+</dl>
+<h3>Constraint clause</h3>
+This clause is part of the create or alter table commands.
+The format is:<p>
+CONSTRAINT <em>constraintname</em> the constraint
+specifications<p>
+The following are some typical constraint specifications:
+<ul>
+<li>PRIMARY KEY--Attribute is unique, not null and indexed
+<li>UNIQUE--Attribute is unique and indexed but not the key
+<li>NOT NULL--Attrbute value cannot be left blank
+<li>REFERENCES--Foreign key constraint. The attribute must
+match a value of a specified attribute
+</ul>
+<a href="cnstrnt.htm">More complex constraint clauses</a>
+can also be added to the schema specification
+<h2><a name="Alter">Altering Tables</a></h2>
+This command can be used to add, drop, and modify attributes
+and constraints.
+The format is:<pre>
+ALTER TABLE tablename
+  ADD attributename datatype constraint
+  ADD tableconstraint
+  MODIFY attributename datatype constraint
+  DROP PRIMARY KEY
+  DROP UNIQUE attributename  (drops the unique constraint on
+an attribute)
+  DROP CONSTRAINT constraintname
+
+ALTER TABLE Patron
+  DROP CONSTRAINT nn_name
+</pre>
+It does not seem to be possible to change the name of an
+attribute or remove an attribute from a table.
+<h2><a name="Remove">Dropping Tables</a></h2>
+To remove a table from the database use<p>
+DROP TABLE tablename
+<hr>
+<ADDRESS>Last modified: September 1, 1998<BR>
+<A HREF="index.html">Dirk Baldwin</A>, MIS, <A HREF="HTTP://www.uwp.edu">UW-Parkside</A>, <A HREF="mailto:dirk.baldwin@uwp.edu">dirk.baldwin@uwp.edu</A></addre ss> </ADDRESS>
+</body>
+</html>
+
+
+
+
+

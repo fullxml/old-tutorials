@@ -1,0 +1,142 @@
+<html>
+<head>
+<title>Oracle SQL Data Manipulation</title>
+</head>
+<body>
+<h1>SQL Data Manipulation</h1>
+[<a href="#Updating">Updating Data</a> | <a
+href="#Query">Querying Data</a>]
+<h2><a name="Updating">Updating data</a></h2>
+<h3>Insert Command</h3>
+This command is used to add rows to a table. The format:<p>
+INSERT INTO table<br>
+Values (list of values separated by commas).<p>
+INSERT INTO table<br>
+Select statement that retrieves values from another table<p>
+INSERT INTO Patron<br>
+Values (100, 'Marsha', 'F')<p>
+Note that the default format for dates is day-month-year,
+where month is a three digit character abbreviation. The
+date should be between single quotes (e.g., 20-JUL-95).
+<h3>Delete Command</h3>
+This command removes rows from a table. The format:<p>
+DELETE FROM tablename<br>
+Where condition<p>
+DELETE FROM Patron<br>
+Where PID = 100
+<h3>Update Command</h3>
+This command changes data in one or more rows<p>
+UPDATE tablename<br>
+SET attributename = some expression (can be an equation)<br>
+Where condition<p>
+Note that you can have more than one set statement per
+UPDATE command.<p>
+UPDATE Checkout<br>
+SET DueDate = '10-Dec-95'<br>
+Where PID = 100
+<h2><a name="Query">Data Querying</a></h2>
+<h3>Select Query</h3>
+The select query used in Oracle is standard SQL so you
+should look in your text book for syntax and examples. The
+following sections illustrate some capabilities or syntax
+variations in Oracle that are not in the text.
+<h4>Outer Joins</h4>
+Unlike Outer Joins in the text, outer joins in Oracle are
+declared in the Where clause through the use of the (+)
+symbol. An example follows:<pre>
+Select b.title, c.pid
+    From Book b, Checkout c
+    Where b.callno = (+) c.callno</pre>
+The =(+) says to join the book callno with the checkout
+callno. But if there is no checkout callno to match book
+callno, use a null in the checkout attributes. Notice that
+the above example would be considered a left outer join in
+our book even though the (+) is to the right of the equal
+sign.
+<h4>Special Set Operators</h4>
+Oracle supports union, intersect and minus set operations on
+two select statements.
+<h4>The System Catalog</h4>
+Oracle keeps the names of your tables and other information
+in a meta table called user_tables.  To see this
+information, use a simple select statement.  The following
+statement list the tablenames: <pre>
+Select TABLE_NAME from USER_TABLES;</pre>
+To find out all the information on your tables, type:<pre>
+Select * from USER_TABLES;</pre>
+<h4>Group Functions</h4>
+Oracle supports the following group functions in a SQL
+query:
+<ul>
+<li>AVG -- average
+<li>COUNT
+<li>MAX -- Returns the maximum value
+<li>MIN -- Returns the minimum value
+<li>STDDEV -- Standard Deviation
+<li>SUM -- The total of some column
+<li>VARIANCE
+</ul>
+All of the above can be used with the DISTINCT option.
+<h4>Other Useful Functions</h4>
+<h5>Mathematical Functions</h5>
+<ul>
+<li>ABS(n)--Absolute value of n
+<li>CEIL(n)--Smallest integer greater than or equal to n
+<li>EXP(n)--Returns e raised to the nth power
+<li>LN(n)--The natural log of n
+<li>LOG(m,n)--Returns the logarithm base m of n
+<li>MOD(m,n)--The remainder of m divided by n
+<li>POWER(m,n)--m raised to the nth power
+<li>ROUND(n[,m])--n rounded to m places right of the
+decimal. m omitted equals 0 places
+<li>SIGN(n)-- Returns -1 if n<0, 0 if n=0 and 1 if n>0
+<li>SQRT(n)--Square root
+<li>TRUNC(n[,m])--n truncated to m decimal places
+</ul>
+<h5>String Functions</h5>
+<ul>
+<li>CHR(n)--Returns the character with the binary equivalent
+to n
+<li>CONCAT(char1, char2)--char1 concatenated with char2
+<li>INITCAP(char)--Returns char with first letter in
+uppercase
+<li>LOWER(char)--Returns char with all letters in lowercase
+<li>LTRIM(char[,set]--Removes characters from the left of
+char, with initial characters removed up to the first
+character not in set
+<li>NLS_INITCAP(char)--First letter of each word in char is
+in uppercase
+<li>NLS_LOWER(char)--All letters in lower case for every
+word
+<li>NLS_UPPER(char)--All letters in lower case
+<li>REPLACE(char,search_string,replacement_string)
+<li>RTRIM(char [,set]--Similar to LTRIM, except trims on
+right
+<li>SUBSTR(char,m [,n])--Portion of char, beginning at
+character m, n characters long. m and n are integers. If n
+left off it returns all characters to end of char.
+<li>UPPER(char)--char with all letters in upper case
+</ul>
+<h5>String to Number Functions</h5>
+<ul>
+<li>ASCII(char)--decimal representatin of char
+<li>INSTR(char1,char2, n, m)--The position of the mth char2
+in char1 beggining from nth position.
+<li>LENGTH(char)--The length of char
+</ul>
+<h5>Date Functions</h5>
+<ul>
+<li>ADD_MONTHS(d,n)--The date d plus n months
+<li>MONTHS_BETWEEN(d1,d2)
+<li>SYSDATE--Returns the current date and time
+</ul>
+<hr>
+<ADDRESS>Last modified: September 1, 1998<BR>
+<A HREF="index.html">Dirk Baldwin</A>, MIS, <A HREF="HTTP://www.uwp.edu">UW-Parkside</A>, <A HREF="mailto:dirk.baldwin@uwp.edu">dirk.baldwin@uwp.edu</A></addre ss> </ADDRESS>
+</body>
+</html>
+
+
+
+
+

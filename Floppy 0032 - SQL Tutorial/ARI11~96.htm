@@ -1,0 +1,73 @@
+<HTML><HEAD><TITLE> Simple SQL Question from a Beginner </TITLE></HEAD><PRE>
+
+mwilson@sundog.larc.nasa.gov wrote:
+: 
+: Hi Folks, 
+: 
+: I've downloaded and installed the trial version of the
+: Workgroup Server 7.3 on a Solaris 2.6 platform.  I'd
+: like to try some simple things out before buying the
+: full blown version.  I've been using PostgreSQL and
+: have a simple little table that includes some arrays.
+: Can anyone tell me how to implement arrays in sqlplus?
+: 
+: This is what I tried along with the error it gave me:
+: 
+: SQL> r
+:   1  create table brdf (
+:   2     mission_date    date,
+:   3     igbp            integer,
+:   4     gmt             integer[],
+:   5     zenith          real[],
+:   6     azimuth         real[],
+:   7     constraint c1 primary key(mission_date, igbp)
+:   8* );
+:         gmt             integer[],
+:                                *
+: ERROR at line 4:
+: ORA-00907: missing right parenthesis
+: 
+: 
+: SQL>
+: 
+: I have also tried using () instead of [] but I am
+: given the same error.  Can someone point me in the
+: right direction while I head over to a book store to
+: find a decent source of info regarding these matters
+: (any suggestions for good books?)??
+: 
+: Thanks!!
+: -Mark.
+: 
+: ---
+: Mark Wilson                                                 757-827-4631
+: Research Scientist                              m.r.wilson@larc.nasa.gov
+: Analytical Services & Materials, Inc.       mwilson@sundog.larc.nasa.gov
+
+Mark,
+
+You were on the right track - use () instead of []. However, with the
+INTEGER datatype, you should not include anything, just "INTEGER".
+If you need decimal precision, use "NUMBER(10,2)" or "NUMBER". Do not
+use "REAL" as a datatype.
+
+For books, there are lots of greaet ones out there. "Oracle8 - A
+Beginner's Guide" is good for either 7 or 8. I also have to pitch my own
+co-authored book, if you can wait until February - "How-To Oracle8" by
+Waite Group Press / Macmillan. It will have many examples, programs,
+screen shots, etc.
+
+-Ari Kaplan
+Independent Oracle DBA Consultant
+
+<-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><->
+<-> For 115+ Oracle tips, visit my Web Page:                      <->
+<->                                                               <->
+<->             http://homepage.interaccess.com/~akaplan          <->
+<->                                                               <->
+<->             email: akaplan@interaccess.com                    <->
+<-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><->
+
+
+<P><IMG SRC="purpball.gif"><A HREF="http://homepage.interaccess.com/~akaplan">Back to Ari Kaplan's Home Page</A>
+</PRE></BODY></HTML>

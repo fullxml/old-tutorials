@@ -1,0 +1,30 @@
+<HTML><HEAD><TITLE> How do you read REDO logs? </TITLE></HEAD><PRE>
+> 
+> Hello Ari,
+> 
+> I just saw your web site and was most impressed with all your answers to
+> Oracle questions.  I am new to Oracle and am having trouble locating
+> information on a way to read the Oracle REDO log from a program.  Is there
+> an API documented somewhere?  I need to do this for Oracle7 right now and
+> Oracle8 in the near future.
+> 
+> Any help would be appreciated.
+> 
+> -Mike Stevens
+> mike.stevens@mci2000.com
+> 
+
+If you issue the command:
+
+alter session set events 'immediate trace name redohdr level 10';
+
+then a dump of the complete log header is sent to your ../udump directory.
+I am glad you like my web page. I plan on doing many changes in the near
+future.
+
+-Ari
+
+
+<P><IMG SRC="purpball.gif"><A HREF="http://homepage.interaccess.com/~akaplan">Back to Ari Kaplan's Home Page</A>
+</PRE></BODY></HTML>
+

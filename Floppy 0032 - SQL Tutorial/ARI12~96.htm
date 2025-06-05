@@ -1,0 +1,38 @@
+<HTML><HEAD><TITLE>Finding the Database name </TITLE></HEAD><PRE>
+> 
+> Dear Sir,
+>           I have just installed Personal Oracle 8.0 for Windows 95 on my 
+> system and just begun using it. How do you figure out what is the 
+> Database Name ? Is there any way in Sql*Plus to repeat the last command 
+> or do you have to type it all over again ?
+> 
+>                              Thanks !
+> 
+Hi,
+
+First, you can find out the database name with the following query:
+
+SELECT * FROM V$DATABASE;
+
+To repeat the command in SQL*PLUS, type a slash (/) on a blank line and
+hit return. SQL*PLUS has a nice little command-line editor to edit and
+review your SQL commands. Type "l" and hit return to view your last command.
+There are many ways to modify your commands...check out your manual for more
+info on this.
+
+Best regards,
+
+
+-Ari Kaplan
+Independent Oracle DBA Consultant
+
+<-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><->
+<-> For 230+ Oracle tips, visit my Web Page:                      <->
+<->                                                               <->
+<->             http://homepage.interaccess.com/~akaplan          <->
+<->                                                               <->
+<->             email: akaplan@interaccess.com                    <->
+<-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><-><->
+<P><IMG SRC="purpball.gif"><A HREF="http://homepage.interaccess.com/~akaplan">
+Back to Ari Kaplan's Home Page</A>
+</PRE></BODY></HTML>   

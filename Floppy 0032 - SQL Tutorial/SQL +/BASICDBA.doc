@@ -1,0 +1,455 @@
+Beginner Tips for Becoming the Complete Oracle DBA
+
+By Richard J. Niemiec, The Ultimate Software Consultants (TUSC)
+
+Introduction:
+One of the hardest part about being a new Oracle DBA is wading through the Oracle manuals and deciding which information is most important.  This paper will focus on those topics which the author considers having the greatest positive impact for a beginner DBA. 
+
+Overview (What will be covered):
+1. Oracle Architecture:  Know how Oracle Works
+2. Multiplex Redo Logs (Extra Copies)
+3. Size Rollback Segments Correctly and Have Enough
+4. Have a Separate Temp Tablespace where Users Sort
+5. How big is this Database?
+6. Finding Information about a Table
+7. Finding Information about an Index
+8. Eliminate Fragmentation
+9. Change the structure of a Table ("on the fly")
+10. Separate KEY data files across Multiple Disks
+11. Moving a datafile associated with a tablespace
+12. Size crucial INIT.ORA Parameters Correctly
+13. Using EXPLAIN to Tune Queries
+14. Image Backups
+15. Best Backup Scheme
+16. What is Parallel Query
+17. User Group Participation
+18. Summary
+1. Oracle Architecture: Know how Oracle Works
+
+
+
+Figure 1:  Rough Oracle Architecture
+
+Tip#1:  Knowing Oracle will help you take Oracle's GENERAL Guidelines and apply them to your very UNIQUE Application.  This includes the sizing of all key files in the above diagram.
+
+2. Multiplex Redo Logs (Extra Copies):
+	A log file (which are recycled) must be online and available while the database is operational or the database will halt!!
+	Controlled by Init.ora parameters 
+		  LOG_CHECKPOINT_INTERVAL = 0 (I use zero)
+	Minimum is 2 online log files; Log file multiplexing is recommended!
+
+SQLDBA> 	ALTER DATABASE ADD LOGFILE MEMBER
+     		'C:\ORAWIN\DBS\WDBLOG1A.LOG' TO GROUP 1;
+
+SQLDBA> 	ALTER DATABASE ADD LOGFILE MEMBER 
+     		'C:\ORAWIN\DBS\WDBLOG2B.LOG' TO GROUP 2;
+Finding Information about your Redo Logs:
+SQL>	Select *
+	From  v$logfile;
+
+GROUP# 	STATUS  	MEMBER
+--------- 	-------------	----------------------------------------
+       2         			C:\ORAWIN\DBS\wdblog2.log
+       1         			C:\ORAWIN\DBS\wdblog1.log
+       1         			C:\ORAWIN\DBS\WDBLOG1A.LOG
+       2         			C:\ORAWIN\DBS\WDBLOG2B.LOG
+
+Tip #2:  Multiplex your Redo Logs:
+
+
+3. Size Rollback Segments Correctly and Have Enough:
+Oracle Recommends: Number of Concurrent Transactions	Rollback Segments
+Less than 16							4
+16-32								8
+>32								n/4 but not more than 50
+
+	You do NOT usually want more than 1 user using a rollback segment at a given time  
+	Oracle's MONITOR utility should be used to check rollback fragmentation and use
+	Usually, batch processes will require the need for one large rollback segment.  The users must use the "set transaction use rollback segment rollbig" so that the large transactions will be directed to use this rollback segment. 
+
+SQL> set transaction use rollback segment rb_big;
+
+Tip#3: Have one large rollback segment for batch processes and use the "set transaction use..." statement.  Monitor rollback segments through "SQLDBA>MONITOR" (or Server Manager) to ensure that more that one user is not in a single rollback segment (add more rollback segments, if necessary). 
+
+How to get information about your rollback segments:
+SQL> 	select Name, Extents, Writes, Gets, Waits
+	from v$rollname a, v$rollstat  b
+	where a.usn = b.usn;
+
+NAME 	EXTENTS	WRITES	GETS		WAITS
+---------------- 	---------------- 	-------------- 	---------- 	---------- 
+SYSTEM         	4       	1670         	29          	0  
+RB1                	23        0          	7          	0        
+RB3                	34        0          	7         	 	0         
+
+4. Have a Separate Temp Tablespace where Users Sort:
+	Defaults to System Tablespace unless specified with "Alter User..."
+	Created when memory is not large enough to process entire data set (in the init.ora parameter SORT_AREA_SIZE)
+	Statements which may generate Temporary Segments:
+
+Create Index, Order By, Distinct, Group By, Union, Intersect, Minus, Unindexed Joins and some Correlated Subqueries
+
+SQL> ALTER USER username TEMPORARY TABLESPACE temp1;
+
+Finding a user's temporary tablespace:
+SQL>	select username, temporary_tablespace
+  	from dba_users;
+
+USERNAME 	TEMPORARY_TABLESPACE
+-------------------	------------------------------
+SYS                   	TEMP1
+SYSTEM         	TEMP1
+SCOTT             	TEMP1
+
+Tip#4: Create a temporary tablespace and use the "Alter user..." command so that users are forced into that tablespace.
+
+
+5. How big is this Database?
+compute sum of bytes on report
+break on report
+col bytes format 999,999,999,999
+col tablespace_name heading 'Tablespace'
+spool db_size.out
+Select	 tablespace_name, sum(bytes) bytes
+From	 dba_data_files
+Group by tablespace_name;
+
+Tablespace		Bytes		
+SYSTEM		  30,000,000
+ORDER_D		300,000,000
+ORDER_I		150,000,000	
+sum			480,000,000
+
+spool db_free.out
+Select	 tablespace_name, sum(bytes) bytes
+From	 dba_free_space
+Group by tablespace_name;
+
+Tablespace		Bytes		
+SYSTEM		  10,000,000
+ORDER_D		     5,000,000
+ORDER_I		     2,000,000	
+sum			   17,000,000
+
+Tip#5: Check the Tablespace Sizes and Free Space Regularly.
+
+
+6. Finding Information about a Table:
+Select	Table_Name, Initial_Extent, Next_Extent, 
+	Pct_Free, Pct_Increase
+From	dba_tables
+Where	Table_Name IN ('ORDER', 'CUST');
+
+Table   	Initial        	Next		   Pct_Free   Pct_Inc
+Order		20,000,000	2,000,000		20	0
+Cust		10,000,000	1,000,000		10	0
+
+Tip#6: Monitor Tables for Potential Problems and/or Needed Changes due to Fragmentation or Chaining.  The NEXT_EXTENT is the determiner for fragmentation and PCT_FREE is the determiner for chaining.
+
+7. Finding Information about an Index:
+Select	Index_name, Initial_Extent, Next_Extent, 
+	Pct_Free, Pct_Increase
+From	dba_indexes
+Where	Index_Name IN ('ORDER_I', 'CUST_I');
+
+Index   	Initial        	Next		   Pct_Free   Pct_Inc
+Order_I	10,000,000	1,000,000		20	0
+Cust_I		  5,000,000	   500,000		10	0
+
+Tip#7: Monitor Indexes for Potential Problems and/or Needed Changes due to Fragmentation or Chaining.
+8. Eliminate Fragmentation
+	Table Fragmentation can occur when tables extend into multiple extents (pieces).  Set NEXT_EXTENT correctly.
+	Record Fragmentation can occur when records to tables are updated, and the blocks which contain the data do not have enough room to store the changes.  This is known as "Block Chaining" or simply "Chaining".  Set PCT_FREE correctly.
+	The cost of fragmentation is about 10-25% (highest for chaining).
+
+Find Tables/Indexes fragmented in 5 pieces or more:
+Select  	segment_name, extents, next_extent, bytes, 
+		segment_type
+From  	dba_segments
+where 	extents > 4;
+
+Segment 	   Extents   	Next		      Bytes	       	    	Type     
+Order			20 	2,000,000		58,000,000		Table
+
+Fixing Table Fragmentation:
+Example:  	The CUSTOMER Table is fragmented
+		Currently in 22 Extents of 1M each.(Can be found by querying DBA_EXTENTS)
+
+Solution:	Export the CUSTOMER Table (Compress)				
+		Drop the CUSTOMER Table
+		Create the CUSTOMER Table with a NEW storage clause prior to import (opt.)
+		Import the CUSTOMER Table (Ignore=Y)
+		
+Tip#8: Query the database often for fragmentation problems.  If fragmentation greater than 5 extents exists for a single table then schedule a time where the table can be de-fragmented.
+
+9. Change the structure of a tablespace ("on the fly")
+Fragmentation can hurt the performance of a database.  The key is to eliminate fragmentation by rebuilding the table or specifying the correct size in the first place.  
+
+1. The symptoms:
+	The ORDER Table was built two weeks ago with the following space definition:
+
+Initial Extent = 2M; Next Extent = 1M;  Pctincrease = 0
+
+	The ORDER Table currently has 4 extents (A 2M, 1M, 1M and 1M) totaling 5M.
+	The Order Entry Personnel are putting in many more orders than you had expected. The ORDER table will grow to be 40M by the end of the year. 
+2. The Solution:
+	ALTER TABLE ORDER
+	STORAGE (NEXT 35M);
+
+	The next extent built will be 35M making the total table storage 40M in ONLY 5 extents.
+
+Tip#9: Correct sizing problems before they get to be BIG problems.
+
+
+10. Separate KEY data files across multiple disks:
+
+	The SYSTEM Tablespace
+	The TEMPORARY Tablespace
+	The Rollback Segments Tablespace
+	The REDO Logs
+	The Operating System Disk
+	Heavily Accessed Table's corresponding data files
+	Heavily Accessed Index's corresponding data files
+
+Example Setup with 11 Available Disks:
+Disk0: Operating System
+Disk1: Temporary Tablespace, Control File 1
+Disk2: Rollback Segments, Control File 2
+Disk3: Redo Logs, Archive Logs
+Disk4: System Tablespace 
+Disk5: Data1, Control File 3
+Disk6: Index3, Control File 4
+Disk7: Data2
+Disk8: Index2
+Disk9: Data3
+Disk10: Index1
+
+
+	Try to put REDO Logs and Archive Logs separate from data files for recovery purposes
+
+FILEIO Monitor:
+	This will show us how the actual database files are being "hit" by the users (In SQLDBA Monitor or Server Manager).  
+
+File IO (% of Hits)
+
+Figure 6: Oracle is not Distributed Correctly (SYSTEM Tablespace includes TEMP...)
+
+Tablespaces / Tables / Indexes: 
+	Move tables and indexes for equal "hits" across all disks.
+	Tables that will be often Joined should have all data and index separated as shown below in the EXAMPLE:
+
+Example:
+	SELECT COL1, COL2 ....
+	FROM    CUST_HEADER, CUST_DETAIL ...;
+
+One Solution:
+Disk1: CUST_HEADER Table
+Disk5: CUST_HEADER Index
+Disk8: CUST_DETAIL Table
+Disk12: CUST_DETAIL Index
+
+Tip#10: Separate KEY Oracle Files and separate data & index files based on the application.  Keep data files (Tables) on different disks (or separate arrays) and controllers than the corresponding index.
+
+
+11. Moving a datafile associated with a tablespace
+	Take the tablespace corresponding to the datafile OFFLINE:
+	$sqldba
+	SQLDBA> connect internal
+	SQLDBA> ALTER TABLESPACE ORDERS OFFLINE;
+	SQLDBA> exit
+
+	Copy the datafile to the new location on disk:
+	$cp  /disk1/orders1.dbf  /disk2/orders1.dbf  (UNIX copy command)
+
+	Rename the datafile to the NEW datafile location for the tablespace:
+
+	ALTER TABLESPACE ORDERS
+	RENAME '/disk1/orders1.dbf' to '/disk2/orders1.dbf';
+
+	Bring the tablespace back ONLINE:
+	$sqldba
+	SQLDBA> connect internal
+	SQLDBA> ALTER TABLESPACE ORDERS ONLINE;
+	SQLDBA> exit
+
+	Delete the old datafile:
+	$rm /disk1/orders1.dbf  (UNIX delete command)
+
+
+Tip#11: Move datafiles to balance file I/O.
+
+
+12. Size crucial INIT.ORA Parameters Correctly:
+For the system to be efficient as a complete entity, the INIT.ORA parameter must be set correctly.  While tuning queries lead to the greatest performance gains, the system will be slow if the INIT.ORA parameters are not set correctly. 
+
+First look at DB_BLOCK_BUFFERS (The most Crucial Parameter in Oracle!):
+	If DB_BLOCK_BUFFERS is low, users will not have enough memory to operate efficiently.
+	If DB_BLOCK_BUFFERS is high, your system may begin to swap and may come to a halt.
+
+Response Time in Minutes 
+    Figure 2: Response Time for a Memory Intensive Report with given SGA (Buffer) settings
+
+Tip#12A: Size DB_BLOCK_BUFFERS at about 25% of Total Memory (Given that Oracle is the primary application).  Advanced DBAs may query "x$bh" (as SYS) for better sizing.
+Determine if the data block buffers are being utilized optimally and if there are enough.  
+
+If the read hit ratio is less than 90-95%, increasing the db_block_buffers may help performance.  However, beware that if the ratio is near 100% and the number of  gets is in the millions, there is a very good chance that the statement being executed is not optimized.
+
+select 	name, value
+from	v$sysstat
+where	name in ('db block gets', 'consistent gets', 'physical reads');
+
+Name			Value	
+db block gets		10000
+consistent gets		90000
+physical reads		20000
+
+hit ratio 	=	1   -     Physical/Logical Reads  x 100%
+		=	1   -     20000/(10000+90000) x 100%
+		=     80%
+
+
+Second, Look at the SHARED_POOL_SIZE (V7 only):
+
+	This is the memory allocated for the library and data dictionary cache   
+
+
+
+Determine dictionary cache hit ratio:
+If > 15%, increase the SHARED_POOL_SIZE INIT.ora parameter.  The dc SGA storage is now a part of the shared pool along with the library cache, there are no more "dc_" parameters in the INIT.ora.  This is a key area since the dictionary is accessed so frequently especially by the internals of Oracle.  I would never recommend lowering the SHARED_POOL_SIZE since the library cache is also a part of this shared pool.
+
+
+select 	sum(gets), sum(getmisses), 
+sum(getmisses)/sum(gets) "Ratio of Misses"
+
+from   	v$rowcache;
+
+
+
+Gets:		20000	
+Getmisses:	  1000
+Miss Ratio:	     5%
+
+This would be a good Ratio and would probably not require action in this area.
+
+Tip#12B: Size SHARED_POOL_SIZE to roughly 50-75% of what you sized your DB_BLOCK_BUFFERS. 
+
+
+13. Using Explain Plan to Tune Queries:
+
+How do I use Explain by itself?
+1. Find the script; it is usually in $ORACLE_HOME/rdbms/admin. 
+		"utlplan.sql" in V7
+
+2. Execute the script xplainpl.sql in SQL or SQLDBA:
+	SQL>@utlplan   (In V7)
+
+3. Run Explain Plan for the query to be optimized (In V7):
+	SQL> EXPLAIN PLAN 
+		 SET STATEMENT_ID = 'CUSTOMER' FOR
+			SELECT CUSTOMER_NUMBER
+			FROM   CUSTOMER
+			WHERE  CUSTOMER_NUMBER = 111;
+
+
+Selecting from the PLAN_TABLE:
+select		operation, options, object_name, 
+		id, parent_id, position
+from 		plan_table
+where 		statement_id = 'CUSTOMER' ;    (In V7 Only)
+
+Operation         	Options       	Object_Name     	ID    	Parent
+----------------		-----------	------------------ 	--- 	--------
+Select Statement					  	0    			(In V7 Only)
+Table Access   	By Rowid      	Customer          	1    
+Index               	Range Scan    	CUST_IDX      	2   	1
+
+Tip#13:  Use EXPLAIN instead of TRACE so that you don't have to wait for the query to run.  Use TRACE only for multi-query batch jobs to find out which query is slow.
+
+
+14. Image Backups:
+Surveys show that CEOs and CIOs rate the performance of an MIS Director by the percentage of time that the system is "up" during operating hours.  Schedule Downtime during off-hours!
+
+The files that MUST be restored from tape or disk are (Cold Backup):
+
+	All Database Files
+	All Control Files
+	All On-line Redo Logs (Not archives)
+	The INIT.ORA File (Optional)
+
+Tip#14: The database must be DOWN for an Image Backup (Non-Hot Backup).
+
+
+15. Have a Solid Backup Plan:
+
+A Solid Backup Schedule:
+
+
+
+
+
+
+Tip#15: Develop a Backup AND Recovery Plan that includes Image, Export and Archives at a minimum.  Have a backup plan that incorporates more than ONE means of database recovery.
+
+
+16. Parallel Query- What it is & How it Works
+
+
+	In Version 7.1, you may spread a single query across many processors utilizing the full extent of the total processing power of the box.
+	Use it by using the PARALLEL Clause for Table/Index definition.
+	Use PARALLEL=TRUE with DIRECT=TRUE with SQL*Loader.
+	Parallel Recovery is also possible (speed).
+
+Benchmarks:
+	Operation			Processors			Minutes
+	Index			1				38.4
+					20				3
+
+Tip#16: Apply Parallel Query only in Appropriate Situations but use it to your advantage.
+
+17. User Group Participation
+	You will get the real picture, instead of that biased and protected picture that the people that sell you the software/services/hardware will give you.  
+
+Types of User Groups out there:
+Local User Groups - Meetings
+Special Interest Groups - Meetings (Platform Specific / Tools Specific / Application Specific)
+Regional User Groups - Mini-Conferences and Newsletters
+International - Major Conferences and Select Magazine
+MOSES - DBAs with VLDB experience
+SMTI - System Management Tools Initiative (A voice in planning future Oracle products)
+
+Other Places to get Help:
+Oracle Business Alliance (BAP)
+Oracle Preferred System Integrators (PSI)
+
+Where to find numbers to contact groups:
+Oracle Magazine
+Select Magazine 
+Regional Newsletters
+
+Tip#17: Go to User Groups and develop relationships with other people that do the same job that you do. 
+
+Summary:
+While there is a vast amount of information to learn as the Oracle DBA, focusing on key issues that surround the Oracle Database will be the most effective tool for success.  This paper covered those issues which the author considers having the greatest positive impact for a beginner DBA.  This paper covered issues dealing with Basic Concepts and Setup, Knowing Your Database, Maintenance Issues, Tuning Tips, Basic Backup and Parallel Query.
+
+About the Author:
+Rich can be reached at TUSC at (708) 960-2909.
+
+References:
+Performance Tuning; Now YOU are the Expert, Undocumented Index Suppression, Rich Niemiec, TUSC; 1991
+Get the most for your Money: Utilize the V$ Tables; 
+
+Joseph C. Trezzo; 
+TUSC
+
+
+Version 6 & 7  DBA, SQL Language and Performance Tuning Guides, Oracle Corporation
+
+Walter Lindsay; EcoSystems Software; 1993 IOUG Proceedings
+
+Gita Kulandaiswamy; Oracle Corporation; 1993 IOUG Proceedings
+Oracle7 Internals; Oracle Corp.; Craig A. Shallahamer
+Oracle 7.1 Release Features Parallel Everything; Integrator; Summer 1994
+ORACLE, SQL*DBA, SQL*Forms, SQL*Loader, SQL*Plus are registered trademarks of Oracle Corporation.  ORACLE7, ORACLE Parallel Server, OFA, Optimal Flexible Architecture, OFA Standard are trademarks of Oracle Corporation.
+
+Please report errors in this article to TUSC.  Neither TUSC or the author warrant that this document is error-free.
+This document may not be copied or reproduced without the express written consent of the author or an Officer of TUSC.

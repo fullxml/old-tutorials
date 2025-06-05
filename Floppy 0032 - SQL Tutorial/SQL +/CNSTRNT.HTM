@@ -1,0 +1,189 @@
+<html>
+<head>
+<title>Constraint Enforcement</title>
+</head>
+<body bgcolor="ffffff">
+<h1>Constraint enforcement in Oracle and PB</h1>
+[ <a href="#Types">Types of Constraints</a> | <a href="#Oracle">Oracle</a> | <a href="#PB">PowerBuilder</a> ]
+<hr>
+<h2><a name="Types">Types of Constraints</a></h2>
+Domain Constraints
+<ul>
+     <li>Data Type
+    <li>List of Values (enumerated data type)
+     <li>Unique
+    <li>Not Null
+</ul>
+
+Interattribute Constraints
+<ul>
+    <li>State Constraints
+          <ul>
+          <li>Foreign Key (Referential integrity)
+         <li>Other: (e.g., if type = mgr., salary <= 100000)
+         </ul>
+     <li>Transition Constraints
+          (e.g., salary(t+1) <= 1.10 * salary(t))
+</ul>
+Cardinality Constraints
+<hr>
+<h2><a name="Oracle">Enforcement in Oracle</a></h2>
+<hr>
+<h3>Domain and Foreign Key Constraints</h3>
+
+<h4>Declare Data types and constraints in tables</h4>
+
+<h5>Example</h5>
+<pre>
+CREATE TABLE order-detail
+     (order_id Number Constraint
+          fk_oid REFERENCES scott.order(order_id),
+     (part_no Number Constraint
+          fk_pno REFERENCES part(part_no),
+     (quantity Number Constraint nn_qty Not NULL
+          Constraint check_qty_low CHECK (quantity > 0),
+     (cost Number Constraint
+          check_cost CHECK (cost>0),
+     (Constraint pk_od PRIMARY KEY (order_id, part_no))
+</pre>
+
+<h5>Legal Constraints in Oracle</h5>
+<ul>
+<li>NOT NULL Nulls not allowed
+<li>UNIQUE Values must be unique, but nulls allowed
+<li>PRIMARY KEY Values must be unique, nulls not allowed
+<li>REFERENCES Causes a foreign key relationship
+<li>CHECK defines a condition that must be satisfied
+</ul>
+<h4>REFERENCES in more detail</h4>
+Syntax for the REFERENCES clause<p>
+With the specification of a table attribute<p>
+CONSTRAINT name REFERENCES table(attribute)
+     [ON DELETE CASCADE]<p>
+In a Constraint Row<p>
+CONSTRAINT name FOREIGN KEY (attribute1)
+     REFERENCES table(attribute)
+     [ON DELETE CASCADE]<p>
+
+The ON DELETE CASCADE clause tells Oracle to delete the
+child tables when the corresponding parent table row is
+deleted. If the ON DELETE CASCADE clause is left off, Oracle
+will not allow the deletion of a parent row unless all the
+child rows are deleted first.<p>
+
+Oracle supports update restrict, delete restrict and delete
+cascade. It does not easily support:
+<dl><dt>update cascade
+<dd>changes made to a parent key are cascaded to child
+<dt>update with null
+<dd>changes allowed to parent, child attribute changed to null
+<dt>delete with null
+<dd>parent deleted, child attribute changed to null
+</dl>
+<h4>More Examples</h4>
+<pre>
+CREATE TABLE dept
+     (deptno NUMBER(2)
+          CONSTRAINT pk_dept PRIMARY KEY
+          CONSTRAINT ck_deptno
+               CHECK (deptno BETWEEN 10 and 99),
+     dname VARCHAR2(9)
+          CONSTRAINT ck_dname CHECK (dname=UPPER(dname))
+     loc VARCHAR2(10)
+          CONSTRAINT ck_loc CHECK (loc IN
+               (`DALLAS','BOSTON','CHICAGO')))
+
+CREATE TABLE emp
+     (empno NUMBER(4) CONSTRAINT pk_emp PRIMARY KEY,
+     ename VARCHAR2(10),
+     job VARCHAR2(9),
+     hiredate DATE,
+     sal NUMBER(7,2)
+     comm NUMBER(7,2),
+     deptno NUMBER(2),
+     CONSTRAINT fk_deptno FOREIGN KEY (deptno)
+          REFERENCES dept(deptno),
+     CONSTRAINT ck_total CHECK (sal + comm <=5000))
+</pre>
+<hr>
+<h3>Triggers</h3>
+
+A database trigger is a stored PL/SQL block that is
+associated with a table. Oracle executes a trigger when an
+SQL statement is issued against the table.
+
+<h4>Examples</h4>
+<pre>
+CREATE TRIGGER emp_permit_changes
+     BEFORE
+     DELETE or INSERT or UPDATE
+     ON emp
+     DECLARE
+          dummy INTEGER;
+     BEGIN
+          /* If today is a Saturday or Sunday, then error.*/
+          IF (TO_CHAR(SYSDATE, `DY') = `SAT' OR
+               (TO_CHAR(SYSDATE, `DY') = `SUN')
+               THEN raise_application_error(-2051,
+                    `May not change on weekend');
+          END IF;
+          /* Check holiday */
+          SELECT COUNT (*)
+               INTO dummy
+               FROM company_holidays
+               WHERE day = TRUNC(SYSDATE);
+          IF dummy > 0
+               THEN raise_application_error(-20501,
+                    `May not change on holiday');
+          END IF;
+     END;
+
+CREATE TRIGGER salary_check
+     BEFORE
+     INSERT OR UPDATE OF sal, job
+     ON emp
+     FOR EACH ROW
+     WHEN (new.job<>`PRESIDENT')
+     DECLARE
+          minsal    NUMBER;
+          maxsal    NUMBER;
+     BEGIN
+          /*Get the min and max salary from table*/
+          SELECT minsal, maxsal
+               INTO minsal, maxsal
+               FROM sal_guide
+               WHERE job = :new.job;
+          /*Check for Error*/
+          IF (:new.sal<minsal OR :new.sal>maxsal)
+               THEN raise_application_error(-20601, `Salary
+                    out of range for job')
+          END IF;
+     END;
+</pre>
+<hr>
+<h2><a name="PB">PowerBuilder</a></h2>
+
+Constraints can also be enforced in PowerBuilder
+
+<h3>Database Painter</h3>
+<ul>
+<li>Table attribute data types
+<li>Table attribute Edit specifications
+     (e.g., mask, radio buttons, list box)
+<li>Table attributes validation specification
+<li>Foreign key specification in table
+<li>Primary key specification in table
+<li>Not null specification in table
+</ul>
+<h3>Datawindow Painter</h3>
+
+Display field edit specifications
+
+<h3>Windows and Scripts</h3>
+     Write scripts for on update events
+
+<hr>
+<ADDRESS>Last modified: September 1, 1998<BR>
+<A HREF="index.html">Dirk Baldwin</A>, MIS, <A HREF="HTTP://www.uwp.edu">UW-Parkside</A>, <A HREF="mailto:dirk.baldwin@uwp.edu">dirk.baldwin@uwp.edu</A></addre ss> </ADDRESS>
+</html>
+

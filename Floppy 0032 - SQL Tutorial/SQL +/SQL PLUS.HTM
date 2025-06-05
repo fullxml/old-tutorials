@@ -1,0 +1,126 @@
+<html>
+<head>
+<title>Oracle: SQL*Plus Tutorial</title>
+</head>
+<body>
+<h1 align=center>Oracle: SQL*Plus<br>
+Tutorial</h1>
+<hr>
+<em>Under construction</em><br>
+For additional information, the following sites can be
+accessed:<p>
+<a
+href="http://www.yahoo.com/Computers_and_Internet/Software/Databases/Oracle/">
+Yahoo's Oracle index</a> section identifies a number
+of Oracle related sites <br>
+<a
+href="http://www.bf.rmit.edu.au/~orafaq/">
+Oracle faq</a> contains several hints on Oracles products,
+including SQL Plus and Oracle SQL
+<hr>
+[<a href="#Logging">Logging on/off</a> |<a
+href="#SQLPLUS">SQL Plus Commands</a> |<a
+href="oraddl.htm">Data Definition</a> |<a
+href="orasql.htm">Data Manipulation</a> ]
+<h2><a name="Logging">Logging On/Off</a></h2>
+To log on to SQL Plus, you need to find a computer that is
+hooked up to the ISQS server. These computers are in BA 365.
+In windows, find the Oracle group and click on SQL Plus. You
+will
+be prompted for your UserID, password, hoststring. Enter the
+information indicated in class.
+If successful, you will see the SQL> prompt.
+<h2><a name="SQLPLUS">SQL Plus Commands</a></h2>
+[<a href="#Introduction">Introduction</a> |<a
+href="#LineEdit">Line Editing</a> |<a href="#Notepad">Using
+Notepad for editing </a>|<a href="#Results">Sending results
+to a file</a> |<a href="#Retrieving">Retrieving a file</a> ]
+<h3><a name="Introduction">Introduction</a></h3>
+At the SQL prompt, you can begin typing any SQL command.
+Upon hitting return (i.e., enter key) the SQL prompt will
+change to line number prompts. When you are finished typing
+a command,
+type / or RUN to execute the SQL command. Also, a semicolon
+at the end of the SQL command will execute the command
+immediately after hitting return. In addition to SQL
+commands, /, and RUN, other commands can be issued at the
+SQL prompt (a semicolon does not have to follow the nonSQL
+commands).
+<ul>
+<li>DESCRIBE tablename--lists the attributes and their
+specifications of tablename
+<li>EDIT--Places you in an editor (Notepad). The buffer
+contents are put into the editor
+<li>GET filename--Retrieves a file and places it into the
+buffer
+<li>SAVE filename--Saves the buffer to the name file
+<li>CLEAR BUFFER--Clears the buffer
+</ul>
+<hr>
+<h3><a name="LineEdit">Line Editing</a></h3>
+One way to change an SQL statement in the buffer is by using
+the line editor. The following are a list of line edit
+commands.
+<ul>
+<li>LIST or L--Lists the contents of the buffer
+<li>LIST n or L n--Lists the contents of line number n in
+the buffer and makes the line current
+<li>LIST * or L *--Lists the current line
+<li>LIST m n--Lists the range from m to n line
+<li>Append text or A text--Adds to the end of the current
+line (e.g., "A ," adds a comma to the end of line
+<li>INPUT or I--Adds one or more lines after the current
+line so you can begin adding the text.
+<li>CHANGE /text--Deletes text from the current line
+<li>CHANGE /oldtext/newtext--Replaces oldtext with newtext
+in the current line
+<li>DEL -- Deletes the current line
+</ul>
+<h3><a name="Notepad">Using Notepad for Editing</a></h3>
+You can use Notepad to edit the contents of the buffer.
+There are two ways to enter Notepad.
+<ul>
+<li>Use the menus Edit/editor/invoke.  In addition here, you
+can use Edit/editor/define to change the editor. You might
+check Edit/editor/define prior to editing a buffer to make
+sure it is set up the way you would like.
+<li>Type Edit at the SQL Prompt
+</ul>
+When you are finished editing, click on File/exit (in
+Notepad). Next, type GET buffername at the SQL prompt. The
+buffer name will be listed a few lines up in SQL Plus upon
+returning to SQL Plus. Type RUN, to execute the command.<p>
+Notepad can also be used to save the buffer contents. Use
+File/Save As to create a permanent file.<p>
+Multiple SQL commands can be typed in Notepad. End each SQL
+command (except the last one) with a semicolon. After
+exiting notepad, type Start buffername instead of GET
+buffername to run all of the commands.
+Start filename can also be used to execute SQL command that
+are stored
+in a file.
+<h3><a name="Results">Sending the Results to a File</a></h3>
+To send queries and their results to a file for later
+printing (e.g., turning in homework assigments), the
+spool command is used. On the menu go to FILE/Spool to begin
+spooling--it will ask for a file name. To
+quit spooling, go to FILE/Spool and then click on end Spool.
+<h3><a name="Retrieving">Retrieving a File</a></h3>
+To retrieve SQL command from a file use GET filename or
+START filename. GET filename places the
+file into the buffer. START filename executes the commands
+in the file.
+<hr>
+<ADDRESS>Last modified: September 1, 1998<BR>
+<A HREF="index.html">Dirk Baldwin</A>, MIS, <A HREF="HTTP://www.uwp.edu">UW-Parkside</A>, <A HREF="mailto:dirk.baldwin@uwp.edu">dirk.baldwin@uwp.edu</A></addre ss> </ADDRESS>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
